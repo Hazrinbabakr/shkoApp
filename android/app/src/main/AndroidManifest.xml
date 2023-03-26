@@ -50,5 +50,8 @@
             </intent-filter>
         </receiver>
         <receiver android:name="com.dexterous.flutterlocalnotifications.ScheduledNotificationReceiver" />
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDaT8trbbgUlxgW3m1JPYc0W8cDlLnNdKs"/>
     </application>
 </manifest>

@@ -4,10 +4,13 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:onlineshopping/Widgets/BackArrowWidget.dart';
 import 'package:onlineshopping/Widgets/empty.dart';
 import 'package:onlineshopping/localization/AppLocal.dart';
+import 'package:onlineshopping/screen/address/addresses_bottom_sheet.dart';
 import 'package:onlineshopping/screen/homepage.dart';
+import 'package:onlineshopping/services/local_storage_service.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -124,21 +127,31 @@ class _CartScreenState extends State<CartScreen> {
                       padding: const EdgeInsets.symmetric(horizontal: 15,),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-
                         children: [
-
                           SizedBox(height: 10,),
-                          Row(children: [
-                            Text(AppLocalizations.of(context).trans("Address"),
-                              style: TextStyle(fontSize: 16),
+                          InkWell(
+                            onTap: () async {
+                              await AddressesBottomSheet.show(context);
+                              setState(() {
+
+                              });
+                            },
+                            child: Row(
+                              children: [
+                                Text(
+                                  AppLocalizations.of(context).trans("Address"),
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    LocalStorageService.instance.selectedAddress?.title??AppLocalizations.of(context).trans("not_selected"),
+                                    style: TextStyle(color: Colors.indigo,fontSize: 16),
+                                    maxLines: 2,
+                                  ),
+                                )
+                              ],
                             ),
-                            Expanded(
-                              child: Text(address,
-                                style: TextStyle(color: Colors.indigo,fontSize: 16),
-                                maxLines: 2,
-                              ),
-                            )
-                          ],),
+                          ),
                         ],
                       ),
                     ),
@@ -737,6 +750,10 @@ class _CartScreenState extends State<CartScreen> {
                           SizedBox(height: 15,),
                           InkWell(
                               onTap: (){
+                                if(LocalStorageService.instance.selectedAddress == null){
+                                  Fluttertoast.showToast(msg: AppLocalizations.of(context).trans("please_select_address"));
+                                  return;
+                                }
                                 setState(() {
                                   var date =  DateTime.now();
                                   var orderDate = DateFormat('MM-dd-yyyy, hh:mm a').format(date);
@@ -749,14 +766,20 @@ class _CartScreenState extends State<CartScreen> {
 
                                   getCart();
                                   Future.delayed(Duration(milliseconds: 100),(){
-                                    FirebaseFirestore.instance.collection('Admin').doc('admindoc').collection('orders').add({
+                                    FirebaseFirestore.instance.collection('Admin')
+                                        .doc('admindoc')
+                                        .collection('orders')
+                                        .add({
                                       "productList":cartList,
                                       "subTotal": subTotal,
                                       "totalPrice":(subTotal+deliveryFee),
                                       "deliveryFee":deliveryFee,
                                       "userID": user.uid,
                                       "userName": name,
-                                      "userAddress": address,
+                                      "userAddress": LocalStorageService.instance.selectedAddress.title,
+                                      "userLat": LocalStorageService.instance.selectedAddress.latitude,
+                                      "userLong": LocalStorageService.instance.selectedAddress.longitude,
+                                      "userDesc": LocalStorageService.instance.selectedAddress.description,
                                       "userPhone": phone,
                                      // "dinnar": dinnar,
                                       "orderID":rundomNumber,
@@ -771,7 +794,10 @@ class _CartScreenState extends State<CartScreen> {
                                       "deliveryFee":deliveryFee,
                                       "userID": user.uid,
                                       "userName": name,
-                                      "userAddress": address,
+                                      "userAddress": LocalStorageService.instance.selectedAddress.title,
+                                      "userLat": LocalStorageService.instance.selectedAddress.latitude,
+                                      "userLong": LocalStorageService.instance.selectedAddress.longitude,
+                                      "userDesc": LocalStorageService.instance.selectedAddress.description,
                                       "userPhone": phone,
                                    //   "dinnar": dinnar,
                                       "OrderStatus": 'Pending',

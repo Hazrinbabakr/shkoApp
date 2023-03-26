@@ -57,19 +57,10 @@ dependencies:
   mailer:
   flutter_email_sender:
   photo_view: ^0.9.2
-
-
-
-
-
-
-
-
-
-
-
-
-
+  google_maps_flutter:
+  location:
+  app_settings:
+  modal_progress_hud:
 dev_dependencies:
   flutter_test:
     sdk: flutter

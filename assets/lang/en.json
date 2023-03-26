@@ -95,11 +95,13 @@
   "profile": "Profile",
   "processing": "Processing",
   "orders": "Orders",
-  "phoneNumberEmpty": "Phone number is empty"
-
-
-
-
-
-
+  "phoneNumberEmpty": "Phone number is empty",
+  "title": "Title",
+  "description": "Description",
+  "save": "Save",
+  "refine_location": "Refine location",
+  "addresses": "Addresses",
+  "add_address": "Add addresses",
+  "not_selected": "Not Selected",
+  "please_select_address": "Please select address"
 }

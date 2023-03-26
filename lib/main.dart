@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:onlineshopping/app/Application.dart';
+import 'package:onlineshopping/helper/colors.dart';
 import 'package:onlineshopping/localization/AppLocal.dart';
 import 'package:onlineshopping/screen/suplashScreen.dart';
 import 'package:provider/provider.dart';
@@ -41,7 +42,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                   primaryColor: Colors.white,
-                  accentColor: Color(0xFFB08BBB),
+                  accentColor: AppColors.accent,
                   fontFamily: 'NRT',
               ),
               home: SplashScreen(),//SignUpMainPage(),

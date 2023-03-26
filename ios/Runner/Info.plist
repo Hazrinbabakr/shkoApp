@@ -43,6 +43,12 @@
 	<string>Need to upload image</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>Need to upload image</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+    <string>user can add his address</string>
+   	<key>NSLocationAlwaysUsageDescription</key>
+   	<string>user can add his address</string>
+   	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+   	<string>user can add his address</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>fetch</string>

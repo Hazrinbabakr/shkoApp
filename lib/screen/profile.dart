@@ -8,6 +8,7 @@ import 'package:onlineshopping/Widgets/profileavatarWidget.dart';
 import 'package:onlineshopping/app/Application.dart';
 import 'package:onlineshopping/localization/AppLocal.dart';
 import 'package:onlineshopping/screen/about_us.dart';
+import 'package:onlineshopping/screen/address/addresses_list.dart';
 import 'package:onlineshopping/services/local_storage_service.dart';
 
 import 'Favorites.dart';
@@ -146,16 +147,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ],
                                         );
                                       });
-
-
                                 },
                                 child: Icon(Icons.edit_outlined)),
                           ),
                          // SizedBox(width: 2,),
                         ],
                       );
-
-
                   }
               )
             ),
@@ -256,6 +253,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   // ),
             ListTile(
                 onTap: () {
+
+                  Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context){
+                      return AddressesList();
+                    }
+                  ));
                   // _textFieldController = TextEditingController(text:  snapshot.data['address'].toString());
                   // showDialog(
                   //     context: context,
@@ -448,6 +451,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child:  InkWell(
                   onTap: () async {
                     LocalStorageService.instance.user = null;
+                    LocalStorageService.instance.selectedAddress = null;
+
                     await FirebaseAuth.instance.signOut();
                     Application.restartApp(context);
                   },

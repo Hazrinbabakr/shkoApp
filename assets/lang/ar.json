@@ -103,6 +103,13 @@
   "profile": "حساب تعريفي",
   "processing": "يعالج",
   "orders": "الطلبات",
-  "phoneNumberEmpty": "رقم الهاتف فارغ"
-
+  "phoneNumberEmpty": "رقم الهاتف فارغ",
+  "title": "العنوان",
+  "description": "التفاصيل",
+  "save": "حفظ",
+  "refine_location": "اعادة تعيين",
+  "addresses": "العناوين",
+  "add_address": "اضافة عنوان",
+  "not_selected": "غير محدد",
+  "please_select_address": "يرجى تحديد العنوان"
 }

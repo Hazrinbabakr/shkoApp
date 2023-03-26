@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:onlineshopping/models/address.dart';
 import 'package:onlineshopping/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -8,6 +9,8 @@ class LocalStorageService {
   static const String AccessToken = "access_token";
   static const String AppLanguageKey = "app_lang";
   static const String UserKey = "User";
+  static const String AddressKey = "Address";
+
 //  static const
 
   static LocalStorageService _instance = LocalStorageService._internal();
@@ -44,6 +47,20 @@ class LocalStorageService {
   set user(AppUser value) {
     _user = value;
     _saveToDisk(UserKey, value == null ? null : json.encode(value.toJson()));
+  }
+
+
+  Address _address;
+  Address get selectedAddress {
+    if (_address != null) return _address;
+    String res = _getFromDisk(AddressKey);
+    if (res == null) return null;
+    return Address.fromJson(json.decode(res),null);
+  }
+
+  set selectedAddress(Address value) {
+    _address = value;
+    _saveToDisk(AddressKey, value == null ? null : json.encode(value.toJson()));
   }
 
 

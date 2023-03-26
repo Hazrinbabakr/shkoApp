@@ -104,8 +104,14 @@
   "profile": "پرۆفایل",
   "processing": "پرۆسەکردن",
   "orders": "داواکاریەکان",
-  "phoneNumberEmpty": "ژمارەی تەلەفۆن بەتاڵە"
-
+  "phoneNumberEmpty": "ژمارەی تەلەفۆن بەتاڵە",
+  "title": "Title",
+  "description": "Description",
+  "save": "Save",
+  "refine_location": "Refine location",
+  "addresses": "Addresses",
+  "add_address": "Add addresses",
+  "not_selected": "Not Selected"
 
 
 }
