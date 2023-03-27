@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 class Address {
   String uid;
   String title;
@@ -30,7 +32,8 @@ class Address {
       "title":title,
       "description":description,
       "latitude":latitude,
-      "longitude":longitude
+      "longitude":longitude,
+      "userId":FirebaseAuth.instance.currentUser.uid
     };
   }
 
