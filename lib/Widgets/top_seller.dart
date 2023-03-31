@@ -49,12 +49,27 @@ class _TopSellerState extends State<TopSeller> {
           : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(AppLocalizations.of(context).trans("topSeller"),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Theme.of(context).accentColor),),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+            children: [
+              Text(AppLocalizations.of(context).trans("topSeller"),style: TextStyle(fontSize: 22),),
+              InkWell(
+                  onTap: (){
+                    // Navigator.of(context).push(MaterialPageRoute(
+                    //     builder: (context) => AllCategory(categorySnapshot)),
+                    // );
+                  },
+                  child: Text( AppLocalizations.of(context).trans("ShowAll"),style: TextStyle(fontSize: 13,color: Theme.of(context).accentColor),)),
+
+            ],
+          ),
           SizedBox(height: 15,),
           Container(
             // color: Colors.red,
             // width: 200,
-            height: 270,
+            height: 230,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
@@ -69,53 +84,77 @@ class _TopSellerState extends State<TopSeller> {
                     },
                     child: Padding(
                       padding: const EdgeInsets.only(right: 15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Container(
-                            width: 150,
-                            height: 150,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.all(
-                                    Radius.circular(20)
-                                  //                 <--- border radius here
-                                ),
-                                border: Border.all(color: Colors.black12,width: 0.6),
-                                image: DecorationImage(
-                                  // fit: BoxFit.cover,
-                                    image: NetworkImage(
-                                        topSellerSnapshot[i]['images'][0].toString()
-                                    )
-                                )),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                            borderRadius: BorderRadius.all(
+                                Radius.circular(20)
+                              //                 <--- border radius here
+                            ),
+                            border: Border.all(color: Colors.black12,width: 0.6),
                           ),
+                        child: Column(
+                          //crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(height: 20,),
+                             Container(
+                             //  color: Colors.red,
+                               height:115,
+                               width: 170,
+                               child: Image.network(
+                        topSellerSnapshot[i]['images'][0].toString()??""
+                      ),
+                             ),
 
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                width: 150,
-                                height: 30,
-                                //color: Colors.grey,
-                                child: Center(
-                                  child: Text(
 
-                                    AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                                    topSellerSnapshot[i]['nameK'].toString():
-                                    AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                                    topSellerSnapshot[i]['nameA'].toString():
-                                    topSellerSnapshot[i]['name'].toString(),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(height: 20,),
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                                  child: Row(
+                                    children: [
+                                      Text('${ topSellerSnapshot[i]['price'].toString()}',
+                                        style: TextStyle(fontSize: 19,color: Colors.red[700],fontWeight: FontWeight.w500),),
+                                      Text('IQD',
+                                        style: TextStyle(fontSize: 13,color: Colors.red[700],fontWeight: FontWeight.w500),),
 
-                                    style: TextStyle(fontWeight: FontWeight.bold,fontSize: 16,), overflow: TextOverflow.ellipsis,),
+SizedBox(width: 5,),
+
+                                      Text('${ topSellerSnapshot[i]['oldPrice'].toString()}',
+                                        style: TextStyle(fontSize: 10,color: Colors.grey,decoration: TextDecoration.lineThrough),),
+                                      Text('IQD',
+                                        style: TextStyle(fontSize: 7,color: Colors.grey,decoration: TextDecoration.lineThrough),),
+
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              //  SizedBox(height: 10,),
-                              Text('${ topSellerSnapshot[i]['price'].toString()}\$',
-                                style: TextStyle(fontSize: 14,color: Colors.black,fontWeight: FontWeight.w500),),
-                              SizedBox(height: 10,),
+                                Container(
+                                  width: 150,
+                                  height: 30,
+                                  //color: Colors.grey,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                                    child: Text(
 
-                            ],
-                          )
-                        ],
+                                      AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
+                                      topSellerSnapshot[i]['nameK'].toString():
+                                      AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
+                                      topSellerSnapshot[i]['nameA'].toString():
+                                      topSellerSnapshot[i]['name'].toString(),
+
+                                      style: TextStyle(fontSize: 16,), overflow: TextOverflow.ellipsis,),
+                                  ),
+                                ),
+                                //  SizedBox(height: 10,),
+
+                                SizedBox(height: 10,),
+
+                              ],
+                            )
+                          ],
+                        ),
                       ),
                     ),)
                       : SizedBox();

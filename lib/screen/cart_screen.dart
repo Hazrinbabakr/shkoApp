@@ -118,7 +118,24 @@ class _CartScreenState extends State<CartScreen> {
         body:
         Builder(
             builder: (BuildContext context){
-              return cartList.isEmpty? EmptyWidget(): Padding(
+              return cartList.isEmpty?
+
+
+              Center(
+                child: Container(
+                    height: 280,
+                    width: 220,
+
+                    child: Column(
+                      children: [
+                        Image.asset('images/category/emptyCart.png',),
+                        Text('Your cart is empty')
+                      ],
+                    )),
+              ):
+
+
+              Padding(
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 child: Column(
                   //crossAxisAlignment: CrossAxisAlignment.start,

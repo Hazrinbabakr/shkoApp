@@ -60,12 +60,14 @@ class _HomePageState extends State<HomePage> {
           iconSize: 30,
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              title: Text(""),
+              icon:   Image.asset('images/category/shop.png'),
+
+              //Icon(Icons.home),
+              title: Text("Shop",style: TextStyle(color:  Theme.of(context).accentColor),),
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search_rounded),
-              title: Text(""),
+              icon:  Image.asset('images/category/search.png'),
+              title: Text("Explore",style: TextStyle(color:  Theme.of(context).accentColor),),
             ),
             BottomNavigationBarItem(
 
@@ -74,14 +76,14 @@ class _HomePageState extends State<HomePage> {
       builder: (context, snapshot) {
       return Stack(
       children: [
-      Icon(Icons.shopping_cart),
+        Image.asset('images/category/cart.png'),
       Positioned(
       top:0,
       right:0,
 
       child:snapshot.data?.docs?.length==null? CircularProgressIndicator(): Container(
-      width:16,
-      height:16,
+      width:13,
+      height:13,
       decoration: BoxDecoration(
       color:Colors.red,
       borderRadius: BorderRadius.all(
@@ -93,14 +95,14 @@ class _HomePageState extends State<HomePage> {
       child: Center(
       child:
       Text(snapshot.data?.docs?.length.toString() ?? '0',
-      style: TextStyle(fontSize: 12,color: Colors.white,fontWeight: FontWeight.bold),),
+      style: TextStyle(fontSize: 10,color: Colors.white,fontWeight: FontWeight.bold),),
       ))
       )
       ],
       );
       }
       ),
-              title: Text(''),
+              title: Text('Cart',style: TextStyle(color:  Theme.of(context).accentColor),),
               // backgroundColor: Colors.purple[600]
             ),
             // BottomNavigationBarItem(
@@ -109,10 +111,9 @@ class _HomePageState extends State<HomePage> {
             //   // backgroundColor: Colors.purple[600]
             // ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.person_pin),
-              title: Text(""),
+              icon:  Image.asset('images/category/profile.png',width: 40,height: 40,),
+              title: Text("Profile",style: TextStyle(color:  Theme.of(context).accentColor),),
             ),
-
           ],
         ),
       ),

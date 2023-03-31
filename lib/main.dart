@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                   primaryColor: Colors.white,
-                  accentColor: AppColors.accent,
+                  accentColor: Color(0xff00bebb),
                   fontFamily: 'NRT',
               ),
               home: SplashScreen(),//SignUpMainPage(),

@@ -53,24 +53,25 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text( AppLocalizations.of(context).trans("categories"),style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Theme.of(context).accentColor),),
+              Text( AppLocalizations.of(context).trans("categories"),style: TextStyle(fontSize: 22,),),
               InkWell(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => AllCategory(categorySnapshot)),
                     );
                   },
-                  child: Text( AppLocalizations.of(context).trans("ShowAll"),style: TextStyle(fontSize: 12,color: Theme.of(context).accentColor),)),
+                  child:
+                  Text( AppLocalizations.of(context).trans("ShowAll"),style: TextStyle(fontSize: 13,color: Theme.of(context).accentColor),)),
 
             ],
           ),
-          SizedBox(height: 5,),
+          SizedBox(height: 20,),
           Padding(
-            padding: const EdgeInsets.only(left: 10),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Container(
-              // color: Colors.red,
+               //color: Colors.red,
               // width: 200,
-              height: 140,
+              height: 130,
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
@@ -79,62 +80,66 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                     DocumentSnapshot data= categorySnapshot.elementAt(i);
                     return (categorySnapshot[i] != null)
 
-                        ? InkWell(
+                        ? Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: InkWell(
                       onTap: (){
-                        // Navigator.of(context).push(MaterialPageRoute(
-                        //   builder: (context) => ProductDetails( modelListSnapShot[i].id.toString()),
-                        // ));
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //   builder: (context) => ProductDetails( modelListSnapShot[i].id.toString()),
+                          // ));
 
 
 
 
-                        Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ProductsList(
-                            data.id.toString(),
-                            AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                            data['nameK'].toString():
-                            AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                            data['nameA'].toString():
-                            data['name'].toString(),
+                          Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => ProductsList(
+                              data.id.toString(),
+                              AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
+                              data['nameK'].toString():
+                              AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
+                              data['nameA'].toString():
+                              data['name'].toString(),
 
 
-                          ),
-                        ));
+                            ),
+                          ));
 
                       },
                       child: Padding(
-                        padding: const EdgeInsets.only(right: 15),
-                        child:
-                        Column(
-                          children: [
-                            Container(
-                              height: 80,
-                              width: 80,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(15)
-                                    //                 <--- border radius here
-                                  ),
-                                  border: Border.all(color: Colors.black12,width: 0.6),
-                                  image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: NetworkImage(
-                                          categorySnapshot[i]['img'].toString()))),
-                            ),
-                            SizedBox(height: 7,),
-                            Text(
-                              AppLocalizations.of(context).locale.languageCode.toString()=='ku'? categorySnapshot[i]['nameK']:
-                              AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                              categorySnapshot[i]['nameA']:
-                              categorySnapshot[i]['name'],
-                              style: TextStyle(fontWeight: FontWeight.w600,),)
-                          ],
-                        ),
+                          padding: const EdgeInsets.only(right: 15),
+                          child:
+                          Column(
+                            children: [
+                              Container(
+                                height: 45,
+                                width: 45,
+                                decoration: BoxDecoration(
+                                  //color: Colors.white,
+                                  //   borderRadius: BorderRadius.all(
+                                  //       Radius.circular(15)
+                                  //     //                 <--- border radius here
+                                  //   ),
+                                   // border: Border.all(color: Colors.black12,width: 0.6),
+                                    image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: NetworkImage(
+
+                                            categorySnapshot[i]['img'].toString()))),
+                              ),
+                              SizedBox(height: 7,),
+                              Text(
+                                AppLocalizations.of(context).locale.languageCode.toString()=='ku'? categorySnapshot[i]['nameK']:
+                                AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
+                                categorySnapshot[i]['nameA']:
+                                categorySnapshot[i]['name'],
+                                style: TextStyle(fontWeight: FontWeight.w600,),)
+                            ],
+                          ),
 
 
 
-                      ),)
+                      ),),
+                        )
                         : SizedBox();
                   }),
             ),

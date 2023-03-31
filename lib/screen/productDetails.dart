@@ -182,73 +182,74 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 )
                                     :  Column(
                                       children: [
-                                        SizedBox(height: 20,),
-                                        Container(
+                                        Expanded(
+                                          child: Container(
                                   //color: Colors.red,
-                                          child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child:Stack(
-                                            children: [
-                                              CarouselSlider(
-                                                options: CarouselOptions(
-                                                    //height: 300,
-                                                    viewportFraction: 1,
-                                                    autoPlay: false,
-                                                    onPageChanged: (index, reason) {
-                                                      setState(() {
-                                                        _current = index;
-                                                      });
-                                                    }),
+                                            child: ClipRRect(
+                                            borderRadius: BorderRadius.circular(10),
+                                            child:Stack(
+                                              children: [
+                                                CarouselSlider(
+                                                  options: CarouselOptions(
+                                                      //height: 300,
+                                                      viewportFraction: 1,
+                                                      autoPlay: false,
+                                                      onPageChanged: (index, reason) {
+                                                        setState(() {
+                                                          _current = index;
+                                                        });
+                                                      }),
 
-                                                items: imgList.map((i) {
-                                                  return Builder(
+                                                  items: imgList.map((i) {
+                                                    return Builder(
 
-                                                    builder: (BuildContext context) {
+                                                      builder: (BuildContext context) {
 
-                                                      return
-                                                        // Text('ssss ${i['test1'].toString()}');
-                                                        GestureDetector(
-                                                          onTap: (){
-                                                            int ind = 0;
-                                                            Navigator.of(context).push(
-                                                                MaterialPageRoute(
-                                                                    builder: (context) =>
-                                                                        PhotosGalleryPage(
-                                                                          initialPage: 0,
-                                                                          galleryItems: [
-                                                                            GalleryItem(
-                                                                                id: widget.productID
-                                                                                    +
-                                                                                    "_" +
-                                                                                    (ind++)
-                                                                                        .toString(),
-                                                                                image: i)
-                                                                          ],
-                                                                        )
-                                                                )
-                                                            );
-                                                          },
-                                                          child: Container(
-                                                            // height: heightt-450,
-                                                            //width: 700,
-                                                            decoration: BoxDecoration(
-                                                              image: DecorationImage(
-                                                                  fit: BoxFit.cover,
-                                                                  image: NetworkImage(i.toString())),),
+                                                        return
+                                                          // Text('ssss ${i['test1'].toString()}');
+                                                          GestureDetector(
+                                                            onTap: (){
+                                                              int ind = 0;
+                                                              Navigator.of(context).push(
+                                                                  MaterialPageRoute(
+                                                                      builder: (context) =>
+                                                                          PhotosGalleryPage(
+                                                                            initialPage: 0,
+                                                                            galleryItems: [
+                                                                              GalleryItem(
+                                                                                  id: widget.productID
+                                                                                      +
+                                                                                      "_" +
+                                                                                      (ind++)
+                                                                                          .toString(),
+                                                                                  image: i)
+                                                                            ],
+                                                                          )
+                                                                  )
+                                                              );
+                                                            },
+                                                            child: Container(
+                                                              // height: heightt-450,
+                                                              //width: 700,
+                                                              decoration: BoxDecoration(
+                                                                image: DecorationImage(
+                                                                    fit: BoxFit.cover,
+                                                                    image: NetworkImage(i.toString())),),
 
-                                                            //child: Text(i.toString()),
-                                                          ),
-                                                        );
-                                                    },
-                                                  );
-                                                }).toList(),
-                                              ),
+                                                              //child: Text(i.toString()),
+                                                            ),
+                                                          );
+                                                      },
+                                                    );
+                                                  }).toList(),
+                                                ),
 
-                                            ],
-                                          )
+                                              ],
+                                            )
 
 
                                 ),
+                                          ),
                                         ),
                                         SizedBox(height: 20,),
                                         Row(
