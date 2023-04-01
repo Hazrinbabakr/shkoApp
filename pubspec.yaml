@@ -61,6 +61,7 @@ dependencies:
   location:
   app_settings:
   modal_progress_hud:
+  flutter_swiper:
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -83,6 +84,7 @@ flutter:
   assets:
     - images/category/
     - assets/lang/
+    - images/
 
 
   # An image asset can refer to one or more resolution-specific "variants", see

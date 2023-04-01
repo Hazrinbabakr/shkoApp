@@ -10,6 +10,7 @@ class LocalStorageService {
   static const String AppLanguageKey = "app_lang";
   static const String UserKey = "User";
   static const String AddressKey = "Address";
+  static const String FirstTime = "FirstTime";
 
 //  static const
 
@@ -34,6 +35,15 @@ class LocalStorageService {
   set languageCode(String value) {
     _languageCode = value;
     _saveToDisk(AppLanguageKey, value);
+  }
+
+  // firstTime
+  bool _firstTime;
+  bool get firstTime => _firstTime ?? _getFromDisk(FirstTime);
+
+  set firstTime(bool value) {
+    _firstTime = value;
+    _saveToDisk(FirstTime, value);
   }
 
   AppUser _user;

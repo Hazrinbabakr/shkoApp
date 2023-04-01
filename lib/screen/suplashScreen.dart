@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:onlineshopping/screen/on_boarding/onBoarding.dart';
 
 import 'auth/normal_user_login/login_main_page.dart';
 import 'homepage.dart';
@@ -42,10 +43,12 @@ String text = '';
         if(activeConnection==true){
           Navigator.push(
               context, MaterialPageRoute(builder: (crl) =>
-          FirebaseAuth.instance.currentUser != null ?
-          HomePage():
-          MainLoginPage()
-          ));
+          OnBoardingPage()
+          // FirebaseAuth.instance.currentUser != null ?
+          // HomePage():
+          // MainLoginPage()
+          )
+          );
         }
         else{
           setState(() {
