@@ -17,6 +17,8 @@ import 'package:onlineshopping/localization/AppLocal.dart';
 import 'package:onlineshopping/screen/productDetailPDF.dart';
 import 'package:onlineshopping/services/local_storage_service.dart';
 
+import 'auth/normal_user_login/login_main_page.dart';
+
 class ProductDetails extends StatefulWidget {
   final String productID;
   const ProductDetails(this.productID, {Key key}) : super(key: key);
@@ -60,7 +62,12 @@ class _ProductDetailsState extends State<ProductDetails> {
     _auth = FirebaseAuth.instance;
     user= _auth.currentUser;
     getProducts();
-    getFavList();
+    if(  FirebaseAuth.instance.currentUser != null ){
+      setState(() {
+        getFavList();
+      });
+    }
+    // getFavList();
     // TODO: implement initState
     super.initState();
   }
@@ -98,19 +105,29 @@ class _ProductDetailsState extends State<ProductDetails> {
                 ):
                 InkWell(
                   onTap: (){
+
+
                     setState(() {
-                      User user = _auth.currentUser;
-                      userCollection
-                          .doc(user.uid)
-                          .collection('favorite')
-                          .doc(widget.productID)
-                          .set({
-                        "productID":widget.productID
-                      });
-                      isfav= !isfav;
-                      // //print('added to fav');
-                     // Scaffold.of(context).showSnackBar(_snackBarAddToFav);
+                      if(   FirebaseAuth.instance.currentUser != null){
+                        User user = _auth.currentUser;
+                        userCollection
+                            .doc(user.uid)
+                            .collection('favorite')
+                            .doc(widget.productID)
+                            .set({
+                          "productID":widget.productID
+                        });
+                        isfav= !isfav;
+
+                      }else{
+                        Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => MainLoginPage(),
+                        ));
+                      }
+
                     });
+
+
                   },
                   child: Icon(
                     Icons.favorite_border,
@@ -610,26 +627,44 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   BorderRadius.circular(12)),
                               child: InkWell(
                                 onTap: () {
-                                  //Addtocart
-                                  User user = _auth.currentUser;
-                                  userCollection
-                                      .doc(user.uid)
-                                      .collection('cart')
-                                      .doc(widget.productID)
-                                      .set({
-                                    "productID": widget.productID,
-                                    "quantity": quantity,
-                                    "price": productSnapshot['price'],
-                                    "name": productSnapshot.data()['name'],
-                                    "nameA": productSnapshot.data()['nameA'],
-                                    "nameK": productSnapshot.data()['nameK'],
-                                    "supPrice":
-                                    (productSnapshot['price']) * quantity,
 
-                                    "img": productSnapshot.data()['images'][0],
+
+                                  setState(() {
+                                    if(   FirebaseAuth.instance.currentUser != null){
+                                      //Addtocart
+                                      User user = _auth.currentUser;
+                                      userCollection
+                                          .doc(user.uid)
+                                          .collection('cart')
+                                          .doc(widget.productID)
+                                          .set({
+                                        "productID": widget.productID,
+                                        "quantity": quantity,
+                                        "price": productSnapshot['price'],
+                                        "name": productSnapshot.data()['name'],
+                                        "nameA": productSnapshot.data()['nameA'],
+                                        "nameK": productSnapshot.data()['nameK'],
+                                        "supPrice":
+                                        (productSnapshot['price']) * quantity,
+
+                                        "img": productSnapshot.data()['images'][0],
+                                      });
+                                      //print('added');
+                                      Scaffold.of(context).showSnackBar(_snackBar);
+
+                                    }else{
+                                      Navigator.of(context).push(MaterialPageRoute(
+                                        builder: (context) => MainLoginPage(),
+                                      ));
+                                    }
+
                                   });
-                                  //print('added');
-                                  Scaffold.of(context).showSnackBar(_snackBar);
+
+
+
+
+
+
 
                                 },
                                 child: Text(

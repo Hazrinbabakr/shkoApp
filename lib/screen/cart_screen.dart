@@ -118,18 +118,18 @@ class _CartScreenState extends State<CartScreen> {
         body:
         Builder(
             builder: (BuildContext context){
-              return cartList.isEmpty?
+              return cartList.isEmpty || subTotal ==0?
 
 
               Center(
                 child: Container(
                     height: 280,
-                    width: 220,
+                    width: 240,
 
                     child: Column(
                       children: [
                         Image.asset('images/category/emptyCart.png',),
-                        Text('Your cart is empty')
+                        Text('Your cart is empty!',style: TextStyle(color: Colors.grey[700]),)
                       ],
                     )),
               ):

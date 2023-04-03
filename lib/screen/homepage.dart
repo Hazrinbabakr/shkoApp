@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:onlineshopping/screen/profile.dart';
 import 'package:onlineshopping/screen/search.dart';
 import 'Favorites.dart';
+import 'auth/normal_user_login/login_main_page.dart';
 import 'cart_screen.dart';
 import 'home.dart';
 import 'order_history.dart';
@@ -39,7 +40,11 @@ class _HomePageState extends State<HomePage> {
   final currentPage = [
     HomeScreen(),
     Search(),
-    CartScreen(false),
+
+
+    FirebaseAuth.instance.currentUser != null ?
+  CartScreen(false):MainLoginPage(),
+
     // FavoriteScreen(),
     //OrderHistoryScreen(),
     ProfileScreen(),
@@ -78,7 +83,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             BottomNavigationBarItem(
-              icon: StreamBuilder(
+              icon:  FirebaseAuth.instance.currentUser != null ?
+              StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('users')
                       .doc(user.uid)
@@ -117,8 +123,11 @@ class _HomePageState extends State<HomePage> {
                                     )))
                       ],
                     );
-                  }),
-              activeIcon: StreamBuilder(
+                  }):
+              Image.asset('images/category/cart.png',color: Colors.black38,),
+
+
+              activeIcon: FirebaseAuth.instance.currentUser != null ? StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('users')
                       .doc(user.uid)
@@ -157,18 +166,14 @@ class _HomePageState extends State<HomePage> {
                                 )))
                       ],
                     );
-                  }),
+                  }): Image.asset('images/category/cart.png'),
               title: Text(
                 'Cart',
                 style: TextStyle(color: Theme.of(context).accentColor),
               ),
               // backgroundColor: Colors.purple[600]
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.favorite_border),
-            //   title: Text('Favorite'),
-            //   // backgroundColor: Colors.purple[600]
-            // ),
+
             BottomNavigationBarItem(
               icon: Image.asset(
                 'images/category/profile.png',

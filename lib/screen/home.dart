@@ -53,7 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
                           });
                         },
-                        child: Row(
+                        child:FirebaseAuth.instance.currentUser != null? Row(
                           children: [
                             Icon(Icons.location_on,color: Colors.red[700],size: 20,),
                             Text(
@@ -64,7 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               maxLines: 2,
                             ),
                           ],
-                        ),
+                        ): SizedBox()
                       ),
                     ),
 

@@ -8,6 +8,8 @@ import 'package:onlineshopping/screen/auth/providers/normal_user_login_provider.
 import 'package:onlineshopping/screen/auth/signup_normal_user/sign_up_main_page.dart';
 import 'package:provider/provider.dart';
 
+import '../../homepage.dart';
+
 class LoginPage extends StatefulWidget {
   const LoginPage({Key key}) : super(key: key);
 
@@ -144,6 +146,22 @@ class _LoginPageState extends State<LoginPage> {
                 //     ),),
                 //   ),
                 // ),
+
+SizedBox(height: 100,),
+                InkWell(
+                  onTap: (){
+                    Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                      return HomePage();
+                    }));
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(  AppLocalizations.of(context).trans("skip"),style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.w500
+                    ),),
+                  ),
+                ),
 
               ],
             ),

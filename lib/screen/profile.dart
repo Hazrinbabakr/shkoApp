@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:onlineshopping/Widgets/guestProfile.dart';
 import 'package:onlineshopping/Widgets/language_bottom_sheet.dart';
 import 'package:onlineshopping/Widgets/profileavatarWidget.dart';
 import 'package:onlineshopping/app/Application.dart';
@@ -46,7 +47,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     _auth= FirebaseAuth.instance;
     user=_auth.currentUser;
-    getUserInfo();
+    if( FirebaseAuth.instance.currentUser != null ){
+      getUserInfo();
+    }
+
     setState(() {
       _textFieldController = TextEditingController(text: address.toString());
     });
@@ -54,7 +58,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return   FirebaseAuth.instance.currentUser != null ?
+    Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).trans("profile"),),
@@ -479,6 +484,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ],
         ),
       ),
-    );
+    ):
+   GuestProfile();
   }
 }
