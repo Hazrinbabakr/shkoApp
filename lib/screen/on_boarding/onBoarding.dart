@@ -2,11 +2,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
-import 'package:onlineshopping/Widgets/CustomAppButton.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/auth/normal_user_login/login_main_page.dart';
-import 'package:onlineshopping/screen/homepage.dart';
-import 'package:onlineshopping/services/local_storage_service.dart';
+import 'package:shko/Widgets/CustomAppButton.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/auth/normal_user_login/login_main_page.dart';
+import 'package:shko/screen/homepage.dart';
+import 'package:shko/services/local_storage_service.dart';
 
 import 'widgets/wideDotsSwiperPaginationBuilder.dart';
 
@@ -29,66 +29,98 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        top: true,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  CustomAppButton(
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Text(
-                        AppLocalizations.of(context).trans("skip"),
-                        style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context).primaryColor),
-                      ),
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+        centerTitle: false,
+        elevation: 0,
+        title:Image.asset('images/category/shkoLogo.png',width: 80,),
+
+      ),
+      body: Container(
+        color: Colors.white,
+        width: MediaQuery.of(context).size.width,
+        child: Column(
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                CustomAppButton(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      AppLocalizations.of(context).trans("skip"),
+                      style: TextStyle(
+                          fontSize: 14,
+                          color: Theme.of(context).primaryColor),
                     ),
-                    color: Colors.transparent,
-                    elevation: 0,
-                    onTap: goHome,
-                  )
-                ],
-              ),
-              imageSlider(images),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16 , vertical: 8.0),
-                child: AnimatedSwitcher(
-                    duration: Duration(milliseconds: 500),
-                    //opacity: showButton ? 1 : 0,
-                    child: SizedBox(
-                      height: 44,
-                      width: MediaQuery.of(context).size.width,
-                      child: CustomAppButton(
-                        color: Theme.of(context).colorScheme.secondary,
-                        elevation: 0,
-                        borderRadius: 18,
-                        child: Center(
-                          child: Text(
-                            AppLocalizations.of(context).trans("next"),
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white
+                  ),
+                  color: Colors.transparent,
+                  elevation: 0,
+                  onTap: goHome,
+                )
+              ],
+            ),
+            imageSlider(images),
+            SizedBox(height: 15,),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16 , vertical: 8.0),
+              child: AnimatedSwitcher(
+                  duration: Duration(milliseconds: 500),
+                  //opacity: showButton ? 1 : 0,
+                  child: SizedBox(
+                    height: 54,
+                    width: MediaQuery.of(context).size.width,
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 30,right: 30,),
+                      child: Row(
+                        children: [
+                          InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                                return MainLoginPage();
+                              }));
+                            },
+                            child: Text('Skip',
+                              style: TextStyle(
+                                fontSize: 22,
+                                decoration: TextDecoration.underline,
+                                color: Colors.grey[700]
+                              ),
                             ),
                           ),
-                        ),
-                        onTap: () {
-                          if (showButton) {
-                            goHome();
-                          } else {
-                            _controller.next();
-                          }
-                        },
+                          SizedBox(width: 140,),
+                          Expanded(
+                            flex: 2,
+                            child: CustomAppButton(
+                              color: Color(0xff8dba39),
+                              elevation: 0,
+                              borderRadius: 15,
+                              child: Center(
+                                child: Text(
+                                  AppLocalizations.of(context).trans("Next"),
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+
+                                    fontSize: 20,
+                                    color: Colors.white
+                                  ),
+                                ),
+                              ),
+                              onTap: () {
+                                if (showButton) {
+                                  goHome();
+                                } else {
+                                  _controller.next();
+                                }
+                              },
+                            ),
+                          ),
+                        ],
                       ),
-                    )),
-              )
-            ],
-          ),
+                    ),
+                  )),
+            )
+          ],
         ),
       ),
     );
@@ -98,24 +130,21 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   List<String> images = [
-    "images/board1.png",
-    "images/board2.png",
-    "images/board3.png",
-    "images/board4.png"
+    "images/category/onboard3.png",
+    "images/category/onboard1.png",
+    "images/category/onboard2.png",
   ];
 
   List<String> text = [
-    "onboard_text_1",
-    "onboard_text_2",
-    "onboard_text_3",
-    "onboard_text_4"
+    "Welcome to Shko app",
+    "The first app",
+    "Enjoy!",
   ];
 
   List<String> subText = [
-    "onboard_subtext_1",
-    "onboard_subtext_2",
-    "onboard_subtext_3",
-    "onboard_subtext_4"
+    "We are here to serve you",
+    "The first stationary app in Kurdistan",
+    "We hope that we can be satisfied with you",
   ];
 
   imageSlider(List<String> images) {
@@ -123,8 +152,9 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
     double width = MediaQuery.of(context).size.width;
 
     return Container(
-      height: height * 0.75,
+      height: height * 0.70,
       width: MediaQuery.of(context).size.width,
+      //color: Colors.red,
       child: Swiper(
           itemCount: images.length,
           loop: false,
@@ -138,39 +168,41 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
           },
           itemBuilder: (context, index) {
             return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 0),
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Image.asset(
                     "${images[index]}",
                     fit: BoxFit.contain,
-                    height: height * 0.35,
+                    height: height * 0.44,
                     width: width,
                   ),
                   SizedBox(
-                    height: 24,
+                    height: 44,
                   ),
                   Text(
                     AppLocalizations.of(context).trans(text[index]),
                     style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 24,
+                        fontSize: 22,
                         color: Colors.black
                     ),
                     textAlign: TextAlign.center,
                   ),
                   SizedBox(
-                    height: 24,
+                    height: 10,
                   ),
                   Text(
                     AppLocalizations.of(context).trans(subText[index]),
                     style: TextStyle(
-                        fontWeight: FontWeight.w300,
-                        fontSize: 12,
-                        color: Colors.grey
+                       // fontWeight: FontWeight.w300,
+                        fontSize: 20,
+                        color: Colors.grey,
+                      //letterSpacing:
                     ),
                     textAlign: TextAlign.center,
+
                   ),
                 ],
               ),

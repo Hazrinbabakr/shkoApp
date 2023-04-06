@@ -3,10 +3,11 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/productDetails.dart';
-import 'package:onlineshopping/screen/productList.dart';
-import 'package:onlineshopping/services/local_storage_service.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/all_topSeller.dart';
+import 'package:shko/screen/productDetails.dart';
+import 'package:shko/screen/productList.dart';
+import 'package:shko/services/local_storage_service.dart';
 
 
 class TopSeller extends StatefulWidget {
@@ -57,9 +58,9 @@ class _TopSellerState extends State<TopSeller> {
               Text(AppLocalizations.of(context).trans("topSeller"),style: TextStyle(fontSize: 22),),
               InkWell(
                   onTap: (){
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //     builder: (context) => AllCategory(categorySnapshot)),
-                    // );
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => AllTopSeller(topSellerSnapshot)),
+                    );
                   },
                   child: Text( AppLocalizations.of(context).trans("ShowAll"),style: TextStyle(fontSize: 13,color: Theme.of(context).accentColor),)),
 

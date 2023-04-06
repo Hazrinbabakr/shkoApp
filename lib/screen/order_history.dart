@@ -4,10 +4,10 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/Widgets/BackArrowWidget.dart';
-import 'package:onlineshopping/Widgets/empty.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/productDetails.dart';
+import 'package:shko/Widgets/BackArrowWidget.dart';
+import 'package:shko/Widgets/empty.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/productDetails.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
   OrderHistoryScreen({Key key}) : super(key: key);
@@ -21,7 +21,8 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   List<DocumentSnapshot> currentOrderList;
   FirebaseAuth _auth;
   User user;
-
+  final userCollection = FirebaseFirestore.instance.collection('users');
+  final adminCollection = FirebaseFirestore.instance.collection('Admin');
   getProducts() {
     int i = 0;
     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('orders').
@@ -202,17 +203,75 @@ int length=0;
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        "Pending"
-                                       // currentOrderList[i]['OrderStatus']
-                                        ,style: TextStyle(color: Colors.orange,fontSize: 18),),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                           AppLocalizations.of(context).trans(currentOrderList[i]['OrderStatus'])
+                                          //  "Pending"
+
+                                            ,style: TextStyle(color: Colors.orange,fontSize: 18),),
+                                          InkWell(
+                                            onTap: (){
+                                              showDialog(context:context,
+                                                builder: (_)=>  AlertDialog(title: Text('Are You Sure?'),
+                                                  // shape: CircleBorder(),
+                                                  shape: BeveledRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(5.0),
+                                                  ),
+                                                  elevation: 30,
+                                                  backgroundColor: Colors.white,
+                                                  actions: <Widget>[
+
+                                                    InkWell(
+                                                        onTap:(){
+                                                          Navigator.of(context).pop();
+                                                        },
+
+                                                        child: Text('No',style: TextStyle(fontSize: 20,color: Colors.red[900]),)
+                                                    ),
+                                                    SizedBox(height: 30,),
+                                                    InkWell(
+                                                      onTap: (){
+                                                        setState(() {
+
+                                                          User user = _auth.currentUser;
+                                                          userCollection
+                                                              .doc(user.uid)
+                                                              .collection('orders')
+                                                              .doc(currentOrderList[i].id).delete();
+                                                          adminCollection
+                                                              .doc('admindoc')
+                                                              .collection('orders')
+                                                              .doc(currentOrderList[i].id).delete();
+
+                                                          Navigator.of(context).pop();
+
+                                                        });
+                                                      },
+                                                      child: Text('Yes',style: TextStyle(fontSize: 20,color: Colors.green[900])),
+                                                    )
+                                                  ],
+                                                ),
+                                              );
+                                              //Addtocart
+                                            },
+                                            child: Text(
+                                             // 'داواکارییەکەم هەڵبوەشێنەرەوە'
+                                              AppLocalizations.of(context).trans('cancelMyOrder')
+                                              //  "Pending"
+
+                                              ,style: TextStyle(color:Colors.red[700],fontSize: 16),),
+                                          ),
+                                        ],
+                                      ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(vertical:7 ),
                                         child: Text(currentOrderList[i]['date'],style: TextStyle(fontSize: 12,color: Colors.black),),
                                       ),
                                       Row(
                                         children: [
-                                          Text('Deliver to: ',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),),
+                                          Text( AppLocalizations.of(context).trans("deliveryTo"),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),),
                                           Expanded(child: Text(currentOrderList[i]['userAddress'].toString(),style: TextStyle(color: Colors.black),)),
                                         ],
                                       ),
@@ -268,14 +327,14 @@ int length=0;
                               ),
                               Row(
                                 children: [
-                                  Text('Delivery Fee: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList[i]['deliveryFee'].toString()}\$')),
+                                  Text( AppLocalizations.of(context).trans("DeliveryFee"),style: TextStyle(fontWeight: FontWeight.bold),),
+                                  Expanded(child: Text('${currentOrderList[i]['deliveryFee'].toString()}IQD')),
                                 ],
                               ),
                               Row(
                                 children: [
-                                  Text('Total Price: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList[i]['totalPrice'].toString()}\S')),
+                                  Text( AppLocalizations.of(context).trans("TotalPrice"),style: TextStyle(fontWeight: FontWeight.bold),),
+                                  Expanded(child: Text('${currentOrderList[i]['totalPrice'].toString()}IQD')),
                                 ],
                               ),
 

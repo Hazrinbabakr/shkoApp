@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
+import 'package:shko/localization/AppLocal.dart';
 
 class PhoneNumberInput extends StatelessWidget {
   final TextEditingController controller;

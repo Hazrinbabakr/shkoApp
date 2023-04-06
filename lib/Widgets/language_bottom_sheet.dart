@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/services/settings_service_provider.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/services/settings_service_provider.dart';
 
 class LanguageBottomSheet extends StatelessWidget {
   static showLanguageBottomSheet(BuildContext context) {

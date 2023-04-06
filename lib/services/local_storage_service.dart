@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:onlineshopping/models/address.dart';
-import 'package:onlineshopping/models/user.dart';
+import 'package:shko/models/address.dart';
+import 'package:shko/models/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 

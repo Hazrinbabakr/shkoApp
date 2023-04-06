@@ -5,15 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:mailer/mailer.dart';
 import 'package:mailer/smtp_server.dart';
-import 'package:onlineshopping/Widgets/Categories.dart';
-import 'package:onlineshopping/Widgets/Offers.dart';
-import 'package:onlineshopping/Widgets/brands.dart';
-import 'package:onlineshopping/Widgets/cart_widget.dart';
-import 'package:onlineshopping/Widgets/homeAppBar.dart';
-import 'package:onlineshopping/Widgets/SocialMediaWidget.dart';
-import 'package:onlineshopping/Widgets/top_seller.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/services/local_storage_service.dart';
+import 'package:shko/Widgets/Categories.dart';
+import 'package:shko/Widgets/Offers.dart';
+import 'package:shko/Widgets/brands.dart';
+import 'package:shko/Widgets/cart_widget.dart';
+import 'package:shko/Widgets/homeAppBar.dart';
+import 'package:shko/Widgets/SocialMediaWidget.dart';
+import 'package:shko/Widgets/top_seller.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/services/local_storage_service.dart';
 
 import 'address/addresses_bottom_sheet.dart';
 
@@ -58,8 +58,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             Icon(Icons.location_on,color: Colors.red[700],size: 20,),
                             Text(
                               LocalStorageService.instance.selectedAddress?.title??
-                                  "Select address",
-                                  //AppLocalizations.of(context).trans("not_selected"),
+                                  AppLocalizations.of(context).trans("not_selected"),
                               style: TextStyle(fontSize: 16),
                               maxLines: 2,
                             ),

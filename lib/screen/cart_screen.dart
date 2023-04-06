@@ -5,12 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:onlineshopping/Widgets/BackArrowWidget.dart';
-import 'package:onlineshopping/Widgets/empty.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/address/addresses_bottom_sheet.dart';
-import 'package:onlineshopping/screen/homepage.dart';
-import 'package:onlineshopping/services/local_storage_service.dart';
+import 'package:shko/Widgets/BackArrowWidget.dart';
+import 'package:shko/Widgets/empty.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/address/addresses_bottom_sheet.dart';
+import 'package:shko/screen/homepage.dart';
+import 'package:shko/services/local_storage_service.dart';
 import 'package:uuid/uuid.dart';
 
 
@@ -785,8 +785,8 @@ class _CartScreenState extends State<CartScreen> {
                                   Future.delayed(Duration(milliseconds: 100),(){
                                     FirebaseFirestore.instance.collection('Admin')
                                         .doc('admindoc')
-                                        .collection('orders')
-                                        .add({
+                                        .collection('orders').doc(rundomNumber)
+                                        .set({
                                       "productList":cartList,
                                       "subTotal": subTotal,
                                       "totalPrice":(subTotal+deliveryFee),
@@ -817,6 +817,7 @@ class _CartScreenState extends State<CartScreen> {
                                       "userDesc": LocalStorageService.instance.selectedAddress.description,
                                       "userPhone": phone,
                                    //   "dinnar": dinnar,
+                                      "orderID":rundomNumber,
                                       "OrderStatus": 'Pending',
                                       "date": orderDate,
                                     });

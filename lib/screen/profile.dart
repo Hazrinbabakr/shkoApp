@@ -3,14 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/Widgets/guestProfile.dart';
-import 'package:onlineshopping/Widgets/language_bottom_sheet.dart';
-import 'package:onlineshopping/Widgets/profileavatarWidget.dart';
-import 'package:onlineshopping/app/Application.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/about_us.dart';
-import 'package:onlineshopping/screen/address/addresses_list.dart';
-import 'package:onlineshopping/services/local_storage_service.dart';
+import 'package:shko/Widgets/guestProfile.dart';
+import 'package:shko/Widgets/language_bottom_sheet.dart';
+import 'package:shko/Widgets/profileavatarWidget.dart';
+import 'package:shko/app/Application.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/about_us.dart';
+import 'package:shko/screen/address/addresses_list.dart';
+import 'package:shko/services/local_storage_service.dart';
 
 import 'Favorites.dart';
 import 'order_history.dart';
@@ -96,9 +96,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Container(
                            child:  Row(
                              children: [
-                               Image.asset('images/category/profile.png',width: 70,color:Theme.of(context).accentColor,),
+                               Container(
+                                 // width: 80,
+                                 // height: 80,
+                                 decoration: BoxDecoration(
+                                    // color: Colors.red[800],
+                                    // shape: BoxShape.circle,
+                                   borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                                 ),
+                                 child:      ClipOval(child: Image.asset('images/category/profile2.jpg',fit: BoxFit.cover,scale: 6,)),
+                               ),
+
+                               // Image.asset('images/category/about.png',width: 100,),
                                SizedBox(width: 10,),
-                               Text(snapshot.data['username'].toString(),style: TextStyle(fontSize: 17),),
+                               Column(
+                                 crossAxisAlignment: CrossAxisAlignment.start,
+                                 children: [
+                                   Text(snapshot.data['username'].toString(),style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+                                   Text("+974${snapshot.data['phone'].toString()}",style: TextStyle(fontSize: 15,color: Colors.grey[800]),),
+
+
+                                 ],
+                               ),
                              ],
                            ),
                           ),
@@ -153,7 +172,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         );
                                       });
                                 },
-                                child: Icon(Icons.edit_outlined)),
+                                child: Icon(Icons.edit_outlined,color: Colors.grey[600],)),
                           ),
                          // SizedBox(width: 2,),
                         ],
@@ -313,25 +332,23 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
 
                 },
-                dense: true,
+               // dense: true,
                 leading: Container(
-                  width: 50,
-                  height: 50,
+                  width: 60,
+                  height: 60,
                   decoration: BoxDecoration(
-                      color: Colors.cyan[300],
+
                       shape: BoxShape.circle
                   ),
-                  child: Icon(
-                    Icons.location_city_sharp,
-                    size: 22,
-                    color: Theme.of(context).primaryColor,
-                  ),
+                  child:  Image.asset('images/category/location.png',width: 100),
                 ),
                 title: Text(
                   AppLocalizations.of(context).trans("myAddress"),
                   style: Theme.of(context).textTheme.subtitle1,
                 ),
-               // trailing:  Icon(Icons.edit_outlined,color: Colors.grey[600],)
+                trailing: Icon(Icons.arrow_forward_ios,size: 18,)
+
+              // trailing:  Icon(Icons.edit_outlined,color: Colors.grey[600],)
               ),
                   SizedBox(height: 15,),
                   //my order
@@ -342,25 +359,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context) => OrderHistoryScreen(),
                         ));
                       },
-                      dense: true,
+                      //dense: true,
                       leading: Container(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: BoxDecoration(
-                            color: Colors.teal[300],
+                           // color: Colors.teal[300],
                             shape: BoxShape.circle
                         ),
-                        child: Icon(
-                          Icons.shopping_basket_outlined,
-                          size: 22,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                        child:   Image.asset('images/category/order.png'),
                       ),
                       title: Text(
                         AppLocalizations.of(context).trans("my_orders"),
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
-                      trailing: Icon(Icons.arrow_forward_ios,size: 18,)),
+                      trailing: Icon(Icons.arrow_forward_ios,size: 18,)
+                  ),
                   SizedBox(height: 15,),
                   //favorite
                   ListTile(
@@ -369,19 +383,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context) => FavoriteScreen(),
                         ));
                       },
-                      dense: true,
+                     // dense: true,
                       leading: Container(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: BoxDecoration(
-                            color: Colors.blueAccent[400],
+                            //color: Colors.red[800],
                             shape: BoxShape.circle
                         ),
-                        child: Icon(
-                          Icons.favorite_border_sharp,
-                          size: 22,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                        child: Image.asset('images/category/heart.png',fit: BoxFit.cover)
                       ),
                       title: Text(
                         AppLocalizations.of(context).trans("Favorite"),
@@ -394,19 +404,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       onTap: () {
                         LanguageBottomSheet.showLanguageBottomSheet(context);
                       },
-                      dense: true,
+                     // dense: true,
                       leading: Container(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: BoxDecoration(
-                            color: Colors.red,
+                           // color: Colors.red,
                             shape: BoxShape.circle
                         ),
-                        child: Icon(
-                          Icons.translate,
-                          size: 22,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                        child:  Image.asset('images/category/languages.png',width: 100),
                       ),
                       title: Text(
                         AppLocalizations.of(context).trans("language"),
@@ -421,20 +427,103 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           builder: (context) => AboutUs(),
                         ));
                       },
-                      dense: true,
+                     // dense: true,
                       leading: Container(
-                          width: 50,
-                          height: 50,
+                          width: 65,
+                          height: 65,
                           decoration: BoxDecoration(
-                            color: Colors.grey[400],
                             shape: BoxShape.circle
                         ),
-                        child:  Icon(Icons.announcement_outlined,size: 22,  color: Theme.of(context).primaryColor,)
+                        child:   Image.asset('images/category/about.png',width: 100),
                       ),
                       title: Text(AppLocalizations.of(context).trans('about_us'),
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
                       trailing: Icon(Icons.arrow_forward_ios,size: 18)),
+
+                 // delete account
+                  SizedBox(height: 15,),
+                  ListTile(
+
+
+
+
+                      onTap: ()  {
+                        showDialog(context:context,
+                          builder: (_)=>  AlertDialog(
+                            title: Column(
+                              children: [
+                                Text(AppLocalizations.of(context).trans('areYouSure'),style: TextStyle(color: Colors.red,fontSize: 20),),
+                                SizedBox(height: 10,),
+                                Text(AppLocalizations.of(context).trans('areYouSureDeleteAccount')),
+                              ],
+                            ),
+
+                            // shape: CircleBorder(),
+                            shape: BeveledRectangleBorder(
+                              borderRadius: BorderRadius.circular(5.0),
+                            ),
+                            elevation: 30,
+                            backgroundColor: Colors.white,
+                            actions: <Widget>[
+
+                              InkWell(
+                                  onTap:(){
+                                    Navigator.of(context).pop();
+                                  },
+
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                                    child: Text(AppLocalizations.of(context).trans('no'),style: TextStyle(fontSize: 20,color: Colors.green[900]),),
+                                  )),
+                              SizedBox(height: 30,),
+                              InkWell(
+                                onTap: ()async{
+
+                                  try {
+                                    User user2 = FirebaseAuth.instance.currentUser;
+                                    await user2.delete();
+                                  } on FirebaseAuthException catch (e) {
+                                    print(e.message.toString());
+                                    if (e.code == 'requires-recent-login') {
+                                      print(e.message.toString());
+                                    }
+                                  }
+                                  // user.delete();
+                                  FirebaseFirestore.instance.collection("users").doc(user.uid).delete();
+                                  Application.restartApp(context);
+
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                                  child: Text(AppLocalizations.of(context).trans('yes'),style: TextStyle(fontSize: 20,color: Colors.red[900])),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                        //Addtocart
+                      },
+
+                      // dense: true,
+                      leading: Container(
+                        width: 65,
+                        height: 65,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle
+                        ),
+                        child:   Image.asset('images/category/deleteAccount.png',width: 100),
+                      ),
+                      title: Text(AppLocalizations.of(context).trans('deleteAccount'),
+                        style: Theme.of(context).textTheme.subtitle1.merge(TextStyle(color: Colors.red[700])),
+                        
+                      ),
+                      trailing: Icon(Icons.arrow_forward_ios,size: 18)),
+
+
+
+
+
                 ],
               ),
             ),
@@ -444,7 +533,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: EdgeInsets.symmetric(vertical: 10),
                 decoration: BoxDecoration(
                   color: Colors.grey[50],
-                  borderRadius: BorderRadius.circular(15),
+                  borderRadius: BorderRadius.circular(20),
                   // boxShadow: [
                   //   BoxShadow(
                   //       color:

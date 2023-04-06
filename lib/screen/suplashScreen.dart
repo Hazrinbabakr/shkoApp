@@ -2,8 +2,8 @@ import 'dart:io';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/screen/on_boarding/onBoarding.dart';
-import 'package:onlineshopping/services/local_storage_service.dart';
+import 'package:shko/screen/on_boarding/onBoarding.dart';
+import 'package:shko/services/local_storage_service.dart';
 
 import 'auth/normal_user_login/login_main_page.dart';
 import 'homepage.dart';

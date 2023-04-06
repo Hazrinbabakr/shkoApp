@@ -3,8 +3,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/screen/profile.dart';
-import 'package:onlineshopping/screen/search.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/profile.dart';
+import 'package:shko/screen/search.dart';
 import 'Favorites.dart';
 import 'auth/normal_user_login/login_main_page.dart';
 import 'cart_screen.dart';
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
               activeIcon: Image.asset('images/category/shop.png'),
               //Icon(Icons.home),
               title: Text(
-                "Shop",
+                AppLocalizations.of(context).trans("shop"),
                 //style: TextStyle(color: Theme.of(context).accentColor),
               ),
             ),
@@ -78,7 +79,7 @@ class _HomePageState extends State<HomePage> {
               activeIcon: Image.asset('images/category/search.png'),
 
               title: Text(
-                "Explore",
+                AppLocalizations.of(context).trans("search"),
                 //style: TextStyle(color: Theme.of(context).accentColor),
               ),
             ),
@@ -168,7 +169,8 @@ class _HomePageState extends State<HomePage> {
                     );
                   }): Image.asset('images/category/cart.png'),
               title: Text(
-                'Cart',
+                AppLocalizations.of(context).trans("Cart"),
+
                 style: TextStyle(color: Theme.of(context).accentColor),
               ),
               // backgroundColor: Colors.purple[600]
@@ -187,7 +189,7 @@ class _HomePageState extends State<HomePage> {
                 height: 40,
               ),
               title: Text(
-                "Profile",
+                AppLocalizations.of(context).trans("profile"),
                 style: TextStyle(color: Theme.of(context).accentColor),
               ),
             ),

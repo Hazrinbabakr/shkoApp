@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/screen/cart_screen.dart';
+import 'package:shko/screen/cart_screen.dart';
 
 class CartWidget extends StatefulWidget {
   const CartWidget({ key}) : super(key: key);

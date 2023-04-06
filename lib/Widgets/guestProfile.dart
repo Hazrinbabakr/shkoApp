@@ -3,15 +3,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/Widgets/language_bottom_sheet.dart';
-import 'package:onlineshopping/app/Application.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/Favorites.dart';
-import 'package:onlineshopping/screen/about_us.dart';
-import 'package:onlineshopping/screen/address/addresses_list.dart';
-import 'package:onlineshopping/screen/auth/normal_user_login/login_main_page.dart';
-import 'package:onlineshopping/screen/order_history.dart';
-import 'package:onlineshopping/services/local_storage_service.dart';
+import 'package:flutter/painting.dart';
+import 'package:shko/Widgets/language_bottom_sheet.dart';
+import 'package:shko/app/Application.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/Favorites.dart';
+import 'package:shko/screen/about_us.dart';
+import 'package:shko/screen/address/addresses_list.dart';
+import 'package:shko/screen/auth/normal_user_login/login_main_page.dart';
+import 'package:shko/screen/order_history.dart';
+import 'package:shko/services/local_storage_service.dart';
 
 
 
@@ -60,9 +61,21 @@ class _GuestProfileState extends State<GuestProfile> {
                     Container(
                       child:  Row(
                         children: [
-                          Image.asset('images/category/profile.png',width: 70,color:Theme.of(context).accentColor,),
-                          SizedBox(width: 10,),
-                          Text('Name',style: TextStyle(fontSize: 17),),
+                          Container(
+                            width: 75,
+                            height: 75,
+                            decoration: BoxDecoration(
+
+
+                                //color: Colors.red[800],
+                                shape: BoxShape.circle
+                            ),
+                            child:      Image.asset('images/category/profile1.png',fit: BoxFit.cover,),
+                          ),
+
+                         // Image.asset('images/category/about.png',width: 100),
+                          SizedBox(width: 20,),
+                          Text(AppLocalizations.of(context).trans("guest"),style: TextStyle(fontSize: 20),),
                         ],
                       ),
                     ),
@@ -93,25 +106,24 @@ class _GuestProfileState extends State<GuestProfile> {
                       onTap: () {
                         LanguageBottomSheet.showLanguageBottomSheet(context);
                       },
-                      dense: true,
+                      //dense: true,
                       leading: Container(
-                        width: 50,
-                        height: 50,
+                        width: 60,
+                        height: 60,
                         decoration: BoxDecoration(
-                            color: Colors.red,
+                           // color: Colors.red,
                             shape: BoxShape.circle
                         ),
-                        child: Icon(
-                          Icons.translate,
-                          size: 22,
-                          color: Theme.of(context).primaryColor,
-                        ),
+                        child: Image.asset('images/category/languages.png',fit: BoxFit.cover,),
+
                       ),
                       title: Text(
                         AppLocalizations.of(context).trans("language"),
                         style: Theme.of(context).textTheme.subtitle1,
                       ),
                       trailing: Icon(Icons.arrow_forward_ios,size: 18)),
+                  SizedBox(height: 15,),
+
                   SizedBox(height: 15,),
                   // Aboyt
                   ListTile(
@@ -120,15 +132,15 @@ class _GuestProfileState extends State<GuestProfile> {
                           builder: (context) => AboutUs(),
                         ));
                       },
-                      dense: true,
+                      //dense: true,
                       leading: Container(
-                          width: 50,
-                          height: 50,
+                          width: 65,
+                          height: 65,
                           decoration: BoxDecoration(
-                              color: Colors.grey[400],
+                            //  color: Colors.grey[400],
                               shape: BoxShape.circle
                           ),
-                          child:  Icon(Icons.announcement_outlined,size: 22,  color: Theme.of(context).primaryColor,)
+                          child:  Image.asset('images/category/about.png',fit: BoxFit.cover,),
                       ),
                       title: Text(AppLocalizations.of(context).trans('about_us'),
                         style: Theme.of(context).textTheme.subtitle1,

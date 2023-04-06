@@ -4,7 +4,7 @@
   "phone": "Phone",
   "continue": "Continue",
   "fieldIsRequired": "This field is required!",
-  "signup": "Signup",
+  "signup": "Sign up",
   "login": "Login",
   "login_business": "Business login",
   "invalid_email": "Invalid email!",
@@ -16,7 +16,7 @@
   "deleteAccount": "Delete My Account",
   "logout": "Logout",
   "guest": "Guest",
-  "search": "Search",
+  "search": "Explore",
 
   "areYouSure": "Are You Sure?",
   "areYouSureDeleteAccount": "Be careful by clicking YES your account will be deleted permanently",
@@ -50,7 +50,7 @@
   "Mobilenumber": "Mobile number",
   "Signin": "Sign in",
   "Signup": "Sign up",
-  "WelcomeBack": "Welcome Back",
+  "WelcomeBack": "Welcome Back To",
   "Businesslogin": "Business login",
   "skip": "Skip",
   "otp": "Please enter the code that has been sent to your phone",
@@ -87,7 +87,7 @@
   "no": "No",
   "Searchforyourproduct": "Search for a product",
   "my_orders": "My Order",
-  "myAddress": "My Address",
+  "myAddress": "Addresses",
   "Dashboard": "Dashboard",
   "topSeller": "Top Seller",
   "chooseShko": "Choose Shko!",
@@ -103,5 +103,11 @@
   "addresses": "Addresses",
   "add_address": "Add addresses",
   "not_selected": "Not Selected",
-  "please_select_address": "Please select address"
+  "please_select_address": "Please select address",
+  "shop": "Shop",
+  "AddedSuccessfully'": "Added Successfully'",
+  "deliveryTo": "Delivery to: ",
+
+
+  "cancelMyOrder": "Cancel My Order"
 }

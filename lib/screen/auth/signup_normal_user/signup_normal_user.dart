@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:onlineshopping/Widgets/BackArrowWidget.dart';
-import 'package:onlineshopping/Widgets/CustomAppButton.dart';
-import 'package:onlineshopping/Widgets/phone_input_widget.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/auth/providers/normal_user_login_provider.dart';
+import 'package:shko/Widgets/BackArrowWidget.dart';
+import 'package:shko/Widgets/CustomAppButton.dart';
+import 'package:shko/Widgets/phone_input_widget.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/auth/providers/normal_user_login_provider.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
@@ -25,6 +25,7 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: Text(AppLocalizations.of(context).trans("signup")),
         leading: BackArrowWidget(),
@@ -45,6 +46,7 @@ class _SignUpPageState extends State<SignUpPage> {
               key: _form,
               child: Column(
                 children: [
+                  SizedBox(height: 150,),
                   Row(
                     children: [
                       Expanded(
@@ -57,18 +59,18 @@ class _SignUpPageState extends State<SignUpPage> {
                   ),
                   const SizedBox(height: 16.0,),
                   PhoneNumberInput(controller: phoneNumberController),
-                  const SizedBox(height: 16.0,),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: textFieldWidget(
-                          controller: address,
-                          label: AppLocalizations.of(context).trans("address"),
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16.0,),
+                  const SizedBox(height: 60.0,),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       child: textFieldWidget(
+                  //         controller: address,
+                  //         label: AppLocalizations.of(context).trans("address"),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+                  // const SizedBox(height: 16.0,),
                   SizedBox(
                     width: double.infinity,
                     child: CustomAppButton(

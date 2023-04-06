@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:onlineshopping/Widgets/CustomAppButton.dart';
-import 'package:onlineshopping/Widgets/phone_input_widget.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/auth/bussiness_user_login/bussiness_signin_page.dart';
-import 'package:onlineshopping/screen/auth/providers/normal_user_login_provider.dart';
-import 'package:onlineshopping/screen/auth/signup_normal_user/sign_up_main_page.dart';
+import 'package:shko/Widgets/CustomAppButton.dart';
+import 'package:shko/Widgets/phone_input_widget.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/auth/bussiness_user_login/bussiness_signin_page.dart';
+import 'package:shko/screen/auth/providers/normal_user_login_provider.dart';
+import 'package:shko/screen/auth/signup_normal_user/sign_up_main_page.dart';
 import 'package:provider/provider.dart';
 
 import '../../homepage.dart';
@@ -48,15 +48,19 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               children: [
                 const SizedBox(
-                  height: spacing,
+                  height: 150
                 ),
-                Row(
-                  children: [
-                    Text(
-                      AppLocalizations.of(context).trans("WelcomeBack"),
-                      style: TextStyle()
-                    ),
-                  ],
+                Center(
+                  child: Row(
+                    children: [
+                      Text(
+                        AppLocalizations.of(context).trans("WelcomeBack"),
+                        style: TextStyle()
+                      ),
+                      SizedBox(width: 10,),
+                      Image.asset('images/category/shkoLogo.png',width: 50),
+                    ],
+                  ),
                 ),
                 SizedBox(height: 32,),
                 Row(
@@ -80,7 +84,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 // SizedBox(height: spacing,),
                 // PrivacyPolicyWidget(),
-              SizedBox(height: 100,),
+              SizedBox(height: 50,),
                 SizedBox(
                   width: double.infinity,
                   child: CustomAppButton(
@@ -116,7 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                SizedBox(height: 30,),
+                SizedBox(height: 20,),
                 InkWell(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (context){
@@ -147,7 +151,6 @@ class _LoginPageState extends State<LoginPage> {
                 //   ),
                 // ),
 
-SizedBox(height: 100,),
                 InkWell(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(builder: (context){
@@ -158,7 +161,8 @@ SizedBox(height: 100,),
                     padding: const EdgeInsets.all(8.0),
                     child: Text(  AppLocalizations.of(context).trans("skip"),style: TextStyle(
                         fontSize: 18,
-                        fontWeight: FontWeight.w500
+                        fontWeight: FontWeight.w500,
+                      color: Colors.red[900]
                     ),),
                   ),
                 ),

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:onlineshopping/Widgets/CustomAppButton.dart';
-import 'package:onlineshopping/Widgets/text-field.dart';
-import 'package:onlineshopping/helper/colors.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/models/address.dart';
-import 'package:onlineshopping/providers/address_provider.dart';
-import 'package:onlineshopping/screen/address/address_text_field.dart';
-import 'package:onlineshopping/screen/map/location_picker_page.dart';
-import 'package:onlineshopping/screen/map/map_page.dart';
+import 'package:shko/Widgets/CustomAppButton.dart';
+import 'package:shko/Widgets/text-field.dart';
+import 'package:shko/helper/colors.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/models/address.dart';
+import 'package:shko/providers/address_provider.dart';
+import 'package:shko/screen/address/address_text_field.dart';
+import 'package:shko/screen/map/location_picker_page.dart';
+import 'package:shko/screen/map/map_page.dart';
 
 class AddAddress extends StatefulWidget {
   final double lat,long;

@@ -76,7 +76,7 @@
   "total": "گشتی",
   "TotalPrice": "نرخی گشتی: ",
   "subtotal": "کۆی گشتی",
-  "CartScreen": "پەیجی عەرەبانە",
+  "CartScreen": "سەبەتەکەم",
   "orderHistory": "داواکاری پێشوو",
   "skip": "بازدان",
   "categories": "جۆڕەکان",
@@ -105,13 +105,19 @@
   "processing": "پرۆسەکردن",
   "orders": "داواکاریەکان",
   "phoneNumberEmpty": "ژمارەی تەلەفۆن بەتاڵە",
-  "title": "Title",
-  "description": "Description",
-  "save": "Save",
-  "refine_location": "Refine location",
-  "addresses": "Addresses",
-  "add_address": "Add addresses",
-  "not_selected": "Not Selected"
+  "title": "ناونیشان",
+  "description": "وەسف",
+  "save": "خەزنکردن",
+  "refine_location": "شۆێنەکەت بگورە",
+  "addresses": "ناونیشانەکان",
+  "add_address": "ناونیشان زیاد بکە",
+  "not_selected": "هەڵنەبژێردراوە",
+  "shop": "دوکان",
+  "AddedSuccessfully'": "بە سەرکەوتوویی زیاد کرا",
+  "deliveryTo": "گەیاندن بۆ: ",
+
+
+  "cancelMyOrder": "داواکارییەکەم هەڵبوەشێنەرەوە"
 
 
 }

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
+import 'package:shko/localization/AppLocal.dart';
 
 
 class ProfileAvatarWidget extends StatefulWidget {

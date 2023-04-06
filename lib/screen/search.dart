@@ -1,9 +1,9 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/Widgets/brands.dart';
-import 'package:onlineshopping/Widgets/searchCategory.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/productDetails.dart';
+import 'package:shko/Widgets/brands.dart';
+import 'package:shko/Widgets/searchCategory.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/productDetails.dart';
 
 
 
@@ -108,84 +108,89 @@ height: 60,
                 child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      SizedBox(height: 10,),
                       (searchInput != "" && searchInput != null)
                           ? StreamBuilder(
                           stream: FirebaseFirestore.instance.collection('products').snapshots(),
                           builder: (_, snapshot) {
-                            return ListView.builder(
-                              itemCount: snapshot.data?.docs?.length ?? 0,
-                              itemBuilder: (_, index) {
-                                String searchWord;
-                                searchWord =
-                                AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                                snapshot.data.docs[index].data()['nameK']:
-                                AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                                // ignore: unnecessary_statements
-                                snapshot.data.docs[index].data()['makeA']:
-                                // ignore: unnecessary_statements
-                                snapshot.data.docs[index].data()['name'];
-                                if (snapshot.hasData &&
-                                    searchWord.contains(searchInput)) {
-                                  DocumentSnapshot shops =
-                                  snapshot.data.docs[index];
-                                  return InkWell(
-                                    onTap: () {
+                            return Container(
+                              //color: Colors.red,
+                              height: 600,
+                              child: ListView.builder(
+                                itemCount: snapshot.data?.docs?.length ?? 0,
+                                itemBuilder: (_, index) {
+                                  String searchWord;
+                                  searchWord =
+                                  AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
+                                  snapshot.data.docs[index].data()['nameK']:
+                                  AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
+                                  // ignore: unnecessary_statements
+                                  snapshot.data.docs[index].data()['makeA']:
+                                  // ignore: unnecessary_statements
+                                  snapshot.data.docs[index].data()['name'];
+                                  if (snapshot.hasData &&
+                                      searchWord.contains(searchInput)) {
+                                    DocumentSnapshot shops =
+                                    snapshot.data.docs[index];
+                                    return InkWell(
+                                      onTap: () {
 
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => ProductDetails(snapshot.data.docs[index].id),
-                                      ));
-                                    },
-                                    child: Card(
-                                      child: Row(
-                                       // mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                        children: [
-                                          SizedBox(width: 10,),
-                                          Container(
-                                            height: 70,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15)
-                                                  //                 <--- border radius here
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => ProductDetails(snapshot.data.docs[index].id),
+                                        ));
+                                      },
+                                      child: Card(
+                                        child: Row(
+                                         // mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                          children: [
+                                            SizedBox(width: 10,),
+                                            Container(
+                                              height: 70,
+                                              width: 70,
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.all(
+                                                      Radius.circular(15)
+                                                    //                 <--- border radius here
+                                                  ),
+                                                 // border: Border.all(color: Colors.black12,width: 0.6),
+                                                  image: DecorationImage(
+                                                      fit: BoxFit.cover,
+                                                      image: NetworkImage(
+                                                          shops.data()['images'][0].toString()))),
+                                            ),
+                                            SizedBox(width: 10,),
+                                            Expanded(
+                                              child: Text(
+                                                  AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
+                                                  shops.data()['nameK'].toString():
+                                                  AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
+                                                  // ignore: unnecessary_statements
+                                                  shops.data()['nameA'].toString():
+                                                  // ignore: unnecessary_statements
+                                                  shops.data()['name'].toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 22,
+                                                      fontWeight: FontWeight.bold),
                                                 ),
-                                               // border: Border.all(color: Colors.black12,width: 0.6),
-                                                image: DecorationImage(
-                                                    fit: BoxFit.cover,
-                                                    image: NetworkImage(
-                                                        shops.data()['images'][0].toString()))),
-                                          ),
-                                          SizedBox(width: 10,),
-                                          Expanded(
-                                            child: Text(
-                                                AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                                                shops.data()['nameK'].toString():
-                                                AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                                                // ignore: unnecessary_statements
-                                                shops.data()['nameA'].toString():
-                                                // ignore: unnecessary_statements
-                                                shops.data()['name'].toString(),
-                                                style: TextStyle(
-                                                    fontSize: 22,
-                                                    fontWeight: FontWeight.bold),
-                                              ),
-                                          ),
-                                          SizedBox(width: 20,),
-                                          Text(
+                                            ),
+                                            SizedBox(width: 20,),
+                                            Text(
 
-                                           '${ shops.data()['price'].toString()} IQD',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                ),
-                                          ),
-                                          SizedBox(width: 10,),
-                                        ],
+                                             '${ shops.data()['price'].toString()} IQD',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  ),
+                                            ),
+                                            SizedBox(width: 10,),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  );
-                                } else {
-                                  return Container();
-                                }
-                              },
+                                    );
+                                  } else {
+                                    return Container();
+                                  }
+                                },
+                              ),
                             );
                           })
                           : Padding(

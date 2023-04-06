@@ -9,13 +9,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:onlineshopping/Widgets/BackArrowWidget.dart';
-import 'package:onlineshopping/Widgets/cart_widget.dart';
-import 'package:onlineshopping/Widgets/empty.dart';
-import 'package:onlineshopping/Widgets/photo_gellary.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/productDetailPDF.dart';
-import 'package:onlineshopping/services/local_storage_service.dart';
+import 'package:shko/Widgets/BackArrowWidget.dart';
+import 'package:shko/Widgets/cart_widget.dart';
+import 'package:shko/Widgets/empty.dart';
+import 'package:shko/Widgets/photo_gellary.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/productDetailPDF.dart';
+import 'package:shko/services/local_storage_service.dart';
 
 import 'auth/normal_user_login/login_main_page.dart';
 

@@ -1,6 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:onlineshopping/models/address.dart';
+import 'package:shko/models/address.dart';
 
 class AddressProvider {
 

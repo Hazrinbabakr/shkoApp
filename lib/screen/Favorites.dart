@@ -2,11 +2,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/Widgets/BackArrowWidget.dart';
-import 'package:onlineshopping/Widgets/empty.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/productDetails.dart';
-import 'package:onlineshopping/services/local_storage_service.dart';
+import 'package:shko/Widgets/BackArrowWidget.dart';
+import 'package:shko/Widgets/empty.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/productDetails.dart';
+import 'package:shko/services/local_storage_service.dart';
 
 
 class FavoriteScreen extends StatefulWidget {
@@ -81,15 +81,15 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          leading: BackArrowWidget(),
+          // leading: BackArrowWidget(),
          // automaticallyImplyLeading: false,
             title: Text(AppLocalizations.of(context).trans("Favorite"),),
             elevation: 0,
         ),
 
         body:
-        (allProductListSnapShot == null)
-            ? EmptyWidget()
+        (allProductListSnapShot == null || allProductListSnapShot.length<1)
+            ? SizedBox()
             : GridView.count(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
@@ -112,9 +112,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                 return (allProductListSnapShot[i] != null)
                     ? InkWell(
                   onTap: (){
-                    // Navigator.of(context).push(MaterialPageRoute(
-                    //   builder: (context) => ProductDetails( allProductListSnapShot[i].id.toString()),
-                    // ));
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ProductDetails( allProductListSnapShot[i].id.toString()),
+                    ));
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20),
@@ -171,7 +171,7 @@ textAlign: TextAlign.center,
                             )),
                       Positioned(
                           right: 10,
-                          top:10,
+                          bottom:10,
                           child: InkWell(
                               onTap: (){
                                 setState(() {

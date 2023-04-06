@@ -2,10 +2,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:onlineshopping/Widgets/BackArrowWidget.dart';
-import 'package:onlineshopping/Widgets/empty.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/productList.dart';
+import 'package:shko/Widgets/BackArrowWidget.dart';
+import 'package:shko/Widgets/empty.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/productList.dart';
 
 
 
@@ -40,7 +40,7 @@ class _AllCategoryState extends State<AllCategory> {
 
           crossAxisSpacing: 12,
           //mainAxisSpacing: 15,
-          //childAspectRatio: 0.60, // (itemWidth/itemHeight),
+          childAspectRatio: 1.15, // (itemWidth/itemHeight),
           padding: EdgeInsets.symmetric(
               horizontal: 10, vertical: 10),
           // Create a grid with 2 columns. If you change the scrollDirection to
@@ -93,7 +93,7 @@ class _AllCategoryState extends State<AllCategory> {
                               ),
                               //border: Border.all(color: Colors.black12,width: 0.6),
                               image: DecorationImage(
-                                  fit: BoxFit.cover,
+                                  fit: BoxFit.contain,
                                   image: NetworkImage(
                                       widget.categoryList[i]['img'].toString()))),
                         ),

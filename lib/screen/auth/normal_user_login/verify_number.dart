@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:onlineshopping/Widgets/CustomAppButton.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
-import 'package:onlineshopping/screen/auth/providers/normal_user_login_provider.dart';
+import 'package:shko/Widgets/CustomAppButton.dart';
+import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/auth/providers/normal_user_login_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pinput/pin_put/pin_put.dart';
 

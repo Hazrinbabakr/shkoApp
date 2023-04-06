@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:onlineshopping/helper/colors.dart';
-import 'package:onlineshopping/localization/AppLocal.dart';
+import 'package:shko/helper/colors.dart';
+import 'package:shko/localization/AppLocal.dart';
 
 const kMaxTextLength = 500;
 
