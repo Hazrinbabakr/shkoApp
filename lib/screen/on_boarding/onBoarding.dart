@@ -76,9 +76,11 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                         children: [
                           InkWell(
                             onTap: (){
-                              Navigator.of(context).push(MaterialPageRoute(builder: (context){
-                                return MainLoginPage();
-                              }));
+                              goHome();
+                               LocalStorageService.instance.firstTime = false;
+                              // Navigator.of(context).push(MaterialPageRoute(builder: (context){
+                              //   return MainLoginPage();
+                              // }));
                             },
                             child: Text('Skip',
                               style: TextStyle(
