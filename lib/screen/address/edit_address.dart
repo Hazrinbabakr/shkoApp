@@ -2,25 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
-import 'package:shko/Widgets/CustomAppButton.dart';
-import 'package:shko/Widgets/text-field.dart';
 import 'package:shko/helper/colors.dart';
+import 'package:shko/screen/address/address_text_field.dart';
+import 'package:shko/screen/map/map_page.dart';
+import 'package:shko/Widgets/CustomAppButton.dart';
 import 'package:shko/localization/AppLocal.dart';
+import 'package:shko/screen/map/location_picker_page.dart';
 import 'package:shko/models/address.dart';
 import 'package:shko/providers/address_provider.dart';
-import 'package:shko/screen/address/address_text_field.dart';
-import 'package:shko/screen/map/location_picker_page.dart';
-import 'package:shko/screen/map/map_page.dart';
 
-class AddAddress extends StatefulWidget {
-  final double lat,long;
-  const AddAddress({Key key,@required this.lat,@required this.long}) : super(key: key);
+class EditAddress extends StatefulWidget {
+  final Address address;
+  const EditAddress({Key key, this.address}) : super(key: key);
 
   @override
-  State<AddAddress> createState() => _AddAddressState();
+  State<EditAddress> createState() => _EditAddressState();
 }
 
-class _AddAddressState extends State<AddAddress> {
+class _EditAddressState extends State<EditAddress> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descController = TextEditingController();
   double lat;
@@ -33,8 +32,11 @@ class _AddAddressState extends State<AddAddress> {
 
   @override
   void initState() {
-    lat = widget.lat;
-    long = widget.long;
+    lat = widget.address.latitude;
+    long = widget.address.longitude;
+    titleController.text = widget.address.title;
+    descController.text = widget.address.description;
+
     super.initState();
   }
 
@@ -53,25 +55,25 @@ class _AddAddressState extends State<AddAddress> {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(
-                    horizontal: 20,
-                    vertical: 20
+                      horizontal: 20,
+                      vertical: 20
                   ),
                   child: Column(
                     children: [
                       Container(
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Theme.of(context).dividerColor
-                          )
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                                color: Theme.of(context).dividerColor
+                            )
                         ),
                         child: Column(
                           children: [
                             Container(
                               height: 150,
                               decoration: BoxDecoration(
-                                color: Theme.of(context).dividerColor,
-                                borderRadius: BorderRadius.circular(25)
+                                  color: Theme.of(context).dividerColor,
+                                  borderRadius: BorderRadius.circular(25)
                               ),
                               child: MapWidget(
                                 key: ValueKey<String>("$lat,$long"),
@@ -83,9 +85,9 @@ class _AddAddressState extends State<AddAddress> {
                               child: CustomAppButton(
                                 onTap: () async {
                                   var res = await Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context){
-                                      return LocationPickerPage();
-                                    }
+                                      builder: (context){
+                                        return LocationPickerPage();
+                                      }
                                   ));
 
                                   if(res!= null){
@@ -98,14 +100,14 @@ class _AddAddressState extends State<AddAddress> {
                                   }
                                 },
                                 padding: EdgeInsets.symmetric(
-                                  vertical: 12
+                                    vertical: 12
                                 ),
                                 elevation: 0,
                                 child: Center(
                                   child: Text(
                                     AppLocalizations.of(context).trans("refine_location"),
                                     style: TextStyle(
-                                      fontSize: 16
+                                        fontSize: 16
                                     ),
                                   ),
                                 ),
@@ -144,7 +146,8 @@ class _AddAddressState extends State<AddAddress> {
                       setState(() {
                         _loading = true;
                       });
-                      var res  = await _addressProvider.addAddress(Address(
+                      var res  = await _addressProvider.editAddress(Address(
+                        uid: widget.address.uid,
                           title: titleController.text,
                           description: descController.text,
                           latitude: lat,
@@ -179,4 +182,5 @@ class _AddAddressState extends State<AddAddress> {
       ),
     );
   }
+
 }

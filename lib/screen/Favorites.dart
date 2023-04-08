@@ -24,39 +24,36 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   int favLength;
   List<String> favList=[];
   getFavProduct() {
-    int i = 0;
+    favListSnapShot = [];
     FirebaseFirestore.instance
         .collection('users').doc(user.uid).collection('favorite')
         .get()
         .then((value) {
-      value.docs.forEach((element) async {
-        favListSnapShot = new List<DocumentSnapshot>(value.docs.length);
-        setState(() {
-          favListSnapShot[i] =  element;
-          favLength=favListSnapShot.length;
-          favList.add(favListSnapShot[i].id);
-        });
-        i++;
-      });
+      favListSnapShot.addAll(value.docs);
+      favLength = favListSnapShot.length;
+      favList.addAll(favListSnapShot.map((e) => e.id).toList());
     }).whenComplete((){
       if(favLength !=null){
         getAllProduct();
       }
+      else {
+        setState(() {
+
+        });
+      }
     });
   }
   getAllProduct() {
-    allProductListSnapShot = new List<DocumentSnapshot>(favLength);
+    allProductListSnapShot = [];//new List<DocumentSnapshot>(favLength);
     // allProductList = new List<Map>(productListSnapShot.length);
     for(int i=0; i<favLength;i++) {
       FirebaseFirestore.instance
           .collection('products').where("productID", isEqualTo: favList[i])
           .get()
           .then((value) {
-        value.docs.forEach((element) async {
-          setState(() {
-            allProductListSnapShot[i] =  element;
-          });
-          i++;
+        allProductListSnapShot.addAll(value.docs);
+        setState(() {
+
         });
       });
     }
@@ -173,18 +170,26 @@ textAlign: TextAlign.center,
                           right: 10,
                           bottom:10,
                           child: InkWell(
-                              onTap: (){
+                              onTap: () async {
+                                User user = _auth.currentUser;
+                                await userCollection
+                                    .doc(user.uid)
+                                    .collection('favorite')
+                                    .doc(allProductListSnapShot[i].id).delete();
+                                allProductListSnapShot.removeAt(i);
+                                favListSnapShot.removeAt(i);
+                                //allProductListSnapShot = null;
+                                //favListSnapShot = null;
                                 setState(() {
-                                  User user = _auth.currentUser;
-                                  userCollection
-                                      .doc(user.uid)
-                                      .collection('favorite')
-                                      .doc(allProductListSnapShot[i].id).delete();
-                                  getFavProduct();
 
-                                  // getAllProduct();
-                                  print('${allProductListSnapShot[i]['name']}  deleted');
                                 });
+                                //getFavProduct();
+
+                                // setState(() {
+                                //
+                                //   // getAllProduct();
+                                //   print('${allProductListSnapShot[i]['name']}  deleted');
+                                // });
                               },
                               child: Icon(Icons.favorite,size: 30,color: Colors.red[900],)))
                       ],

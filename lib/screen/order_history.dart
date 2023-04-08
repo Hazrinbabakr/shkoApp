@@ -86,7 +86,6 @@ int length=0;
           appBar: AppBar(
             centerTitle: true,
             bottom:  PreferredSize(
-
               preferredSize: Size.fromHeight(40),
               child: Container(
                // color: Colors.red,
@@ -138,18 +137,11 @@ int length=0;
            child: Column(
                crossAxisAlignment: CrossAxisAlignment.stretch,
                children: <Widget>[
-
-                 Container(
-                     decoration: BoxDecoration(
-                         border: Border(
-                             top: BorderSide(
-                                 color: Colors.grey,
-                                 width: 0.5))),
-                     child: Padding(
-                         padding:
-                         const EdgeInsets.all(15.0),
-                         child: getCurrentPage()
-                     ))
+                 Padding(
+                     padding:
+                     const EdgeInsets.all(15.0),
+                     child: getCurrentPage()
+                 )
                ]),
          )
       ),

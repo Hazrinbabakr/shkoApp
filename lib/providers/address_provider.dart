@@ -19,5 +19,15 @@ class AddressProvider {
     return Address.fromJson(doc.data(), doc.id);
   }
 
+  Future<Address> editAddress(Address address) async {
+    var res = await _addressCollection.doc(address.uid).update(address.toJson());//add(address.toJson());
+    var doc = await _addressCollection.doc(address.uid).get();
+    return Address.fromJson(doc.data(), doc.id);
+  }
+
+  Future<dynamic> deleteAddress(String uid) async {
+    var res = await _addressCollection.doc(uid).delete();
+    return res;
+  }
 
 }

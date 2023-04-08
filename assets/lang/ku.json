@@ -115,9 +115,6 @@
   "shop": "دوکان",
   "AddedSuccessfully'": "بە سەرکەوتوویی زیاد کرا",
   "deliveryTo": "گەیاندن بۆ: ",
-
-
-  "cancelMyOrder": "داواکارییەکەم هەڵبوەشێنەرەوە"
-
-
+  "cancelMyOrder": "داواکارییەکەم هەڵبوەشێنەرەوە",
+  "delete": "Delete"
 }
