@@ -16,20 +16,15 @@ class CategoriesWidget extends StatefulWidget {
 }
 
 class _CategoriesWidgetState extends State<CategoriesWidget> {
-  List<DocumentSnapshot> categorySnapshot;
+  List<DocumentSnapshot>? categorySnapshot;
   getCategry() {
-    int i = 0;
     FirebaseFirestore.instance
         .collection('categories')
         .get()
         .then((value) {
-      categorySnapshot = new List<DocumentSnapshot>(value.docs.length);
-      value.docs.forEach((element) async {
-        setState(() {
-          categorySnapshot[i] = element;
-        });
-        i++;
-      });
+      categorySnapshot = [];
+      setState(() {});
+
     });
 
   }
@@ -44,7 +39,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
     return
 
 
-      (categorySnapshot == null || categorySnapshot.isEmpty)
+      (categorySnapshot == null || categorySnapshot!.isEmpty)
           ? SizedBox()
           : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -57,7 +52,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               InkWell(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => AllCategory(categorySnapshot)),
+                      builder: (context) => AllCategory(categorySnapshot!)),
                     );
                   },
                   child:
@@ -75,10 +70,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
               child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: categorySnapshot.length,
+                  itemCount: categorySnapshot!.length,
                   itemBuilder: (context, i) {
-                    DocumentSnapshot data= categorySnapshot.elementAt(i);
-                    return (categorySnapshot[i] != null)
+                    DocumentSnapshot data= categorySnapshot!.elementAt(i);
+                    return (categorySnapshot![i] != null)
 
                         ? Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -124,14 +119,14 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                                         fit: BoxFit.cover,
                                         image: NetworkImage(
 
-                                            categorySnapshot[i]['img'].toString()))),
+                                            categorySnapshot![i]['img'].toString()))),
                               ),
                               SizedBox(height: 7,),
                               Text(
-                                AppLocalizations.of(context).locale.languageCode.toString()=='ku'? categorySnapshot[i]['nameK']:
+                                AppLocalizations.of(context).locale.languageCode.toString()=='ku'? categorySnapshot![i]['nameK']:
                                 AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                                categorySnapshot[i]['nameA']:
-                                categorySnapshot[i]['name'],
+                                categorySnapshot![i]['nameA']:
+                                categorySnapshot![i]['name'],
                                 style: TextStyle(fontWeight: FontWeight.w600,),)
                             ],
                           ),

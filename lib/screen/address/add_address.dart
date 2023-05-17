@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shko/Widgets/CustomAppButton.dart';
-import 'package:shko/Widgets/text-field.dart';
 import 'package:shko/helper/colors.dart';
 import 'package:shko/localization/AppLocal.dart';
 import 'package:shko/models/address.dart';
@@ -14,7 +13,7 @@ import 'package:shko/screen/map/map_page.dart';
 
 class AddAddress extends StatefulWidget {
   final double lat,long;
-  const AddAddress({Key key,@required this.lat,@required this.long}) : super(key: key);
+  const AddAddress({Key? key,required this.lat,required this.long}) : super(key: key);
 
   @override
   State<AddAddress> createState() => _AddAddressState();
@@ -23,8 +22,8 @@ class AddAddress extends StatefulWidget {
 class _AddAddressState extends State<AddAddress> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descController = TextEditingController();
-  double lat;
-  double long;
+  late double lat;
+  late double long;
 
   bool _loading = false;
 
@@ -90,8 +89,8 @@ class _AddAddressState extends State<AddAddress> {
 
                                   if(res!= null){
                                     LocationData location = res as LocationData;
-                                    lat = location.latitude;
-                                    long = location.longitude;
+                                    lat = location.latitude!;
+                                    long = location.longitude!;
                                     setState(() {
 
                                     });
@@ -144,7 +143,8 @@ class _AddAddressState extends State<AddAddress> {
                       setState(() {
                         _loading = true;
                       });
-                      var res  = await _addressProvider.addAddress(Address(
+                      var res  = await _addressProvider.addAddress(
+                          Address(
                           title: titleController.text,
                           description: descController.text,
                           latitude: lat,

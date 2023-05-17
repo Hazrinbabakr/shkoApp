@@ -1,21 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Address {
-  String uid;
+  String? uid;
   String title;
   String description;
   double latitude;
   double longitude;
 
   Address({
-    this.title,
+    required this.title,
     this.uid,
-    this.description,
-    this.latitude,
-    this.longitude
+    required this.description,
+    required this.latitude,
+    required this.longitude
   });
 
-  factory Address.fromJson(Map<String,dynamic> data,String id){
+  factory Address.fromJson(dynamic data,String? id){
     return Address(
       uid: id ?? data["id"],
       title: data["title"]??"",
@@ -33,7 +33,7 @@ class Address {
       "description":description,
       "latitude":latitude,
       "longitude":longitude,
-      "userId":FirebaseAuth.instance.currentUser.uid
+      "userId":FirebaseAuth.instance.currentUser?.uid??""
     };
   }
 

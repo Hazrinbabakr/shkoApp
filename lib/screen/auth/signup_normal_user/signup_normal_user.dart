@@ -9,7 +9,7 @@ import 'package:shko/screen/auth/providers/normal_user_login_provider.dart';
 import 'package:provider/provider.dart';
 
 class SignUpPage extends StatefulWidget {
-  const SignUpPage({Key key}) : super(key: key);
+  const SignUpPage({Key? key}) : super(key: key);
 
   @override
   State<SignUpPage> createState() => _SignUpPageState();
@@ -79,7 +79,7 @@ class _SignUpPageState extends State<SignUpPage> {
                       color: Theme.of(context).colorScheme.secondary,
                       elevation: 0,
                       onTap: () {
-                        if(_form.currentState.validate()){
+                        if(_form.currentState!.validate()){
 
                           NormalUserLoginProvider.of(context).signUp(
                             request: UserRegisterRequest(
@@ -119,16 +119,16 @@ class _SignUpPageState extends State<SignUpPage> {
   }
 
   textFieldWidget(
-      {@required String label,
-        @required TextEditingController controller,
-        String hint,
-        FocusNode focusNode,
-        FocusNode next}) {
+      {required String label,
+        required TextEditingController controller,
+        String? hint,
+        FocusNode? focusNode,
+        FocusNode? next}) {
     return TextFormField(
       controller: controller,
       focusNode: focusNode,
       validator: (text) {
-        if (text.trim().isEmpty) {
+        if (text!.trim().isEmpty) {
           return AppLocalizations.of(context).trans("fieldIsRequired");
         }
         return null;
@@ -152,7 +152,7 @@ class _SignUpPageState extends State<SignUpPage> {
           border: UnderlineInputBorder(
               borderSide: BorderSide(color: Colors.grey)),
           focusedBorder: UnderlineInputBorder(
-              borderSide: BorderSide(color: Theme.of(context).accentColor)),
+              borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary)),
           hintStyle: TextStyle(color: Colors.grey)),
     );
   }

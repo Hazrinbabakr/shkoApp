@@ -11,7 +11,7 @@ import 'package:shko/screen/productList.dart';
 
 class AllCategory extends StatefulWidget {
   final List<DocumentSnapshot> categoryList;
-  const AllCategory(this.categoryList, {Key key}) : super(key: key);
+  const AllCategory(this.categoryList, {Key? key}) : super(key: key);
   @override
   _AllCategoryState createState() => _AllCategoryState();
 }
@@ -26,7 +26,7 @@ class _AllCategoryState extends State<AllCategory> {
         appBar: AppBar(
           leading: BackArrowWidget(),
            automaticallyImplyLeading: false,
-          title: Text(  AppLocalizations.of(context).trans("categories"),style: TextStyle(color: Theme.of(context).accentColor,fontWeight: FontWeight.bold),),
+          title: Text(  AppLocalizations.of(context).trans("categories"),style: TextStyle(color: Theme.of(context).colorScheme.secondary,fontWeight: FontWeight.bold),),
           elevation: 0,
         ),
 

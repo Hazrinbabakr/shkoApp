@@ -5,7 +5,7 @@ import 'package:shko/localization/AppLocal.dart';
 class PhoneNumberInput extends StatelessWidget {
   final TextEditingController controller;
 
-  const PhoneNumberInput({Key key, @required this.controller})
+  const PhoneNumberInput({Key? key, required this.controller})
       : super(key: key);
 
 
@@ -35,7 +35,7 @@ class PhoneNumberInput extends StatelessWidget {
             child: TextFormField(
               controller: controller,
               validator: (val) {
-                String text = val.trim().replaceAll(" ", "");
+                String text = val!.trim().replaceAll(" ", "");
                 if (text.trim().isEmpty) {
                   return AppLocalizations.of(context).trans("phoneNumberEmpty");
                 }
@@ -73,9 +73,9 @@ class PhoneNumberInput extends StatelessWidget {
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.grey),
                 ),
-                focusColor: Theme.of(context).accentColor,
+                focusColor: Theme.of(context).colorScheme.secondary,
                 focusedBorder: UnderlineInputBorder(
-                  borderSide: BorderSide(color: Theme.of(context).accentColor),
+                  borderSide: BorderSide(color: Theme.of(context).colorScheme.secondary),
                 ),
               ),
             ),

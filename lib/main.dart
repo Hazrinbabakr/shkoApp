@@ -16,7 +16,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await LocalStorageService.instance.init();
-  var res = FirebaseMessaging();
+  var res = FirebaseMessaging.instance;
   res.getToken().then((value) {
     print("value ${value}");
   });
@@ -42,6 +42,9 @@ class MyApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               theme: ThemeData(
                   primaryColor: Colors.white,
+                  colorScheme: ColorScheme.light(
+                    secondary: Color(0xff00bebb),
+                  ),
                   accentColor: Color(0xff00bebb),
                   fontFamily: 'NRT',
               ),
@@ -50,9 +53,9 @@ class MyApp extends StatelessWidget {
                 if (AppLocalizations.of(context).locale.languageCode ==
                     "ku") {
                   child = Directionality(
-                      textDirection: TextDirection.rtl, child: child);
+                      textDirection: TextDirection.rtl, child: child!);
                 }
-                return child;
+                return child!;
               },
               localizationsDelegates: [
                 const AppLocalizationsDelegate(),
@@ -64,7 +67,7 @@ class MyApp extends StatelessWidget {
                 KurdishCupertinoLocalization.delegate
               ],
               supportedLocales: Lang.values.map((e) => Locale(e)).toList(),
-              locale: Locale(LocalStorageService.instance.languageCode),
+              locale: Locale(LocalStorageService.instance.languageCode??"en"),
               //Test()
             );
           },

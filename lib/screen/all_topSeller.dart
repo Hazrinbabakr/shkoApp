@@ -12,7 +12,7 @@ import 'package:shko/screen/productList.dart';
 
 class AllTopSeller extends StatefulWidget {
   final List<DocumentSnapshot> topSellerSnapshot;
-  const AllTopSeller(this.topSellerSnapshot, {Key key}) : super(key: key);
+  const AllTopSeller(this.topSellerSnapshot, {Key? key}) : super(key: key);
   @override
   _AllTopSellerState createState() => _AllTopSellerState();
 }
@@ -27,7 +27,7 @@ class _AllTopSellerState extends State<AllTopSeller> {
         appBar: AppBar(
           leading: BackArrowWidget(),
            automaticallyImplyLeading: false,
-          title: Text(  AppLocalizations.of(context).trans("topSeller"),style: TextStyle(color: Theme.of(context).accentColor,fontWeight: FontWeight.bold),),
+          title: Text(  AppLocalizations.of(context).trans("topSeller"),style: TextStyle(color: Theme.of(context).colorScheme.secondary,fontWeight: FontWeight.bold),),
           elevation: 0,
         ),
 

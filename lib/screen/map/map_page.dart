@@ -5,9 +5,9 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapWidget extends StatefulWidget {
   final LatLng defaultPosition;
-  final List<Marker> markers;
+  final List<Marker>? markers;
 
-  const MapWidget({Key key, @required this.defaultPosition, this.markers}) : super(key: key);
+  const MapWidget({Key? key, required this.defaultPosition, this.markers}) : super(key: key);
 
   @override
   State<MapWidget> createState() => MapWidgetState();

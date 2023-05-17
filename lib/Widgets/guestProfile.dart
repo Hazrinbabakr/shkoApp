@@ -18,7 +18,7 @@ import 'package:shko/services/local_storage_service.dart';
 
 
 class GuestProfile extends StatefulWidget {
-  const GuestProfile({Key key}) : super(key: key);
+  const GuestProfile({Key? key}) : super(key: key);
   @override
   _GuestProfileState createState() => _GuestProfileState();
 }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shko/helper/colors.dart';
 import 'package:shko/screen/address/address_text_field.dart';
 import 'package:shko/screen/map/map_page.dart';
@@ -13,7 +13,7 @@ import 'package:shko/providers/address_provider.dart';
 
 class EditAddress extends StatefulWidget {
   final Address address;
-  const EditAddress({Key key, this.address}) : super(key: key);
+  const EditAddress({Key? key,required this.address}) : super(key: key);
 
   @override
   State<EditAddress> createState() => _EditAddressState();
@@ -22,8 +22,8 @@ class EditAddress extends StatefulWidget {
 class _EditAddressState extends State<EditAddress> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descController = TextEditingController();
-  double lat;
-  double long;
+  late double lat;
+  late double long;
 
   bool _loading = false;
 
@@ -92,8 +92,8 @@ class _EditAddressState extends State<EditAddress> {
 
                                   if(res!= null){
                                     LocationData location = res as LocationData;
-                                    lat = location.latitude;
-                                    long = location.longitude;
+                                    lat = location.latitude!;
+                                    long = location.longitude!;
                                     setState(() {
 
                                     });

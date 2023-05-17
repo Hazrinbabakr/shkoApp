@@ -17,25 +17,25 @@ import 'order_history.dart';
 
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({Key key}) : super(key: key);
+  const ProfileScreen({Key? key}) : super(key: key);
   @override
   _ProfileScreenState createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool guest =true;
-  User user;
-  FirebaseAuth _auth;
+  User user = FirebaseAuth.instance.currentUser!;
+  FirebaseAuth _auth= FirebaseAuth.instance;
   String name='';
   String phone='';
   String address='';
-  DocumentSnapshot userInfo;
+  Map<String,dynamic>? userInfo;
   Future getUserInfo()async{
-    userInfo= await FirebaseFirestore.instance.collection("users").doc(user.uid).get();
+    userInfo= (await FirebaseFirestore.instance.collection("users").doc(user.uid).get()).data();
     setState(() {
-     name= userInfo.data()['username'];
-     phone= userInfo.data()['phone'];
-     address = userInfo.data()['address'];
+     name= userInfo!['username'];
+     phone= userInfo!['phone'];
+     address = userInfo!['address'];
      print(name);
     });
   }
@@ -45,8 +45,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _auth= FirebaseAuth.instance;
-    user=_auth.currentUser;
     if( FirebaseAuth.instance.currentUser != null ){
       getUserInfo();
     }
@@ -112,8 +110,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                Column(
                                  crossAxisAlignment: CrossAxisAlignment.start,
                                  children: [
-                                   Text(snapshot.data['username'].toString(),style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
-                                   Text("+974${snapshot.data['phone'].toString()}",style: TextStyle(fontSize: 15,color: Colors.grey[800]),),
+                                   Text(snapshot.data!['username'].toString(),style: TextStyle(fontSize: 17,fontWeight: FontWeight.bold),),
+                                   Text("+974${snapshot.data!['phone'].toString()}",style: TextStyle(fontSize: 15,color: Colors.grey[800]),),
 
 
                                  ],
@@ -126,7 +124,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             padding: const EdgeInsets.symmetric(horizontal: 15),
                             child: InkWell(
                                 onTap: () {
-                                  _textFieldController = TextEditingController(text:  snapshot.data['username'].toString());
+                                  _textFieldController = TextEditingController(text:  snapshot.data!['username'].toString());
                                   showDialog(
                                       context: context,
                                       builder: (context) {
@@ -481,7 +479,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 onTap: ()async{
 
                                   try {
-                                    User user2 = FirebaseAuth.instance.currentUser;
+                                    User user2 = FirebaseAuth.instance.currentUser!;
                                     await user2.delete();
                                   } on FirebaseAuthException catch (e) {
                                     print(e.message.toString());
@@ -515,7 +513,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         child:   Image.asset('images/category/deleteAccount.png',width: 100),
                       ),
                       title: Text(AppLocalizations.of(context).trans('deleteAccount'),
-                        style: Theme.of(context).textTheme.subtitle1.merge(TextStyle(color: Colors.red[700])),
+                        style: Theme.of(context).textTheme.subtitle1!.merge(TextStyle(color: Colors.red[700])),
                         
                       ),
                       trailing: Icon(Icons.arrow_forward_ios,size: 18)),

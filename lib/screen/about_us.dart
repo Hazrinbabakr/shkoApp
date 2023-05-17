@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:shko/Widgets/BackArrowWidget.dart';
 import 'package:shko/localization/AppLocal.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 
 class AboutUs extends StatefulWidget {
@@ -15,13 +16,13 @@ class AboutUs extends StatefulWidget {
 class _AboutUsState extends State<AboutUs> {
   String whatsAppPhone='';
   String phone='';
-  DocumentSnapshot adminInfo;
+  Map<String,dynamic>? adminInfo;
   Future getAdminInfo()async{
-    adminInfo= await FirebaseFirestore.instance.collection("Admin").doc('admindoc').get();
+    adminInfo= (await FirebaseFirestore.instance.collection("Admin").doc('admindoc').get()).data();
 
     setState(() {
-      whatsAppPhone= adminInfo.data()['whatsappPhone'].toString();
-      phone= adminInfo.data()['phoneNumber'].toString();
+      whatsAppPhone= adminInfo!['whatsappPhone'].toString();
+      phone= adminInfo!['phoneNumber'].toString();
     });
   }
   @override
@@ -34,7 +35,7 @@ class _AboutUsState extends State<AboutUs> {
   Widget build(BuildContext context) {
     return Scaffold(
 
-      backgroundColor: Theme.of(context).accentColor,
+      backgroundColor: Theme.of(context).colorScheme.secondary,
       appBar: AppBar(
 
         leading: InkWell(
@@ -42,7 +43,7 @@ class _AboutUsState extends State<AboutUs> {
               Navigator.pop(context);
             },
             child: Icon(Icons.arrow_back_ios_sharp,color: Colors.white,size: 30,)),
-        backgroundColor: Theme.of(context).accentColor,
+        backgroundColor: Theme.of(context).colorScheme.secondary,
         elevation: 0,
       ),
       body: Column(
@@ -96,7 +97,7 @@ class _AboutUsState extends State<AboutUs> {
                   Text(AppLocalizations.of(context).trans("contact_us"),
 
 
-                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Theme.of(context).accentColor),
+                    style: TextStyle(fontSize: 25,fontWeight: FontWeight.bold,color: Theme.of(context).colorScheme.secondary),
                     //textAlign: TextAlign.center,
 
                   ),
@@ -115,18 +116,18 @@ class _AboutUsState extends State<AboutUs> {
                     children: [
                       InkWell(
                           onTap: (){
-                            launch('https://instagram.com/shko_st?igshid=YWJhMjlhZTc=');
+                            launchUrlString('https://instagram.com/shko_st?igshid=YWJhMjlhZTc=');
                           },
                           child: Image.asset('images/category/location.png',width: 30,)),
                       InkWell(
                           onTap: (){
-                            launch("tel:0${phone.toString()}");
+                            launchUrlString("tel:0${phone.toString()}");
                           },
                           child: Image.asset('images/category/phone.png',
                             width: 30,)),
                       InkWell(
                           onTap: (){
-                            launch(whatsAppPhone.toString());
+                            launchUrlString(whatsAppPhone.toString());
                           },
                           child: Image.asset('images/category/whatsapp.png',
                             width: 30,)),
@@ -134,13 +135,13 @@ class _AboutUsState extends State<AboutUs> {
                       InkWell(
                           onTap: (){
                             //   print('whatsapp');
-                            launch("https://mobile.facebook.com/Shkocopycenter/?_rdc=1&_rdr&refsrc=deprecated");
+                            launchUrlString("https://mobile.facebook.com/Shkocopycenter/?_rdc=1&_rdr&refsrc=deprecated");
 
                           },
                           child: Image.asset('images/category/fb.png',width: 30,)),
                       InkWell(
                           onTap: (){
-                            launch("https://instagram.com/shko_st?igshid=YWJhMjlhZTc=");
+                            launchUrlString("https://instagram.com/shko_st?igshid=YWJhMjlhZTc=");
                           },
                           child: Image.asset('images/category/insta.png',width: 30,)),
 

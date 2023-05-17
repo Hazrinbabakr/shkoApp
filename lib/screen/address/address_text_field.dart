@@ -6,22 +6,22 @@ import 'package:shko/localization/AppLocal.dart';
 const kMaxTextLength = 500;
 
 class AddressTextFieldItem extends StatefulWidget {
-  final FormFieldValidator<String> validator;
+  final FormFieldValidator<String>? validator;
   final bool isOptional;
   final String title;
-  final String hint;
-  final TextEditingController controller;
+  final String? hint;
+  final TextEditingController? controller;
   final int maxLines;
   final bool canEdit;
-  final FocusNode next;
-  final FocusNode current;
-  final int maxLength;
+  final FocusNode? next;
+  final FocusNode? current;
+  final int? maxLength;
 
   const AddressTextFieldItem({
-    Key key,
+    Key? key,
     this.validator,
     this.isOptional = false,
-    @required this.title,
+    required this.title,
     this.hint,
     this.controller,
     this.maxLines = 1,
@@ -61,7 +61,7 @@ class _AddressTextFieldItemState extends State<AddressTextFieldItem> {
                   if (widget.isOptional) {
                     return null;
                   }
-                  if (text.trim().isEmpty) {
+                  if (text!.trim().isEmpty) {
                     return AppLocalizations.of(context)
                         .trans("fieldIsRequired");
                   }

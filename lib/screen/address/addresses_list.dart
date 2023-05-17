@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:location/location.dart';
-import 'package:modal_progress_hud/modal_progress_hud.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 import 'package:shko/services/local_storage_service.dart';
 import 'package:shko/localization/AppLocal.dart';
 import 'package:shko/Widgets/loading_widget.dart';
@@ -12,7 +12,7 @@ import 'package:shko/screen/address/edit_address.dart';
 import 'package:shko/screen/map/location_picker_page.dart';
 
 class AddressesList extends StatefulWidget {
-  const AddressesList({Key key}) : super(key: key);
+  const AddressesList({Key? key}) : super(key: key);
 
   @override
   State<AddressesList> createState() => _AddressesListState();
@@ -21,7 +21,7 @@ class AddressesList extends StatefulWidget {
 class _AddressesListState extends State<AddressesList> {
   AddressProvider databaseManager = AddressProvider();
 
-  List<Address> addresses;
+  List<Address>? addresses;
 
   bool loading = false;
 
@@ -33,15 +33,18 @@ class _AddressesListState extends State<AddressesList> {
 
   getAddresses() {
     databaseManager.getAddresses().then((value) {
-      if (value != null) {
-        addresses = value;
-        if(LocalStorageService.instance.selectedAddress != null){
-          LocalStorageService.instance.selectedAddress = addresses.firstWhere((element) => element.uid == LocalStorageService.instance.selectedAddress.uid,orElse: ()=> null);
+      addresses = value;
+      if(LocalStorageService.instance.selectedAddress != null){
+        try{
+          LocalStorageService.instance.selectedAddress =
+              addresses!.firstWhere((element) => element.uid == LocalStorageService.instance.selectedAddress!.uid);
+        } catch (error){
+
         }
-        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-          setState(() {});
-        });
       }
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+        setState(() {});
+      });
     });
   }
 
@@ -66,7 +69,7 @@ class _AddressesListState extends State<AddressesList> {
           builder: (context) {
             if (addresses != null) {
               return ListView.separated(
-                itemCount: addresses.length,
+                itemCount: addresses!.length,
                 padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                 itemBuilder: (context, index) {
                   return InkWell(
@@ -89,7 +92,7 @@ class _AddressesListState extends State<AddressesList> {
                                     onTap: () async {
                                       await Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context){
                                         return EditAddress(
-                                          address: addresses[index],
+                                          address: addresses![index],
                                         );
                                       }));
                                       addresses = null;
@@ -114,10 +117,10 @@ class _AddressesListState extends State<AddressesList> {
                                         setState(() {
                                           loading = true;
                                         });
-                                        if(LocalStorageService.instance.selectedAddress == addresses[index] ){
+                                        if(LocalStorageService.instance.selectedAddress == addresses![index] ){
                                           LocalStorageService.instance.selectedAddress = null;
                                         }
-                                        await databaseManager.deleteAddress(addresses[index].uid);
+                                        await databaseManager.deleteAddress(addresses![index].uid!);
                                         addresses = null;
                                         await getAddresses();
                                         setState(() {
@@ -147,7 +150,7 @@ class _AddressesListState extends State<AddressesList> {
                     },
                     onTap: () {
                       LocalStorageService.instance.selectedAddress =
-                          addresses[index];
+                          addresses![index];
                       setState(() {});
                     },
                     child: Container(
@@ -171,7 +174,7 @@ class _AddressesListState extends State<AddressesList> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  addresses[index].title,
+                                  addresses![index].title,
                                   style: const TextStyle(
                                       fontSize: 14, fontWeight: FontWeight.bold),
                                 ),
@@ -179,7 +182,7 @@ class _AddressesListState extends State<AddressesList> {
                                   height: 8,
                                 ),
                                 Text(
-                                  addresses[index].description,
+                                  addresses![index].description,
                                   style: const TextStyle(
                                       fontSize: 14, fontWeight: FontWeight.w500),
                                 ),
@@ -187,7 +190,7 @@ class _AddressesListState extends State<AddressesList> {
                             ),
                           ),
                           if (LocalStorageService.instance.selectedAddress ==
-                              addresses[index])
+                              addresses![index])
                             Icon(
                               Icons.check,
                               size: 25,
@@ -228,8 +231,8 @@ class _AddressesListState extends State<AddressesList> {
             await Navigator.of(context)
                 .push(MaterialPageRoute(builder: (BuildContext context) {
               return AddAddress(
-                lat: location.latitude,
-                long: location.longitude,
+                lat: location.latitude!,
+                long: location.longitude!,
               );
             }));
             addresses = null;

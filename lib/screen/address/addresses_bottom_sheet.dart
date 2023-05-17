@@ -5,7 +5,7 @@ import 'package:shko/providers/address_provider.dart';
 import 'package:shko/services/local_storage_service.dart';
 
 class AddressesBottomSheet extends StatefulWidget {
-  const AddressesBottomSheet({Key key}) : super(key: key);
+  const AddressesBottomSheet({Key? key}) : super(key: key);
 
 
   static show(BuildContext context){
@@ -25,7 +25,7 @@ class _AddressesBottomSheetState extends State<AddressesBottomSheet> {
 
   AddressProvider databaseManager = AddressProvider();
 
-  List<Address> addresses;
+  List<Address>? addresses;
   @override
   void initState() {
     getAddresses();
@@ -34,14 +34,12 @@ class _AddressesBottomSheetState extends State<AddressesBottomSheet> {
 
   getAddresses(){
     databaseManager.getAddresses().then((value) {
-      if(value != null){
-        addresses = value;
+      addresses = value;
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           setState(() {
 
           });
         });
-      }
     });
   }
 
@@ -65,7 +63,7 @@ class _AddressesBottomSheetState extends State<AddressesBottomSheet> {
             builder: (context){
               if(addresses != null){
                 return ListView.separated(
-                  itemCount: addresses.length,
+                  itemCount: addresses!.length,
                   padding: const EdgeInsets.symmetric(
                       horizontal: 12,
                       vertical: 12
@@ -73,7 +71,7 @@ class _AddressesBottomSheetState extends State<AddressesBottomSheet> {
                   itemBuilder: (context,index){
                     return InkWell(
                       onTap: (){
-                        LocalStorageService.instance.selectedAddress = addresses[index];
+                        LocalStorageService.instance.selectedAddress = addresses![index];
                         Navigator.of(context).pop();
                         setState(() {
 
@@ -105,7 +103,7 @@ class _AddressesBottomSheetState extends State<AddressesBottomSheet> {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    addresses[index].title,
+                                    addresses![index].title,
                                     style: const TextStyle(
                                         fontSize: 17,
                                         fontWeight: FontWeight.bold
@@ -113,7 +111,7 @@ class _AddressesBottomSheetState extends State<AddressesBottomSheet> {
                                   ),
                                   const SizedBox(height: 8,),
                                   Text(
-                                    addresses[index].description,
+                                    addresses![index].description,
                                     style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w500
@@ -122,7 +120,7 @@ class _AddressesBottomSheetState extends State<AddressesBottomSheet> {
                                 ],
                               ),
                             ),
-                            if(LocalStorageService.instance.selectedAddress == addresses[index])
+                            if(LocalStorageService.instance.selectedAddress == addresses![index])
                               Icon(Icons.check , size: 25,color: Colors.green,)
                           ],
                         ),

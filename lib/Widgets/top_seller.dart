@@ -18,20 +18,15 @@ class TopSeller extends StatefulWidget {
 }
 
 class _TopSellerState extends State<TopSeller> {
-  List<DocumentSnapshot> topSellerSnapshot;
+  List<DocumentSnapshot>? topSellerSnapshot;
   getTopSeller() {
-    int i = 0;
     FirebaseFirestore.instance
         .collection('products').where("newArrival", isEqualTo: true)
         .get()
         .then((value) {
-      topSellerSnapshot = new List<DocumentSnapshot>(value.docs.length);
-      value.docs.forEach((element) async {
-        setState(() {
-          topSellerSnapshot[i] = element;
-        });
-        i++;
-      });
+      topSellerSnapshot = [];
+      topSellerSnapshot!.addAll(value.docs);
+      setState(() {});
     });
 
   }
@@ -45,7 +40,7 @@ class _TopSellerState extends State<TopSeller> {
   @override
   Widget build(BuildContext context) {
     return
-      (topSellerSnapshot == null || topSellerSnapshot.isEmpty)
+      (topSellerSnapshot == null || topSellerSnapshot!.isEmpty)
           ? SizedBox()
           : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -59,7 +54,7 @@ class _TopSellerState extends State<TopSeller> {
               InkWell(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => AllTopSeller(topSellerSnapshot)),
+                        builder: (context) => AllTopSeller(topSellerSnapshot!)),
                     );
                   },
                   child: Text( AppLocalizations.of(context).trans("ShowAll"),style: TextStyle(fontSize: 13,color: Theme.of(context).accentColor),)),
@@ -74,13 +69,13 @@ class _TopSellerState extends State<TopSeller> {
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: topSellerSnapshot.length,
+                itemCount: topSellerSnapshot!.length,
                 itemBuilder: (context, i) {
-                  return (topSellerSnapshot[i] != null)
+                  return (topSellerSnapshot![i] != null)
                       ? InkWell(
                     onTap: (){
                       Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => ProductDetails( topSellerSnapshot[i].id.toString()),
+                        builder: (context) => ProductDetails( topSellerSnapshot![i].id.toString()),
                       ));
                     },
                     child: Padding(
@@ -103,7 +98,7 @@ class _TopSellerState extends State<TopSeller> {
                                height:115,
                                width: 170,
                                child: Image.network(
-                        topSellerSnapshot[i]['images'][0].toString()??""
+                        topSellerSnapshot![i]['images'][0].toString()??""
                       ),
                              ),
 
@@ -116,14 +111,14 @@ class _TopSellerState extends State<TopSeller> {
                                   padding: const EdgeInsets.symmetric(horizontal: 8),
                                   child: Row(
                                     children: [
-                                      Text('${ topSellerSnapshot[i]['price'].toString()}',
+                                      Text('${ topSellerSnapshot![i]['price'].toString()}',
                                         style: TextStyle(fontSize: 19,color: Colors.red[700],fontWeight: FontWeight.w500),),
                                       Text('IQD',
                                         style: TextStyle(fontSize: 13,color: Colors.red[700],fontWeight: FontWeight.w500),),
 
 SizedBox(width: 5,),
 
-                                      Text('${ topSellerSnapshot[i]['oldPrice'].toString()}',
+                                      Text('${ topSellerSnapshot![i]['oldPrice'].toString()}',
                                         style: TextStyle(fontSize: 10,color: Colors.grey,decoration: TextDecoration.lineThrough),),
                                       Text('IQD',
                                         style: TextStyle(fontSize: 7,color: Colors.grey,decoration: TextDecoration.lineThrough),),
@@ -140,10 +135,10 @@ SizedBox(width: 5,),
                                     child: Text(
 
                                       AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                                      topSellerSnapshot[i]['nameK'].toString():
+                                      topSellerSnapshot![i]['nameK'].toString():
                                       AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                                      topSellerSnapshot[i]['nameA'].toString():
-                                      topSellerSnapshot[i]['name'].toString(),
+                                      topSellerSnapshot![i]['nameA'].toString():
+                                      topSellerSnapshot![i]['name'].toString(),
 
                                       style: TextStyle(fontSize: 16,), overflow: TextOverflow.ellipsis,),
                                   ),

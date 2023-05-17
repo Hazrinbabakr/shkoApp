@@ -8,14 +8,14 @@ import 'package:shko/screen/productDetails.dart';
 
 
 class Search extends StatefulWidget {
-  const Search({Key key}) : super(key: key);
+  const Search({Key? key}) : super(key: key);
 
   @override
   _SearchState createState() => _SearchState();
 }
 
 class _SearchState extends State<Search> {
-  String searchInput;
+  String? searchInput;
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +58,7 @@ class _SearchState extends State<Search> {
 height: 60,
                   decoration: BoxDecoration(
                     color: Colors.grey[100],
-                      border: Border.all(color: Colors.grey[300]),
+                      border: Border.all(color: Colors.grey[300]!),
                     borderRadius: BorderRadius.circular(18),
                     // boxShadow: <BoxShadow>[
                     //   BoxShadow(
@@ -122,21 +122,21 @@ height: 60,
                                   String searchWord;
                                   searchWord =
                                   AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                                  snapshot.data.docs[index].data()['nameK']:
+                                  snapshot.data!.docs[index].data()['nameK']:
                                   AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
                                   // ignore: unnecessary_statements
-                                  snapshot.data.docs[index].data()['makeA']:
+                                  snapshot.data!.docs[index].data()['makeA']:
                                   // ignore: unnecessary_statements
-                                  snapshot.data.docs[index].data()['name'];
+                                  snapshot.data!.docs[index].data()['name'];
                                   if (snapshot.hasData &&
-                                      searchWord.contains(searchInput)) {
+                                      searchWord.contains(searchInput??"")) {
                                     DocumentSnapshot shops =
-                                    snapshot.data.docs[index];
+                                    snapshot.data!.docs[index];
                                     return InkWell(
                                       onTap: () {
 
                                         Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) => ProductDetails(snapshot.data.docs[index].id),
+                                          builder: (context) => ProductDetails(snapshot.data!.docs[index].id),
                                         ));
                                       },
                                       child: Card(
@@ -156,18 +156,18 @@ height: 60,
                                                   image: DecorationImage(
                                                       fit: BoxFit.cover,
                                                       image: NetworkImage(
-                                                          shops.data()['images'][0].toString()))),
+                                                          shops['images'][0].toString()))),
                                             ),
                                             SizedBox(width: 10,),
                                             Expanded(
                                               child: Text(
                                                   AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                                                  shops.data()['nameK'].toString():
+                                                  shops['nameK'].toString():
                                                   AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
                                                   // ignore: unnecessary_statements
-                                                  shops.data()['nameA'].toString():
+                                                  shops['nameA'].toString():
                                                   // ignore: unnecessary_statements
-                                                  shops.data()['name'].toString(),
+                                                  shops['name'].toString(),
                                                   style: TextStyle(
                                                       fontSize: 22,
                                                       fontWeight: FontWeight.bold),
@@ -176,7 +176,7 @@ height: 60,
                                             SizedBox(width: 20,),
                                             Text(
 
-                                             '${ shops.data()['price'].toString()} IQD',
+                                             '${ shops['price'].toString()} IQD',
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   ),

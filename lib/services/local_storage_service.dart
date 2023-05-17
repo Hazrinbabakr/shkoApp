@@ -15,7 +15,7 @@ class LocalStorageService {
 //  static const
 
   static LocalStorageService _instance = LocalStorageService._internal();
-  static SharedPreferences _preferences;
+  static late SharedPreferences _preferences;
 
   static LocalStorageService get instance => _instance;
 
@@ -29,46 +29,46 @@ class LocalStorageService {
   }
 
   // Language Code
-  String _languageCode;
-  String get languageCode => _languageCode ?? _getFromDisk(AppLanguageKey);
+  String? _languageCode;
+  String? get languageCode => _languageCode ?? _getFromDisk(AppLanguageKey);
 
-  set languageCode(String value) {
+  set languageCode(String? value) {
     _languageCode = value;
     _saveToDisk(AppLanguageKey, value);
   }
 
   // firstTime
-  bool _firstTime;
-  bool get firstTime => _firstTime ?? _getFromDisk(FirstTime);
+  bool? _firstTime;
+  bool? get firstTime => _firstTime ?? _getFromDisk(FirstTime);
 
-  set firstTime(bool value) {
+  set firstTime(bool? value) {
     _firstTime = value;
     _saveToDisk(FirstTime, value);
   }
 
-  AppUser _user;
-  AppUser get user {
+  AppUser? _user;
+  AppUser? get user {
     if (_user != null) return _user;
-    String res = _getFromDisk(UserKey);
+    String? res = _getFromDisk(UserKey);
     if (res == null) return null;
     return AppUser.fromJson(json.decode(res));
   }
 
-  set user(AppUser value) {
+  set user(AppUser? value) {
     _user = value;
     _saveToDisk(UserKey, value == null ? null : json.encode(value.toJson()));
   }
 
 
-  Address _address;
-  Address get selectedAddress {
+  Address? _address;
+  Address? get selectedAddress {
     if (_address != null) return _address;
-    String res = _getFromDisk(AddressKey);
+    String? res = _getFromDisk(AddressKey);
     if (res == null) return null;
     return Address.fromJson(json.decode(res),null);
   }
 
-  set selectedAddress(Address value) {
+  set selectedAddress(Address? value) {
     _address = value;
     _saveToDisk(AddressKey, value == null ? null : json.encode(value.toJson()));
   }

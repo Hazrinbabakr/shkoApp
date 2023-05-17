@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 
 class CustomAppButton extends StatelessWidget {
-  final Widget child;
+  final Widget? child;
   final double borderRadius;
-  final GestureTapCallback onTap;
-  final EdgeInsetsGeometry padding;
-  final EdgeInsetsGeometry margin;
+  final GestureTapCallback? onTap;
+  final EdgeInsetsGeometry? padding;
+  final EdgeInsetsGeometry? margin;
   final BorderSide border;
-  final Color color;
+  final Color? color;
   final double elevation;
 
   const CustomAppButton({
-    Key key,
+    Key? key,
     this.child,
     this.borderRadius = 0,
     this.onTap,
@@ -67,7 +67,7 @@ class CustomAppButtonPrimary extends StatelessWidget {
   final String text;
   final GestureTapCallback onTap;
 
-  const CustomAppButtonPrimary({Key key,@required this.text,@required this.onTap}) : super(key: key);
+  const CustomAppButtonPrimary({Key? key,required this.text,required this.onTap}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return CustomAppButton(

@@ -13,14 +13,14 @@ import 'package:shko/services/local_storage_service.dart';
 class ProductsList extends StatefulWidget {
    final String categoryID;
    final categoryName;
-   ProductsList(this.categoryID, this.categoryName, {Key key}) : super(key: key);
+   ProductsList(this.categoryID, this.categoryName, {Key? key}) : super(key: key);
 
   @override
   _ProductsListState createState() => _ProductsListState();
 }
 
 class _ProductsListState extends State<ProductsList> {
-  List<DocumentSnapshot> productListSnapShot;
+  List<DocumentSnapshot>? productListSnapShot;
 
   // int favLength;
   List<QueryDocumentSnapshot>  productList=[];
@@ -31,16 +31,11 @@ class _ProductsListState extends State<ProductsList> {
         .where('categoryID',isEqualTo: widget.categoryID)
         .get()
         .then((value) {
-      productListSnapShot = new List<DocumentSnapshot>(value.docs.length);
-      value.docs.forEach((element) async {
-        setState(() {
-          productListSnapShot[i] = element;
-          productList.add(element);
-          // favLength=productListSnapShot.length;
-        });
-        i++;
+      productListSnapShot = [];
+      productListSnapShot!.addAll(value.docs);
+      productList.addAll(value.docs);
+      setState(() {});
 
-      });
     });
   }
 
@@ -63,7 +58,7 @@ class _ProductsListState extends State<ProductsList> {
           leading: BackArrowWidget(),
       ),
 
-      body:  (productListSnapShot == null || productListSnapShot.isEmpty)
+      body:  (productListSnapShot == null || productListSnapShot!.isEmpty)
           ? EmptyWidget()
           : SingleChildScrollView(
             child:
@@ -86,8 +81,8 @@ class _ProductsListState extends State<ProductsList> {
                     ? 2
                     : 4,
                 children:
-                List.generate(productListSnapShot.length, (index) {
-                  DocumentSnapshot data= productListSnapShot.elementAt(index);
+                List.generate(productListSnapShot!.length, (index) {
+                  DocumentSnapshot data= productListSnapShot!.elementAt(index);
                   return  InkWell(
                     onTap: (){
                       // print('Main Category ID  ${data.id.toString()}');

@@ -13,14 +13,14 @@ import 'package:shko/services/local_storage_service.dart';
 class BrandList extends StatefulWidget {
   final String brandID;
   final brandName;
-  BrandList(this.brandID, this.brandName, {Key key}) : super(key: key);
+  BrandList(this.brandID, this.brandName, {Key? key}) : super(key: key);
 
   @override
   _BrandListState createState() => _BrandListState();
 }
 
 class _BrandListState extends State<BrandList> {
-  List<DocumentSnapshot> productListSnapShot;
+  List<DocumentSnapshot>? productListSnapShot;
 
   // int favLength;
   List<QueryDocumentSnapshot>  productList=[];
@@ -31,14 +31,10 @@ class _BrandListState extends State<BrandList> {
         .where('brand',isEqualTo: widget.brandID)
         .get()
         .then((value) {
-      productListSnapShot = new List<DocumentSnapshot>(value.docs.length);
-      value.docs.forEach((element) async {
-        setState(() {
-          productListSnapShot[i] = element;
-          productList.add(element);
-          // favLength=productListSnapShot.length;
-        });
-        i++;
+      productListSnapShot = [];
+      productListSnapShot!.addAll(value.docs);
+      productList.addAll(value.docs);
+      setState(() {
 
       });
     });
@@ -63,7 +59,7 @@ class _BrandListState extends State<BrandList> {
         leading: BackArrowWidget(),
       ),
 
-      body:  (productListSnapShot == null || productListSnapShot.isEmpty)
+      body:  (productListSnapShot == null || productListSnapShot!.isEmpty)
           ? EmptyWidget()
           : SingleChildScrollView(
           child:
@@ -86,8 +82,8 @@ class _BrandListState extends State<BrandList> {
                   ? 2
                   : 4,
               children:
-              List.generate(productListSnapShot.length, (index) {
-                DocumentSnapshot data= productListSnapShot.elementAt(index);
+              List.generate(productListSnapShot!.length, (index) {
+                DocumentSnapshot data= productListSnapShot!.elementAt(index);
                 return  InkWell(
                   onTap: (){
                     // print('Main Category ID  ${data.id.toString()}');

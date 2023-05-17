@@ -10,9 +10,9 @@ class ProfileAvatarWidget extends StatefulWidget {
   //bool isGuest;
 
   ProfileAvatarWidget({
-    Key key,
-    this.name,
-    this.phoneNumber,
+    Key? key,
+    required this.name,
+    required this.phoneNumber,
     //this.isGuest,
   }) : super(key: key);
 
@@ -59,7 +59,7 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                   Center(
                         child: Text(
                     "${widget.name.toUpperCase()}",
-                    style: Theme.of(context).textTheme.subtitle1.merge(
+                    style: Theme.of(context).textTheme.subtitle1!.merge(
                           TextStyle(fontSize: 22)),
                   ),
                       ),
@@ -69,7 +69,7 @@ class _ProfileAvatarWidgetState extends State<ProfileAvatarWidget> {
                   //     :
                   Center(
                         child: Text(widget.phoneNumber,
-                    style: Theme.of(context).textTheme.subtitle1.merge(
+                    style: Theme.of(context).textTheme.subtitle1!.merge(
                           TextStyle(color: Theme.of(context).hintColor)),
                   ),
                       ),

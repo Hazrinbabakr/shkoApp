@@ -5,17 +5,18 @@ import 'package:shko/helper/colors.dart';
 
 
 class TextFieldFormInput extends StatelessWidget {
-  final String title;
-  final TextInputType inputType;
+  final String? title;
+  final TextInputType? inputType;
   final bool required;
-  final String initialValue;
-  final TextEditingController controller;
+  final String ?initialValue;
+  final TextEditingController? controller;
   final bool password;
   final bool readOnly;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
 
-  const TextFieldFormInput({Key key, this.title,this.controller, this.inputType, this.required = false,this.initialValue, this.password = false,this.readOnly = false, this.onTap}) : super(key: key);
+  const TextFieldFormInput({Key? key,
+    this.title,this.controller, this.inputType, this.required = false,this.initialValue, this.password = false,this.readOnly = false, this.onTap}) : super(key: key);
 
 
   @override
@@ -39,16 +40,16 @@ class TextFieldFormInput extends StatelessWidget {
           onTap: onTap,
           obscureText: password,
           inputType: inputType,
-          validator: (String text){
+          validator: (String? text){
             if(inputType == TextInputType.emailAddress){
-              if(text.isEmpty && !required) return null;
+              if(text!.isEmpty && !required) return null;
               if(text.isEmpty) return "required";
               //if(Helper.isEmail(text)) return "invalid email";
               return null;
             }
             else{
               if(!required) return null;
-              if(text.isEmpty) return "required";
+              if(text!.isEmpty) return "required";
             }
             return null;
           },
@@ -62,27 +63,27 @@ class TextFieldFormInput extends StatelessWidget {
 
 
 class TextFieldWidget extends StatelessWidget {
-  final ValueChanged<String> onChanged;
-  final FormFieldValidator<String> validator;
-  final ValueChanged<String> onSubmitted;
-  final FormFieldSetter<String> onSave;
-  final String hint;
-  final String initValue;
-  final TextInputType inputType;
-  final int maxLines;
-  final String label;
+  final ValueChanged<String>? onChanged;
+  final FormFieldValidator<String>? validator;
+  final ValueChanged<String>? onSubmitted;
+  final FormFieldSetter<String>? onSave;
+  final String? hint;
+  final String? initValue;
+  final TextInputType? inputType;
+  final int? maxLines;
+  final String? label;
   final bool withBorder;
   final bool readOnly;
-  final VoidCallback onTap;
-  final TextEditingController controller;
-  final Widget icon;
-  final Widget prefix;
-  final Color  fillColor;
+  final VoidCallback? onTap;
+  final TextEditingController? controller;
+  final Widget? icon;
+  final Widget? prefix;
+  final Color?  fillColor;
   final bool obscureText;
 
   const TextFieldWidget(
       {
-        Key key,
+        Key? key,
         this.onChanged,
         this.validator,
         this.onSave,

@@ -10,18 +10,18 @@ import 'package:shko/services/local_storage_service.dart';
 
 
 class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({Key key}) : super(key: key);
+  const FavoriteScreen({Key? key}) : super(key: key);
   @override
   _FavoriteScreenState createState() => _FavoriteScreenState();
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
   final userCollection = FirebaseFirestore.instance.collection('users');
-  List<DocumentSnapshot> allProductListSnapShot;
-  List<DocumentSnapshot> favListSnapShot;
-  User user;
-  FirebaseAuth _auth;
-  int favLength;
+  List<DocumentSnapshot>? allProductListSnapShot;
+  List<DocumentSnapshot>? favListSnapShot;
+  User user = FirebaseAuth.instance.currentUser!;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  int? favLength;
   List<String> favList=[];
   getFavProduct() {
     favListSnapShot = [];
@@ -29,9 +29,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         .collection('users').doc(user.uid).collection('favorite')
         .get()
         .then((value) {
-      favListSnapShot.addAll(value.docs);
-      favLength = favListSnapShot.length;
-      favList.addAll(favListSnapShot.map((e) => e.id).toList());
+      favListSnapShot!.addAll(value.docs);
+      favLength = favListSnapShot!.length;
+      favList.addAll(favListSnapShot!.map((e) => e.id).toList());
     }).whenComplete((){
       if(favLength !=null){
         getAllProduct();
@@ -46,12 +46,12 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   getAllProduct() {
     allProductListSnapShot = [];//new List<DocumentSnapshot>(favLength);
     // allProductList = new List<Map>(productListSnapShot.length);
-    for(int i=0; i<favLength;i++) {
+    for(int i=0; i<favLength!;i++) {
       FirebaseFirestore.instance
           .collection('products').where("productID", isEqualTo: favList[i])
           .get()
           .then((value) {
-        allProductListSnapShot.addAll(value.docs);
+        allProductListSnapShot!.addAll(value.docs);
         setState(() {
 
         });
@@ -62,14 +62,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _auth= FirebaseAuth.instance;
-    user=_auth.currentUser;
     getFavProduct();
-// Future.delayed(Duration(seconds: 2),(){
-//   getAllProduct();
-// });
   }
 
 
@@ -85,7 +79,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         ),
 
         body:
-        (allProductListSnapShot == null || allProductListSnapShot.length<1)
+        (allProductListSnapShot == null || allProductListSnapShot!.length<1)
             ? SizedBox()
             : GridView.count(
               scrollDirection: Axis.vertical,
@@ -104,13 +98,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                   ? 2
                   : 4,
               children:
-              List.generate(allProductListSnapShot.length, (i) {
+              List.generate(allProductListSnapShot!.length, (i) {
                 //DocumentSnapshot data= allProductListSnapShot.elementAt(i);
-                return (allProductListSnapShot[i] != null)
+                return (allProductListSnapShot![i] != null)
                     ? InkWell(
                   onTap: (){
                     Navigator.of(context).push(MaterialPageRoute(
-                      builder: (context) => ProductDetails( allProductListSnapShot[i].id.toString()),
+                      builder: (context) => ProductDetails( allProductListSnapShot![i].id.toString()),
                     ));
                   },
                   child: Padding(
@@ -141,7 +135,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                       image: DecorationImage(
                                           fit: BoxFit.cover,
                                           image: NetworkImage(
-                                              allProductListSnapShot[i]['images'][0].toString()))),
+                                              allProductListSnapShot![i]['images'][0].toString()))),
                                 ),
                                 SizedBox(height: 10,),
                                 Container(
@@ -149,16 +143,16 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                     width: 170,
                                     child: Text(
                                       AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                                      allProductListSnapShot[i]['nameK'].toString().toUpperCase():
+                                      allProductListSnapShot![i]['nameK'].toString().toUpperCase():
                                       AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                                      allProductListSnapShot[i]['nameA'].toString().toUpperCase():
-                                      allProductListSnapShot[i]['name'].toString().toUpperCase(),
+                                      allProductListSnapShot![i]['nameA'].toString().toUpperCase():
+                                      allProductListSnapShot![i]['name'].toString().toUpperCase(),
 textAlign: TextAlign.center,
                                       style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,), overflow: TextOverflow.visible,maxLines: 3,)),
                                // SizedBox(height: 5,),
                                 //LocalStorageService.instance.user.role == 1?
                                 Center(
-                                  child: Text('${allProductListSnapShot[i]['price'].toString()}\$',
+                                  child: Text('${allProductListSnapShot![i]['price'].toString()}\$',
                                     style: TextStyle(fontSize: 15,color: Colors.black,fontWeight: FontWeight.w500),),
                                 ),
 
@@ -171,13 +165,13 @@ textAlign: TextAlign.center,
                           bottom:10,
                           child: InkWell(
                               onTap: () async {
-                                User user = _auth.currentUser;
+                                User user = _auth.currentUser!;
                                 await userCollection
                                     .doc(user.uid)
                                     .collection('favorite')
-                                    .doc(allProductListSnapShot[i].id).delete();
-                                allProductListSnapShot.removeAt(i);
-                                favListSnapShot.removeAt(i);
+                                    .doc(allProductListSnapShot![i].id).delete();
+                                allProductListSnapShot!.removeAt(i);
+                                favListSnapShot!.removeAt(i);
                                 //allProductListSnapShot = null;
                                 //favListSnapShot = null;
                                 setState(() {

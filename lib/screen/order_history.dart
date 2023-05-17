@@ -10,17 +10,17 @@ import 'package:shko/localization/AppLocal.dart';
 import 'package:shko/screen/productDetails.dart';
 
 class OrderHistoryScreen extends StatefulWidget {
-  OrderHistoryScreen({Key key}) : super(key: key);
+  OrderHistoryScreen({Key? key}) : super(key: key);
 
   @override
   _OrderHistoryScreenState createState() => _OrderHistoryScreenState();
 }
 
 class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
-  List<DocumentSnapshot> orderHistoryList;
-  List<DocumentSnapshot> currentOrderList;
-  FirebaseAuth _auth;
-  User user;
+  List<DocumentSnapshot>? orderHistoryList;
+  List<DocumentSnapshot>? currentOrderList;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  User user = FirebaseAuth.instance.currentUser!;
   final userCollection = FirebaseFirestore.instance.collection('users');
   final adminCollection = FirebaseFirestore.instance.collection('Admin');
   getProducts() {
@@ -29,33 +29,25 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     where("OrderStatus",isNotEqualTo: "Pending")
         .get()
         .then((value) {
-      orderHistoryList = new List<DocumentSnapshot>(value.docs.length);
-      value.docs.forEach((element) async {
-        setState(() {
-          orderHistoryList[i] = element;
-        });
-        i++;
-      });
+      orderHistoryList = [];
+      orderHistoryList!.addAll( value.docs);
+      setState(() {});
     }).whenComplete(() {
      // print(orderHistoryList.length);
     });
   }
 
   getCurrentProducts() {
-    int i = 0;
     FirebaseFirestore.instance.collection('users').doc(user.uid).collection('orders').
         orderBy('date', descending: true)
    // where("OrderStatus",isEqualTo: "Pending")
         .get()
         .then((value) {
-      currentOrderList = new List<DocumentSnapshot>(value.docs.length);
-      value.docs.forEach((element) async {
-        setState(() {
-          currentOrderList[i] = element;
-          length= currentOrderList.length;
-        });
-        i++;
-      });
+      currentOrderList = [];
+      currentOrderList!.addAll(value.docs);
+      length = currentOrderList!.length;
+      setState(() {});
+
     }).whenComplete(() {
       // print(currentOrderList.length);
     });
@@ -67,10 +59,7 @@ int length=0;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _auth= FirebaseAuth.instance;
-    user=_auth.currentUser;
     getProducts();
     getCurrentProducts();
   }
@@ -104,7 +93,7 @@ int length=0;
                   indicatorSize: TabBarIndicatorSize.tab,
                   indicator: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      color: Theme.of(context).accentColor,
+                      color: Theme.of(context).colorScheme.secondary,
                   ),
                   //indicatorPadding: EdgeInsets.all(90),
                   onTap: (index){
@@ -173,9 +162,9 @@ int length=0;
                 children: [
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: currentOrderList.length,
+                      itemCount: currentOrderList!.length,
                       itemBuilder: (context, i) {
-                        return (currentOrderList[i] != null) && currentOrderList[i]['OrderStatus'] == "Pending"?
+                        return (currentOrderList![i] != null) && currentOrderList![i]['OrderStatus'] == "Pending"?
 
                         ExpansionTile(
                           title: Padding(
@@ -186,7 +175,7 @@ int length=0;
                                     color: Colors.white,
                                     boxShadow: [
                                       BoxShadow(
-                                          color: Colors.grey[200],
+                                          color: Colors.grey[200]!,
                                           spreadRadius: 1,
                                           blurRadius: 10)
                                     ]),
@@ -199,7 +188,7 @@ int length=0;
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
                                           Text(
-                                           AppLocalizations.of(context).trans(currentOrderList[i]['OrderStatus'])
+                                           AppLocalizations.of(context).trans(currentOrderList![i]['OrderStatus'])
                                           //  "Pending"
 
                                             ,style: TextStyle(color: Colors.orange,fontSize: 18),),
@@ -227,15 +216,15 @@ int length=0;
                                                       onTap: (){
                                                         setState(() {
 
-                                                          User user = _auth.currentUser;
+                                                          User user = _auth.currentUser!;
                                                           userCollection
                                                               .doc(user.uid)
                                                               .collection('orders')
-                                                              .doc(currentOrderList[i].id).delete();
+                                                              .doc(currentOrderList![i].id).delete();
                                                           adminCollection
                                                               .doc('admindoc')
                                                               .collection('orders')
-                                                              .doc(currentOrderList[i].id).delete();
+                                                              .doc(currentOrderList![i].id).delete();
 
                                                           Navigator.of(context).pop();
 
@@ -259,12 +248,12 @@ int length=0;
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(vertical:7 ),
-                                        child: Text(currentOrderList[i]['date'],style: TextStyle(fontSize: 12,color: Colors.black),),
+                                        child: Text(currentOrderList![i]['date'],style: TextStyle(fontSize: 12,color: Colors.black),),
                                       ),
                                       Row(
                                         children: [
                                           Text( AppLocalizations.of(context).trans("deliveryTo"),style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black),),
-                                          Expanded(child: Text(currentOrderList[i]['userAddress'].toString(),style: TextStyle(color: Colors.black),)),
+                                          Expanded(child: Text(currentOrderList![i]['userAddress'].toString(),style: TextStyle(color: Colors.black),)),
                                         ],
                                       ),
 
@@ -284,7 +273,7 @@ int length=0;
                                 // margin: EdgeInsets.only(
                                 //     left: 15.0),
                                 child: ListView.builder(
-                                    itemCount: currentOrderList[i][
+                                    itemCount: currentOrderList![i][
                                     "productList"]
                                         .length,
                                     itemBuilder:
@@ -299,10 +288,10 @@ int length=0;
                                               Row(
                                                 //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                 children: [
-                                                  Text('${currentOrderList[i]["productList"][index]['quantity'].toString()}x'),
+                                                  Text('${currentOrderList![i]["productList"][index]['quantity'].toString()}x'),
                                                   SizedBox(width: 10,),
                                                   Text(
-                                                    currentOrderList[i]["productList"][index]['name'],
+                                                    currentOrderList![i]["productList"][index]['name'],
                                                     style:
                                                     TextStyle(fontSize: 14
                                                     ),
@@ -320,13 +309,13 @@ int length=0;
                               Row(
                                 children: [
                                   Text( AppLocalizations.of(context).trans("DeliveryFee"),style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList[i]['deliveryFee'].toString()}IQD')),
+                                  Expanded(child: Text('${currentOrderList![i]['deliveryFee'].toString()}IQD')),
                                 ],
                               ),
                               Row(
                                 children: [
                                   Text( AppLocalizations.of(context).trans("TotalPrice"),style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList[i]['totalPrice'].toString()}IQD')),
+                                  Expanded(child: Text('${currentOrderList![i]['totalPrice'].toString()}IQD')),
                                 ],
                               ),
 
@@ -369,9 +358,9 @@ int length=0;
 
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: currentOrderList.length,
+                      itemCount: currentOrderList!.length,
                       itemBuilder: (context, i) {
-                        return (currentOrderList[i] != null) && currentOrderList[i]['OrderStatus'] == "Accepted"?
+                        return (currentOrderList![i] != null) && currentOrderList![i]['OrderStatus'] == "Accepted"?
 
                         ExpansionTile(
                           title: Padding(
@@ -382,7 +371,7 @@ int length=0;
                                     color: Colors.white,
                                     boxShadow: [
                                       BoxShadow(
-                                          color: Colors.grey[200],
+                                          color: Colors.grey[200]!,
                                           spreadRadius: 1,
                                           blurRadius: 10)
                                     ]),
@@ -398,12 +387,12 @@ int length=0;
                                         ,style: TextStyle(color: Colors.green[600],fontSize: 18),),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(vertical:7 ),
-                                        child: Text(currentOrderList[i]['date'],style: TextStyle(fontSize: 12),),
+                                        child: Text(currentOrderList![i]['date'],style: TextStyle(fontSize: 12),),
                                       ),
                                       Row(
                                         children: [
                                           Text('Deliver to: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                          Expanded(child: Text(currentOrderList[i]['userAddress'].toString())),
+                                          Expanded(child: Text(currentOrderList![i]['userAddress'].toString())),
                                         ],
                                       ),
 
@@ -423,7 +412,7 @@ int length=0;
                                 // margin: EdgeInsets.only(
                                 //     left: 15.0),
                                 child: ListView.builder(
-                                    itemCount: currentOrderList[i][
+                                    itemCount: currentOrderList![i][
                                     "productList"]
                                         .length,
                                     itemBuilder:
@@ -438,10 +427,10 @@ int length=0;
                                               Row(
                                                 //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                 children: [
-                                                  Text('${currentOrderList[i]["productList"][index]['quantity'].toString()}x'),
+                                                  Text('${currentOrderList![i]["productList"][index]['quantity'].toString()}x'),
                                                   SizedBox(width: 10,),
                                                   Text(
-                                                    currentOrderList[i]["productList"][index]['name'],
+                                                    currentOrderList![i]["productList"][index]['name'],
                                                     style:
                                                     TextStyle(fontSize: 14
                                                     ),
@@ -459,13 +448,13 @@ int length=0;
                               Row(
                                 children: [
                                   Text('Delivery Fee: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList[i]['deliveryFee'].toString()}\$')),
+                                  Expanded(child: Text('${currentOrderList![i]['deliveryFee'].toString()}\$')),
                                 ],
                               ),
                               Row(
                                 children: [
                                   Text('Total Price: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList[i]['totalPrice'].toString()}\S')),
+                                  Expanded(child: Text('${currentOrderList![i]['totalPrice'].toString()}\S')),
                                 ],
                               ),
 
@@ -504,9 +493,9 @@ int length=0;
                 children: [
                   ListView.builder(
                       shrinkWrap: true,
-                      itemCount: currentOrderList.length,
+                      itemCount: currentOrderList!.length,
                       itemBuilder: (context, i) {
-                        return (currentOrderList[i] != null) && currentOrderList[i]['OrderStatus'] == "Rejected"?
+                        return (currentOrderList![i] != null) && currentOrderList![i]['OrderStatus'] == "Rejected"?
 
                         ExpansionTile(
                           title: Padding(
@@ -517,7 +506,7 @@ int length=0;
                                   color: Colors.white,
                                   boxShadow: [
                                     BoxShadow(
-                                        color: Colors.grey[200],
+                                        color: Colors.grey[200]!,
                                         spreadRadius: 1,
                                         blurRadius: 10)
                                   ]),
@@ -532,12 +521,12 @@ int length=0;
                                       ,style: TextStyle(color: Colors.red[500],fontSize: 18),),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical:7 ),
-                                      child: Text(currentOrderList[i]['date'],style: TextStyle(fontSize: 12),),
+                                      child: Text(currentOrderList![i]['date'],style: TextStyle(fontSize: 12),),
                                     ),
                                     Row(
                                       children: [
                                         Text('Deliver to: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                        Expanded(child: Text(currentOrderList[i]['userAddress'].toString())),
+                                        Expanded(child: Text(currentOrderList![i]['userAddress'].toString())),
                                       ],
                                     ),
 
@@ -557,7 +546,7 @@ int length=0;
                                   // margin: EdgeInsets.only(
                                   //     left: 15.0),
                                   child: ListView.builder(
-                                      itemCount: currentOrderList[i][
+                                      itemCount: currentOrderList![i][
                                       "productList"]
                                           .length,
                                       itemBuilder:
@@ -572,10 +561,10 @@ int length=0;
                                                 Row(
                                                   //   mainAxisAlignment: MainAxisAlignment.spaceAround,
                                                   children: [
-                                                    Text('${currentOrderList[i]["productList"][index]['quantity'].toString()}x'),
+                                                    Text('${currentOrderList![i]["productList"][index]['quantity'].toString()}x'),
                                                     SizedBox(width: 10,),
                                                     Text(
-                                                      currentOrderList[i]["productList"][index]['name'],
+                                                      currentOrderList![i]["productList"][index]['name'],
                                                       style:
                                                       TextStyle(fontSize: 14
                                                       ),
@@ -593,13 +582,13 @@ int length=0;
                                 Row(
                                   children: [
                                     Text('Delivery Fee: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                    Expanded(child: Text('${currentOrderList[i]['deliveryFee'].toString()}\$')),
+                                    Expanded(child: Text('${currentOrderList![i]['deliveryFee'].toString()}\$')),
                                   ],
                                 ),
                                 Row(
                                   children: [
                                     Text('Total Price: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                    Expanded(child: Text('${currentOrderList[i]['totalPrice'].toString()}\S')),
+                                    Expanded(child: Text('${currentOrderList![i]['totalPrice'].toString()}\S')),
                                   ],
                                 ),
 

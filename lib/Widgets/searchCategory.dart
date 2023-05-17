@@ -15,20 +15,16 @@ class SearchCategory extends StatefulWidget {
 }
 
 class _BrandsState extends State<SearchCategory> {
-  List<DocumentSnapshot> categorySnapshot;
+  List<DocumentSnapshot>? categorySnapshot;
   getCategry() {
     int i = 0;
     FirebaseFirestore.instance
         .collection('categories')
         .get()
         .then((value) {
-      categorySnapshot = new List<DocumentSnapshot>(value.docs.length);
-      value.docs.forEach((element) async {
-        setState(() {
-          categorySnapshot[i] = element;
-        });
-        i++;
-      });
+      categorySnapshot = [];
+      categorySnapshot!.addAll(value.docs);
+      setState(() {});
     });
 
   }
@@ -43,7 +39,7 @@ class _BrandsState extends State<SearchCategory> {
     return
 
 
-      (categorySnapshot == null || categorySnapshot.isEmpty)
+      (categorySnapshot == null || categorySnapshot!.isEmpty)
           ? SizedBox()
           :  Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -64,8 +60,8 @@ class _BrandsState extends State<SearchCategory> {
               ? 3
               : 4,
         children:
-        List.generate(categorySnapshot.length, (i) {
-            DocumentSnapshot data= categorySnapshot.elementAt(i);
+        List.generate(categorySnapshot!.length, (i) {
+            DocumentSnapshot data= categorySnapshot!.elementAt(i);
             return  InkWell(
               onTap: (){
 
@@ -107,15 +103,15 @@ class _BrandsState extends State<SearchCategory> {
                       height:85,
                       width: 80,
                       child: Image.network(
-                          categorySnapshot[i]['img'].toString()??""
+                          categorySnapshot![i]['img'].toString()??""
                       ),
                     ),
                     SizedBox(height: 25,),
                     Text(
-                      AppLocalizations.of(context).locale.languageCode.toString()=='ku'? categorySnapshot[i]['nameK']:
+                      AppLocalizations.of(context).locale.languageCode.toString()=='ku'? categorySnapshot![i]['nameK']:
                       AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                      categorySnapshot[i]['nameA']:
-                      categorySnapshot[i]['name'],
+                      categorySnapshot![i]['nameA']:
+                      categorySnapshot![i]['name'],
                       maxLines: 1,
                       style: TextStyle(color: Colors.grey[600],fontSize: 14),),
                     SizedBox(height:5,),

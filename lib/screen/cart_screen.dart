@@ -17,48 +17,49 @@ import 'package:uuid/uuid.dart';
 
 class CartScreen extends StatefulWidget {
   final bool arrow;
-  const CartScreen(this.arrow, {Key key}) : super(key: key);
+  const CartScreen(this.arrow, {Key? key}) : super(key: key);
   @override
   _CartScreenState createState() => _CartScreenState();
 }
 
 class _CartScreenState extends State<CartScreen> {
-  FirebaseAuth _auth;
-  User user;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  User user = FirebaseAuth.instance.currentUser!;
   final userCollection = FirebaseFirestore.instance.collection('users');
-  List<DocumentSnapshot> cart;
+  List<DocumentSnapshot>? cart;
   List<Map> cartList = [];
   double subTotal=0.0;
-  DocumentSnapshot adminInfo;
-  DocumentSnapshot adminInfoCollection;
-  DocumentSnapshot userInfo;
-  DocumentSnapshot userInfoCollection;
+  Map<String,dynamic>? adminInfo;
+  DocumentSnapshot? adminInfoCollection;
+  Map<String,dynamic>? userInfo;
+  DocumentSnapshot? userInfoCollection;
   double deliveryFee=0.0;
   //double dinnar =00;
   String name='';
   String address='';
   String phone='';
   var uuid = Uuid();
-  String rundomNumber;
+  String? rundomNumber;
 
   getCart() {
+    cart = [];
     cartList=[];
     subTotal=0.0;
     int i = 0;
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('cart').get().then((value) {
-      cart = new List<DocumentSnapshot>(value.docs.length);
+    FirebaseFirestore.instance.collection('users')
+        .doc(user.uid).collection('cart').get().then((value) {
       value.docs.forEach((element) async {
         setState(() {
-          cart[i] = element;
+          cart!.add(element);
           cartList.add({
-            'name':  cart[i]['name'],
-            'price':  cart[i]['price'],
-            'productID':  cart[i]['productID'],
-            'quantity':  cart[i]['quantity'],
-            'img':  cart[i]['img'],
+            'name':  cart![i]['name'],
+            'price':  cart![i]['price'],
+            'productID':  cart![i]['productID'],
+            'quantity':  cart![i]['quantity'],
+            'img':  cart![i]['img'],
           });
           setState(() {
-            subTotal += cart[i]['price']*cart[i]['quantity'];
+            subTotal += cart![i]['price']*cart![i]['quantity'];
           });
         });
         i++;
@@ -73,8 +74,8 @@ class _CartScreenState extends State<CartScreen> {
         .collection('Admin').doc('admindoc')
         .get();
     setState(() {
-      adminInfo=adminInfoCollection;
-      deliveryFee =  double.parse('${adminInfo.data()['deliveryfee']}');
+      adminInfo=adminInfoCollection!.data() as Map<String,dynamic>;
+      deliveryFee =  double.parse('${adminInfo!['deliveryfee']}');
      // dinnar =  double.parse('${adminInfo.data()['dinnar']}');
     });
   }
@@ -83,10 +84,10 @@ class _CartScreenState extends State<CartScreen> {
         .collection('users').doc(user.uid)
         .get();
     setState(() {
-      userInfo=userInfoCollection;
-      name =  userInfo.data()['username'];
-      address =  userInfo.data()['address'];
-      phone =  userInfo.data()['phone'];
+      userInfo=userInfoCollection!.data() as Map<String,dynamic>;
+      name =  userInfo!['username'];
+      address =  userInfo!['address'];
+      phone =  userInfo!['phone'];
     });
   }
 
@@ -95,8 +96,6 @@ class _CartScreenState extends State<CartScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    _auth = FirebaseAuth.instance;
-    user = _auth.currentUser;
     getCart();
     getAdminInfo();
     getUserInfo();
@@ -183,11 +182,11 @@ class _CartScreenState extends State<CartScreen> {
                             return Container(
                               // color: Colors.red,
                               child: ListView.builder(
-                                itemCount: snapshot.data?.docs?.length ?? 0,
+                                itemCount: snapshot.data?.docs.length ?? 0,
                                 itemBuilder: (_, index) {
 
                                   if (snapshot.hasData) {
-                                    DocumentSnapshot cartInfo = snapshot.data.docs[index];
+                                    DocumentSnapshot cartInfo = snapshot.data!.docs[index];
 
 
                                     return  InkWell(
@@ -206,7 +205,7 @@ class _CartScreenState extends State<CartScreen> {
                                                       // color: Colors.red,
                                                       boxShadow: [
                                                         BoxShadow(
-                                                            color: Colors.grey[200],
+                                                            color: Colors.grey[200]!,
                                                             spreadRadius: 1,
                                                             blurRadius: 10)
                                                       ]),
@@ -228,8 +227,7 @@ class _CartScreenState extends State<CartScreen> {
                                                               image: DecorationImage(
                                                                   fit: BoxFit.cover,
                                                                   image: NetworkImage(
-                                                                    cartInfo
-                                                                        .data()["img"]
+                                                                    cartInfo["img"]
                                                                         .toString(),))),
                                                         ),
 
@@ -243,8 +241,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                 children: [
 
                                                                   Text(
-                                                                    cartInfo
-                                                                        .data()["name"]
+                                                                    cartInfo["name"]
                                                                         .toString(),
                                                                     style: TextStyle(fontSize: 18,fontWeight: FontWeight.w600),
                                                                     maxLines: 1,
@@ -262,8 +259,7 @@ class _CartScreenState extends State<CartScreen> {
 
                                                                       Row(
                                                                         children: [
-                                                                          cartInfo
-                                                                              .data()["quantity"]
+                                                                          cartInfo["quantity"]
                                                                               .toString()=="1"?
                                                                           InkWell(
                                                                             onTap:  () {
@@ -288,8 +284,8 @@ class _CartScreenState extends State<CartScreen> {
                                                                                       onTap: (){
                                                                                         setState(() {
                                                                                           //productListSnapShot[i]['quantity']-1;
-                                                                                          subTotal -= cartInfo.data()['price'];
-                                                                                          User user = _auth.currentUser;
+                                                                                          subTotal -= cartInfo['price'];
+                                                                                          User user = _auth.currentUser!;
                                                                                           userCollection
                                                                                               .doc(user.uid)
                                                                                               .collection('cart')
@@ -339,15 +335,15 @@ class _CartScreenState extends State<CartScreen> {
                                                                             onTap:  () {
                                                                               //Addtocart
                                                                               setState(() {
-                                                                                if(  cartInfo.data()['quantity']>1){
+                                                                                if(  cartInfo['quantity']>1){
                                                                                   //productListSnapShot[i]['quantity']-1;
-                                                                                  subTotal -= cartInfo.data()['price'];
-                                                                                  User user = _auth.currentUser;
+                                                                                  subTotal -= cartInfo['price'];
+                                                                                  User user = _auth.currentUser!;
                                                                                   userCollection
                                                                                       .doc(user.uid)
                                                                                       .collection('cart')
                                                                                       .doc(cartInfo.id).update({
-                                                                                    "quantity":  cartInfo.data()['quantity']-1,
+                                                                                    "quantity":  cartInfo['quantity']-1,
                                                                                     // "subPrice": (cartInfo.data()['quantity'] -1) * cartInfo.data()['price']
 
                                                                                   });
@@ -410,8 +406,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                                 width: 32,
                                                                                 // color: Colors.red,
                                                                                 child:  Center(child:
-                                                                                Text(cartInfo
-                                                                                    .data()["quantity"]
+                                                                                Text(cartInfo["quantity"]
                                                                                     .toString(),style: TextStyle(fontSize: 18),))
                                                                             ),
                                                                           ),
@@ -419,13 +414,13 @@ class _CartScreenState extends State<CartScreen> {
                                                                           InkWell(
                                                                             onTap: (){
                                                                               setState(() {
-                                                                                subTotal += cartInfo.data()['price'];
-                                                                                User user = _auth.currentUser;
+                                                                                subTotal += cartInfo['price'];
+                                                                                User user = _auth.currentUser!;
                                                                                 userCollection
                                                                                     .doc(user.uid)
                                                                                     .collection('cart')
                                                                                     .doc(cartInfo.id).update({
-                                                                                  "quantity":  cartInfo.data()['quantity']+1,
+                                                                                  "quantity":  cartInfo['quantity']+1,
                                                                                   // "subPrice": (cartInfo.data()['quantity'] +1) * cartInfo.data()['price']
                                                                                 });
                                                                                 //calculatingTotalPrice(cartInfo.data()['price'], cartInfo.data()['quantity']);
@@ -456,7 +451,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                                 child:  Icon(
                                                                                   Icons.add,
                                                                                   size: 25,
-                                                                                  color: Theme.of(context).accentColor,
+                                                                                  color: Theme.of(context).colorScheme.secondary,
                                                                                 )
                                                                             ),
                                                                           ),
@@ -464,7 +459,7 @@ class _CartScreenState extends State<CartScreen> {
                                                                         ],
                                                                       ),
                                                                       Text(
-                                                                        '${   (cartInfo.data()["price"]* cartInfo.data()['quantity'])
+                                                                        '${   (cartInfo["price"]* cartInfo['quantity'])
                                                                             .toString()} IQD',
                                                                         style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),
 
@@ -793,10 +788,10 @@ class _CartScreenState extends State<CartScreen> {
                                       "deliveryFee":deliveryFee,
                                       "userID": user.uid,
                                       "userName": name,
-                                      "userAddress": LocalStorageService.instance.selectedAddress.title,
-                                      "userLat": LocalStorageService.instance.selectedAddress.latitude,
-                                      "userLong": LocalStorageService.instance.selectedAddress.longitude,
-                                      "userDesc": LocalStorageService.instance.selectedAddress.description,
+                                      "userAddress": LocalStorageService.instance.selectedAddress!.title,
+                                      "userLat": LocalStorageService.instance.selectedAddress!.latitude,
+                                      "userLong": LocalStorageService.instance.selectedAddress!.longitude,
+                                      "userDesc": LocalStorageService.instance.selectedAddress!.description,
                                       "userPhone": phone,
                                      // "dinnar": dinnar,
                                       "orderID":rundomNumber,
@@ -811,10 +806,10 @@ class _CartScreenState extends State<CartScreen> {
                                       "deliveryFee":deliveryFee,
                                       "userID": user.uid,
                                       "userName": name,
-                                      "userAddress": LocalStorageService.instance.selectedAddress.title,
-                                      "userLat": LocalStorageService.instance.selectedAddress.latitude,
-                                      "userLong": LocalStorageService.instance.selectedAddress.longitude,
-                                      "userDesc": LocalStorageService.instance.selectedAddress.description,
+                                      "userAddress": LocalStorageService.instance.selectedAddress!.title,
+                                      "userLat": LocalStorageService.instance.selectedAddress!.latitude,
+                                      "userLong": LocalStorageService.instance.selectedAddress!.longitude,
+                                      "userDesc": LocalStorageService.instance.selectedAddress!.description,
                                       "userPhone": phone,
                                    //   "dinnar": dinnar,
                                       "orderID":rundomNumber,
@@ -823,17 +818,18 @@ class _CartScreenState extends State<CartScreen> {
                                     });
 
                                   }).whenComplete(() {
-                                    Scaffold.of(context).showSnackBar(_snackBar);
+                                    ScaffoldMessenger.of(context).showSnackBar(_snackBar);
 
                                     Future.delayed(Duration(seconds: 2),(){
                                       Navigator.of(context).push(MaterialPageRoute(
                                         builder: (context) => HomePage(),
                                       ));
 
-                                      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('cart').getDocuments().then((snapshot) {
+                                      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('cart')
+                                          .get().then((snapshot) {
                                         for (DocumentSnapshot doc in snapshot.docs) {
                                           doc.reference.delete();
-                                        };
+                                        }
                                       });
 
                                       print('done');
@@ -847,7 +843,7 @@ class _CartScreenState extends State<CartScreen> {
                               },
                               child: Container(
                                 decoration: BoxDecoration(
-                                  color: Theme.of(context).accentColor,
+                                  color: Theme.of(context).colorScheme.secondary,
                                   borderRadius: BorderRadius.all(
                                       Radius.circular(8)
                                     //                 <--- border radius here

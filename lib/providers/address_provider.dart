@@ -8,7 +8,7 @@ class AddressProvider {
 
   Future<List<Address>> getAddresses() async {
     QuerySnapshot res = await _addressCollection
-        .where("userId",isEqualTo: FirebaseAuth.instance.currentUser.uid)
+        .where("userId",isEqualTo: FirebaseAuth.instance.currentUser!.uid)
         .get();
     return res.docs.map((e) => Address.fromJson(e.data(),e.id)).toList();
   }

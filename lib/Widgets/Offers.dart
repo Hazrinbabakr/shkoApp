@@ -36,7 +36,7 @@ class Offers extends StatelessWidget {
                       height:       160.0,
                       autoPlay:     true,
                     ),
-                    items: snapshot.data.docs.map((i) {
+                    items: snapshot.data!.docs.map((i) {
                       return Builder(
                         builder: (BuildContext context) {
                           return

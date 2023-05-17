@@ -11,16 +11,10 @@ class CartWidget extends StatefulWidget {
 }
 
 class _CartWidgetState extends State<CartWidget> {
-  FirebaseAuth _auth;
-  User user;
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  User user = FirebaseAuth.instance.currentUser!;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    _auth = FirebaseAuth.instance;
-    user = _auth.currentUser;
-  }
+
   @override
   Widget build(BuildContext context) {
     return  FirebaseAuth.instance.currentUser != null ?
@@ -38,7 +32,7 @@ class _CartWidgetState extends State<CartWidget> {
                   Icon(Icons.shopping_bag_outlined,color: Colors.grey[800],size: 30,),
                   Positioned(
                       top:0,
-                      child:snapshot.data?.docs?.length==null? CircularProgressIndicator(): Container(
+                      child:snapshot.data?.docs.length==null? CircularProgressIndicator(): Container(
                           width:16,
                           height:16,
                           decoration: BoxDecoration(

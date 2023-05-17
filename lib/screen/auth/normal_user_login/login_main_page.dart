@@ -5,12 +5,11 @@ import 'package:shko/screen/auth/normal_user_login/login_normal_user.dart';
 import 'package:shko/screen/auth/providers/normal_user_login_provider.dart';
 import 'package:shko/screen/auth/signup_normal_user/sign_up_main_page.dart';
 import 'package:shko/screen/auth/normal_user_login/verify_number.dart';
-import 'package:shko/screen/auth/signup_normal_user/signup_normal_user.dart';
 import 'package:shko/screen/homepage.dart';
 import 'package:provider/provider.dart';
 
 class MainLoginPage extends StatefulWidget {
-  const MainLoginPage({Key key}) : super(key: key);
+  const MainLoginPage({Key? key}) : super(key: key);
 
   @override
   State<MainLoginPage> createState() => _MainLoginPageState();
@@ -46,7 +45,7 @@ class _MainLoginPageState extends State<MainLoginPage> {
       if(_loginProvider.error != null){
         print(_loginProvider.error);
         if(_loginProvider.error is FirebaseAuthException){
-          Fluttertoast.showToast(msg: (_loginProvider.error as FirebaseAuthException).message);
+          Fluttertoast.showToast(msg: (_loginProvider.error as FirebaseAuthException).message??"");
         }
         else{
           Fluttertoast.showToast(msg: "Fail");

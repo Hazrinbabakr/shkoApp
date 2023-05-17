@@ -17,20 +17,16 @@ class Brands extends StatefulWidget {
 }
 
 class _BrandsState extends State<Brands> {
-  List<DocumentSnapshot> brandsSnapshot;
+  List<DocumentSnapshot>? brandsSnapshot;
   getCategry() {
     int i = 0;
     FirebaseFirestore.instance
         .collection('brands')
         .get()
         .then((value) {
-      brandsSnapshot = new List<DocumentSnapshot>(value.docs.length);
-      value.docs.forEach((element) async {
-        setState(() {
-          brandsSnapshot[i] = element;
-        });
-        i++;
-      });
+      brandsSnapshot = [];
+      brandsSnapshot!.addAll(value.docs);
+      setState(() {});
     });
 
   }
@@ -45,7 +41,7 @@ class _BrandsState extends State<Brands> {
     return
 
 
-      (brandsSnapshot == null || brandsSnapshot.isEmpty)
+      (brandsSnapshot == null || brandsSnapshot!.isEmpty)
           ? SizedBox()
           : Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,10 +75,10 @@ class _BrandsState extends State<Brands> {
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,
-                itemCount: brandsSnapshot.length,
+                itemCount: brandsSnapshot!.length,
                 itemBuilder: (context, i) {
-                  DocumentSnapshot data= brandsSnapshot.elementAt(i);
-                  return (brandsSnapshot[i] != null)
+                  DocumentSnapshot data= brandsSnapshot!.elementAt(i);
+                  return (brandsSnapshot![i] != null)
 
                       ? InkWell(
                     onTap: (){
@@ -125,7 +121,7 @@ class _BrandsState extends State<Brands> {
                                 image: DecorationImage(
                                     //fit: BoxFit.cover,
                                     image: NetworkImage(
-                                        brandsSnapshot[i]['img'].toString()))),
+                                        brandsSnapshot![i]['img'].toString()))),
                           ),
                           // SizedBox(height: 7,),
                           // Text(

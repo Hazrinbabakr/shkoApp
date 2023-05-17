@@ -10,10 +10,10 @@ import 'package:location/location.dart';
 
 
 class LocationPickerPage extends StatefulWidget {
-  final double xLongitude;
-  final double yLatitude;
+  final double? xLongitude;
+  final double? yLatitude;
 
-  const LocationPickerPage({Key key, this.xLongitude, this.yLatitude}) : super(key: key);
+  const LocationPickerPage({Key? key,this.xLongitude, this.yLatitude}) : super(key: key);
 
   @override
   State<LocationPickerPage> createState() => _LocationPickerPageState();
@@ -21,9 +21,9 @@ class LocationPickerPage extends StatefulWidget {
 
 class _LocationPickerPageState extends State<LocationPickerPage> {
   final Completer<GoogleMapController> _mapController = Completer();
-  Location _location;
-  LocationData _locationData;
-  LatLng _currentMapPosition;
+  late Location _location;
+  LocationData? _locationData;
+  LatLng? _currentMapPosition;
   bool _gettingLocation = false;
   bool _permissionGranted = false;
   bool _locationServiceEnabled = false;
@@ -41,7 +41,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
       if (widget.xLongitude == null && widget.yLatitude == null) {
         await _checkLocationPermission();
       } else {
-        _currentMapPosition = LatLng(widget.yLatitude, widget.xLongitude);
+        _currentMapPosition = LatLng(widget.yLatitude!, widget.xLongitude!);
       }
     } on PlatformException catch (e) {
       if (e.code == 'PERMISSION_DENIED') {}
@@ -118,10 +118,10 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
     setState(() {
       _gettingLocation = false;
       _locationData = userLocationData;
-      _currentMapPosition = LatLng(_locationData.latitude, _locationData.longitude);
+      _currentMapPosition = LatLng(_locationData!.latitude!, _locationData!.longitude!);
     });
     if (_mapController.isCompleted) {
-      var newPos = CameraPosition(target: _currentMapPosition, zoom: 12);
+      var newPos = CameraPosition(target: _currentMapPosition!, zoom: 12);
       var con = await _mapController.future;
       con.animateCamera(CameraUpdate.newCameraPosition(newPos));
     }
@@ -143,8 +143,8 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
                 onPressed: () async {
                   if (Navigator.canPop(context)) {
                     var latLngResult = LocationData.fromMap({
-                      "latitude" : _currentMapPosition.latitude,
-                      "longitude": _currentMapPosition.longitude
+                      "latitude" : _currentMapPosition!.latitude,
+                      "longitude": _currentMapPosition!.longitude
                     });
                     Navigator.of(context).pop(latLngResult);
                   }
@@ -181,7 +181,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
     }
   }
 
-  _makeMap(bool isLoading, {Set<Marker> markers}) {
+  _makeMap(bool isLoading, {Set<Marker>? markers}) {
     return Scaffold(
       body: Stack(
         children: <Widget>[
@@ -190,7 +190,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
             zoomControlsEnabled: false,
             myLocationButtonEnabled: false,
             mapToolbarEnabled: false,
-            initialCameraPosition: CameraPosition(target: _currentMapPosition, zoom: 12),
+            initialCameraPosition: CameraPosition(target: _currentMapPosition!, zoom: 12),
             onCameraMove: (value) {
               setState(() {
                 _currentMapPosition = value.target;

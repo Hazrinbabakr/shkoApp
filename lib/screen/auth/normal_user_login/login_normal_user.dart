@@ -3,7 +3,6 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:shko/Widgets/CustomAppButton.dart';
 import 'package:shko/Widgets/phone_input_widget.dart';
 import 'package:shko/localization/AppLocal.dart';
-import 'package:shko/screen/auth/bussiness_user_login/bussiness_signin_page.dart';
 import 'package:shko/screen/auth/providers/normal_user_login_provider.dart';
 import 'package:shko/screen/auth/signup_normal_user/sign_up_main_page.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +10,7 @@ import 'package:provider/provider.dart';
 import '../../homepage.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({Key key}) : super(key: key);
+  const LoginPage({Key? key}) : super(key: key);
 
   @override
   State<LoginPage> createState() => _LoginPageState();
@@ -93,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                     color: Theme.of(context).colorScheme.secondary,
                     elevation: 0,
                     onTap: () {
-                      if (_form.currentState.validate())
+                      if (_form.currentState!.validate())
                       {
                         NormalUserLoginProvider.of(context).loginWithPhone(phone: phoneNumberController.text.trim().replaceAll(" ", ""));
                       }

@@ -1,16 +1,8 @@
-// ignore_for_file: use_key_in_widget_constructors, prefer_const_literals_to_create_immutables, prefer_const_constructors
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_email_sender/flutter_email_sender.dart';
-import 'package:mailer/mailer.dart';
-import 'package:mailer/smtp_server.dart';
 import 'package:shko/Widgets/Categories.dart';
 import 'package:shko/Widgets/Offers.dart';
 import 'package:shko/Widgets/brands.dart';
-import 'package:shko/Widgets/cart_widget.dart';
-import 'package:shko/Widgets/homeAppBar.dart';
-import 'package:shko/Widgets/SocialMediaWidget.dart';
 import 'package:shko/Widgets/top_seller.dart';
 import 'package:shko/localization/AppLocal.dart';
 import 'package:shko/services/local_storage_service.dart';
@@ -106,18 +98,18 @@ class _HomeScreenState extends State<HomeScreen> {
   //   }
   // }
 
-  Future<void> send() async {
-    final Email email = Email(
-      body: 'Email body',
-      subject: 'Email subject',
-      recipients: ['hizreen.safaree@gmail.com'],
-      cc: ['hizreen.safaree@gmail.com'],
-      bcc: ['hizreen.safaree@gmail.com'],
-      isHTML: false,
-    );
-
-    await FlutterEmailSender.send(email);
-  }
+  // Future<void> send() async {
+  //   final Email email = Email(
+  //     body: 'Email body',
+  //     subject: 'Email subject',
+  //     recipients: ['hizreen.safaree@gmail.com'],
+  //     cc: ['hizreen.safaree@gmail.com'],
+  //     bcc: ['hizreen.safaree@gmail.com'],
+  //     isHTML: false,
+  //   );
+  //
+  //   await FlutterEmailSender.send(email);
+  // }
   //
   // Future sendEmail({
   //   required String name,

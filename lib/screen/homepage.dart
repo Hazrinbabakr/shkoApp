@@ -13,7 +13,7 @@ import 'home.dart';
 import 'order_history.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key key}) : super(key: key);
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -21,15 +21,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   int currentTabIndex = 0;
-  FirebaseAuth _auth;
-  User user;
-
-  @override
-  void initState() {
-    super.initState();
-    _auth = FirebaseAuth.instance;
-    user = _auth.currentUser;
-  }
+  FirebaseAuth _auth = FirebaseAuth.instance;
+  User user = FirebaseAuth.instance.currentUser!;
 
   onTapped(int index) {
     setState(() {
@@ -59,7 +52,7 @@ class _HomePageState extends State<HomePage> {
         body: currentPage[currentTabIndex],
         bottomNavigationBar: BottomNavigationBar(
           onTap: onTapped,
-          selectedItemColor: Theme.of(context).accentColor,
+          selectedItemColor: Theme.of(context).colorScheme.secondary,
           currentIndex: currentTabIndex,
           unselectedItemColor: Colors.black54,
           iconSize: 30,
@@ -69,19 +62,14 @@ class _HomePageState extends State<HomePage> {
               icon: Image.asset('images/category/shop.png',color: Colors.black38,),
               activeIcon: Image.asset('images/category/shop.png'),
               //Icon(Icons.home),
-              title: Text(
-                AppLocalizations.of(context).trans("shop"),
-                //style: TextStyle(color: Theme.of(context).accentColor),
-              ),
+              label: "",
+
             ),
             BottomNavigationBarItem(
               icon: Image.asset('images/category/search.png',color: Colors.black38),
               activeIcon: Image.asset('images/category/search.png'),
+              label: "",
 
-              title: Text(
-                AppLocalizations.of(context).trans("search"),
-                //style: TextStyle(color: Theme.of(context).accentColor),
-              ),
             ),
             BottomNavigationBarItem(
               icon:  FirebaseAuth.instance.currentUser != null ?
@@ -168,11 +156,12 @@ class _HomePageState extends State<HomePage> {
                       ],
                     );
                   }): Image.asset('images/category/cart.png'),
-              title: Text(
-                AppLocalizations.of(context).trans("Cart"),
-
-                style: TextStyle(color: Theme.of(context).accentColor),
-              ),
+              // title: Text(
+              //   AppLocalizations.of(context).trans("Cart"),
+              //
+              //   style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+              // ),
+              label: "",
               // backgroundColor: Colors.purple[600]
             ),
 
@@ -188,10 +177,11 @@ class _HomePageState extends State<HomePage> {
                 width: 40,
                 height: 40,
               ),
-              title: Text(
-                AppLocalizations.of(context).trans("profile"),
-                style: TextStyle(color: Theme.of(context).accentColor),
-              ),
+              label: "",
+              // title: Text(
+              //   AppLocalizations.of(context).trans("profile"),
+              //   style: TextStyle(color: Theme.of(context).colorScheme.secondary),
+              // ),
             ),
           ],
         ),
