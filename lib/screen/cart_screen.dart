@@ -24,7 +24,7 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   FirebaseAuth _auth = FirebaseAuth.instance;
-  User user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
   final userCollection = FirebaseFirestore.instance.collection('users');
   List<DocumentSnapshot>? cart;
   List<Map> cartList = [];
@@ -40,6 +40,7 @@ class _CartScreenState extends State<CartScreen> {
   String phone='';
   var uuid = Uuid();
   String? rundomNumber;
+  var formatter = NumberFormat('#,###,000');
 
   getCart() {
     cart = [];
@@ -47,7 +48,7 @@ class _CartScreenState extends State<CartScreen> {
     subTotal=0.0;
     int i = 0;
     FirebaseFirestore.instance.collection('users')
-        .doc(user.uid).collection('cart').get().then((value) {
+        .doc(user!.uid).collection('cart').get().then((value) {
       value.docs.forEach((element) async {
         setState(() {
           cart!.add(element);
@@ -81,7 +82,7 @@ class _CartScreenState extends State<CartScreen> {
   }
   getUserInfo() async{
     userInfoCollection = await FirebaseFirestore.instance
-        .collection('users').doc(user.uid)
+        .collection('users').doc(user!.uid)
         .get();
     setState(() {
       userInfo=userInfoCollection!.data() as Map<String,dynamic>;
@@ -109,10 +110,13 @@ class _CartScreenState extends State<CartScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
         appBar: AppBar(
-            title:  Text(AppLocalizations.of(context).trans("CartScreen"),),
+          backgroundColor: Colors.white,
+          title:  Text(AppLocalizations.of(context).trans("CartScreen"),style: TextStyle(color: Colors.black87),),
             elevation: 0,
             //leading: BackArrowWidget()
           automaticallyImplyLeading: widget.arrow,
+          iconTheme: IconThemeData(color: Colors.black87),
+
         ),
         body:
         Builder(
@@ -128,7 +132,7 @@ class _CartScreenState extends State<CartScreen> {
                     child: Column(
                       children: [
                         Image.asset('images/category/emptyCart.png',),
-                        Text('Your cart is empty!',style: TextStyle(color: Colors.grey[700]),)
+                        Text(AppLocalizations.of(context).trans("cartIsEmpty"),style: TextStyle(color: Colors.grey[700]),)
                       ],
                     )),
               ):
@@ -177,7 +181,7 @@ class _CartScreenState extends State<CartScreen> {
                     Expanded(
 
                       child: StreamBuilder(
-                          stream: FirebaseFirestore.instance.collection('users').doc(user.uid).collection('cart').snapshots(),
+                          stream: FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('cart').snapshots(),
                           builder: ( _, snapshot) {
                             return Container(
                               // color: Colors.red,
@@ -410,6 +414,37 @@ class _CartScreenState extends State<CartScreen> {
                                                                                     .toString(),style: TextStyle(fontSize: 18),))
                                                                             ),
                                                                           ),
+                                                                          cartInfo!['availableQuantity']<= cartInfo["quantity"]?
+                                                                          InkWell(
+                                                                            onTap: (){
+                                                                             print("Not Available");
+                                                                            },
+                                                                            child: Container(
+                                                                                decoration: BoxDecoration(
+                                                                                  color: Theme.of(context)
+                                                                                      .primaryColor,
+                                                                                  borderRadius:
+                                                                                  BorderRadius.circular(100),
+                                                                                  boxShadow: [
+                                                                                    BoxShadow(
+                                                                                      color: Colors.grey
+                                                                                          .withOpacity(0.4),
+                                                                                      spreadRadius: 1,
+                                                                                      blurRadius: 7,
+                                                                                      //offset: Offset(1, 0),
+                                                                                    ),
+                                                                                  ],
+                                                                                ),
+                                                                                height: 35,
+                                                                                width: 35,
+                                                                                // color: Colors.red,
+                                                                                child:  Icon(
+                                                                                  Icons.add,
+                                                                                  size: 25,
+                                                                                  color: Colors.grey,
+                                                                                )
+                                                                            ),
+                                                                          ):
 
                                                                           InkWell(
                                                                             onTap: (){
@@ -426,8 +461,6 @@ class _CartScreenState extends State<CartScreen> {
                                                                                 //calculatingTotalPrice(cartInfo.data()['price'], cartInfo.data()['quantity']);
                                                                                 print('added');
                                                                               });
-
-
                                                                             },
                                                                             child: Container(
                                                                                 decoration: BoxDecoration(
@@ -459,8 +492,9 @@ class _CartScreenState extends State<CartScreen> {
                                                                         ],
                                                                       ),
                                                                       Text(
-                                                                        '${   (cartInfo["price"]* cartInfo['quantity'])
+                                                                        '${  formatter.format( (cartInfo["price"]* cartInfo['quantity']))
                                                                             .toString()} IQD',
+
                                                                         style: TextStyle(fontSize: 18,fontWeight: FontWeight.w500),
 
 
@@ -709,7 +743,7 @@ class _CartScreenState extends State<CartScreen> {
                               Text(AppLocalizations.of(context).trans("subtotal"),
                                 style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),
                               ),
-                              Text('${subTotal.floor().toString()} IQD',
+                              Text('${formatter.format(subTotal.floor()).toString()} IQD',
                                 style: TextStyle(fontSize: 18,fontWeight: FontWeight.w400),
                               ),
                             ],
@@ -722,7 +756,7 @@ class _CartScreenState extends State<CartScreen> {
                                 style: TextStyle(fontSize: 14,),
 
                               ),
-                              Text('${deliveryFee.floor()} IQD',
+                              Text('${formatter.format(deliveryFee.floor())} IQD',
                                 style: TextStyle(fontSize: 14,),
                               ),
                             ],
@@ -738,7 +772,7 @@ class _CartScreenState extends State<CartScreen> {
                                 style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),
                               ),
 
-                              Text('${((subTotal+deliveryFee)).floor().toString()} IQD',
+                              Text('${formatter.format(((subTotal+deliveryFee)).floor()).toString()} IQD',
                                 style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
                               ),
                             ],
@@ -786,7 +820,7 @@ class _CartScreenState extends State<CartScreen> {
                                       "subTotal": subTotal,
                                       "totalPrice":(subTotal+deliveryFee),
                                       "deliveryFee":deliveryFee,
-                                      "userID": user.uid,
+                                      "userID": user!.uid,
                                       "userName": name,
                                       "userAddress": LocalStorageService.instance.selectedAddress!.title,
                                       "userLat": LocalStorageService.instance.selectedAddress!.latitude,
@@ -799,12 +833,12 @@ class _CartScreenState extends State<CartScreen> {
                                       "date": orderDate,
                                     });
 
-                                    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('orders').doc(rundomNumber).set({
+                                    FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('orders').doc(rundomNumber).set({
                                       "productList":cartList,
                                       "subTotal": subTotal,
                                       "totalPrice":(subTotal+deliveryFee),
                                       "deliveryFee":deliveryFee,
-                                      "userID": user.uid,
+                                      "userID": user!.uid,
                                       "userName": name,
                                       "userAddress": LocalStorageService.instance.selectedAddress!.title,
                                       "userLat": LocalStorageService.instance.selectedAddress!.latitude,
@@ -825,7 +859,7 @@ class _CartScreenState extends State<CartScreen> {
                                         builder: (context) => HomePage(),
                                       ));
 
-                                      FirebaseFirestore.instance.collection('users').doc(user.uid).collection('cart')
+                                      FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('cart')
                                           .get().then((snapshot) {
                                         for (DocumentSnapshot doc in snapshot.docs) {
                                           doc.reference.delete();

@@ -23,6 +23,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         .get()
         .then((value) {
       categorySnapshot = [];
+      categorySnapshot!.addAll(value.docs);
       setState(() {});
 
     });
@@ -56,7 +57,7 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
                     );
                   },
                   child:
-                  Text( AppLocalizations.of(context).trans("ShowAll"),style: TextStyle(fontSize: 13,color: Theme.of(context).accentColor),)),
+                  Text( AppLocalizations.of(context).trans("ShowAll"),style: TextStyle(fontSize: 13,color:  Color(0xff00bebb),)),)
 
             ],
           ),

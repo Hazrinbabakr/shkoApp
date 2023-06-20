@@ -34,7 +34,9 @@ class _GuestProfileState extends State<GuestProfile> {
     Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).trans("profile"),),
+        backgroundColor: Colors.white,
+
+        title: Text(AppLocalizations.of(context).trans("profile"),style: TextStyle(color: Colors.black87),),
         elevation: 0.6,
         automaticallyImplyLeading: false,),
       // drawer: DrawerWidget(),

@@ -2,6 +2,7 @@ import 'package:barcode_widget/barcode_widget.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -27,10 +28,11 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   DocumentSnapshot? productDetailSnapShot;
   Map<String,dynamic>? productSnapshot;
+  var formatter = NumberFormat('#,###,000');
 
 
   FirebaseAuth _auth = FirebaseAuth.instance;
-  User user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
   List<String> imgList=[];
   int _current = 0;
 
@@ -70,6 +72,8 @@ class _ProductDetailsState extends State<ProductDetails> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.white,
+
           elevation: 0,
           // title: Text('Product details',style: TextStyle(color: mainColor),),
           leading: BackArrowWidget(),
@@ -169,7 +173,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               .primaryColor
                               .withOpacity(0.9),
                           //size
-                          expandedHeight: 270,
+                          expandedHeight: 300,
                           floating: false,
                           pinned: true,
                           snap: false,
@@ -192,74 +196,72 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 )
                                     :  Column(
                                       children: [
-                                        Expanded(
-                                          child: Container(
+                                        Container(
                                   //color: Colors.red,
-                                            child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(10),
-                                            child:Stack(
-                                              children: [
-                                                CarouselSlider(
-                                                  options: CarouselOptions(
-                                                      //height: 300,
-                                                      viewportFraction: 1,
-                                                      autoPlay: false,
-                                                      onPageChanged: (index, reason) {
-                                                        setState(() {
-                                                          _current = index;
-                                                        });
-                                                      }),
+                                          child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(10),
+                                          child:Stack(
+                                            children: [
+                                              CarouselSlider(
+                                                options: CarouselOptions(
+                                                    //height: 300,
+                                                    viewportFraction: 1,
+                                                    autoPlay: false,
+                                                    onPageChanged: (index, reason) {
+                                                      setState(() {
+                                                        _current = index;
+                                                      });
+                                                    }),
 
-                                                  items: imgList.map((i) {
-                                                    return Builder(
+                                                items: imgList.map((i) {
+                                                  return Builder(
 
-                                                      builder: (BuildContext context) {
+                                                    builder: (BuildContext context) {
 
-                                                        return
-                                                          // Text('ssss ${i['test1'].toString()}');
-                                                          GestureDetector(
-                                                            onTap: (){
-                                                              int ind = 0;
-                                                              Navigator.of(context).push(
-                                                                  MaterialPageRoute(
-                                                                      builder: (context) =>
-                                                                          PhotosGalleryPage(
-                                                                            initialPage: 0,
-                                                                            galleryItems: [
-                                                                              GalleryItem(
-                                                                                  id: widget.productID
-                                                                                      +
-                                                                                      "_" +
-                                                                                      (ind++)
-                                                                                          .toString(),
-                                                                                  image: i)
-                                                                            ],
-                                                                          )
-                                                                  )
-                                                              );
-                                                            },
-                                                            child: Container(
-                                                              // height: heightt-450,
-                                                              //width: 700,
-                                                              decoration: BoxDecoration(
-                                                                image: DecorationImage(
-                                                                    fit: BoxFit.cover,
-                                                                    image: NetworkImage(i.toString())),),
+                                                      return
+                                                        // Text('ssss ${i['test1'].toString()}');
+                                                        GestureDetector(
+                                                          onTap: (){
+                                                            int ind = 0;
+                                                            Navigator.of(context).push(
+                                                                MaterialPageRoute(
+                                                                    builder: (context) =>
+                                                                        PhotosGalleryPage(
+                                                                          initialPage: 0,
+                                                                          galleryItems: [
+                                                                            GalleryItem(
+                                                                                id: widget.productID
+                                                                                    +
+                                                                                    "_" +
+                                                                                    (ind++)
+                                                                                        .toString(),
+                                                                                image: i)
+                                                                          ],
+                                                                        )
+                                                                )
+                                                            );
+                                                          },
+                                                          child: Container(
+                                                            // height: heightt-450,
+                                                            //width: 700,
+                                                            decoration: BoxDecoration(
+                                                              image: DecorationImage(
+                                                                  fit: BoxFit.cover,
+                                                                  image: NetworkImage(i.toString())),),
 
-                                                              //child: Text(i.toString()),
-                                                            ),
-                                                          );
-                                                      },
-                                                    );
-                                                  }).toList(),
-                                                ),
+                                                            //child: Text(i.toString()),
+                                                          ),
+                                                        );
+                                                    },
+                                                  );
+                                                }).toList(),
+                                              ),
 
-                                              ],
-                                            )
+                                            ],
+                                          )
 
 
                                 ),
-                                          ),
                                         ),
                                         SizedBox(height: 20,),
                                         Row(
@@ -306,144 +308,136 @@ class _ProductDetailsState extends State<ProductDetails> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 5, vertical: 15),
-                              child: Wrap(
-                                runSpacing: 10,
-                                children: [
-                                  Column(
+                                  horizontal: 15, vertical: 15),
+                              child:  Column(
 
+                                crossAxisAlignment:
+                                CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
                                     crossAxisAlignment:
                                     CrossAxisAlignment.start,
                                     children: <Widget>[
-                                      Row(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Expanded(
-                                            flex: 3,
-                                            child: Container(
-                                              // color: Colors.red,
-                                              child: Text(
-
-                                                AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                                                productSnapshot!['nameK'] ?? '':
-                                                AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                                                productSnapshot!['nameA'] ?? '':
-                                                productSnapshot!['name'] ?? '',
-
-                                                // overflow: TextOverflow.fade,
-                                                maxLines: 3,
-                                                style: Theme.of(
-                                                    context)
-                                                    .textTheme
-                                                    .headline3!
-                                                    .merge(TextStyle(
-                                                    fontSize: 22,
-                                                    fontWeight: FontWeight.bold,
-                                                    color:Colors.black
-                                                )),
-                                              ),
-                                            ),
-                                          ),
-
-                                          Expanded(
-                                            child: productSnapshot!['quantity']==0?
-                                            Text('Out of Stock',
-                                              style: TextStyle(
-                                                  fontSize: 12,fontWeight: FontWeight.bold,color: Colors.red),
-                                            ):
-                                            Text(AppLocalizations.of(context).trans("Availability"),
-                                              style: TextStyle(
-                                                  fontSize: 15,fontWeight: FontWeight.bold,color: Colors.green),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(bottom: 15,),
+                                      Expanded(
+                                        flex: 3,
                                         child: Container(
-                                            height: 40,
-                                            width: 140,
-                                            //color: Colors.red,
-                                            child:  Row(
-                                              children: [
-                                                Text('${productSnapshot!['price'].toString()}',
-                                                  style:
-                                                  TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
-                                                Text(' IQD',style:
-                                                TextStyle(fontSize: 14),),
-                                              ],
-                                            )
+                                          // color: Colors.red,
+                                          child: Text(
+
+                                            AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
+                                            productSnapshot!['nameK'] ?? '':
+                                            AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
+                                            productSnapshot!['nameA'] ?? '':
+                                            productSnapshot!['name'] ?? '',
+
+                                            // overflow: TextOverflow.fade,
+                                            maxLines: 3,
+                                            style: Theme.of(
+                                                context)
+                                                .textTheme
+                                                .headline3!
+                                                .merge(TextStyle(
+                                                fontSize: 22,
+                                                fontWeight: FontWeight.bold,
+                                                color:Colors.black
+                                            )),
+                                          ),
                                         ),
                                       ),
-                                      Text(
-                                        AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
-                                        productSnapshot!['descK'] ?? '':
-                                        AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
-                                        productSnapshot!['descA'] ?? '':
-                                        productSnapshot!['desc'] ?? '',
 
-
-                                        style: TextStyle(fontSize: 16,height: 1.3),),
-
-
-                                      // Column(
-                                      //     crossAxisAlignment: CrossAxisAlignment.stretch,
-                                      //     children: <Widget>[
-                                      //       DefaultTabController(
-                                      //         length: 2, // length of tabs
-                                      //         initialIndex: 0,
-                                      //         child: Container(
-                                      //           // color: Colors.red,
-                                      //           child: TabBar(
-                                      //             indicatorColor: Theme.of(context).accentColor,
-                                      //             indicatorPadding: EdgeInsets.all(0),
-                                      //             labelPadding: EdgeInsets.symmetric(horizontal: 50),
-                                      //             // indicator: UnderlineTabIndicator(
-                                      //             //     borderSide: BorderSide(width: 1.0),
-                                      //             //     insets: EdgeInsets.symmetric(horizontal:10.0)
-                                      //             // ),
-                                      //             //indicatorSize: TabBarIndicatorSize.,//TabBarIndicatorSize(3),
-                                      //             onTap: (index){
-                                      //               setState(() {
-                                      //                 selectedIndex = index;
-                                      //               });
-                                      //             },
-                                      //             isScrollable: true,
-                                      //             tabs: [
-                                      //               Tab(text:  "Specification"),
-                                      //               Tab(text:  "Description"),
-                                      //             ],
-                                      //           ),
-                                      //         ),
-                                      //       ),
-                                      //       Container(
-                                      //           decoration: BoxDecoration(
-                                      //               border: Border(
-                                      //                   top: BorderSide(
-                                      //                       color: Colors.grey,
-                                      //                       width: 0.5))),
-                                      //           child: Padding(
-                                      //               padding:
-                                      //               const EdgeInsets.all(15.0),
-                                      //               child: getCurrentPage()
-                                      //           ))
-                                      //     ])
-
-
-
+                                      Expanded(
+                                        child:
+                                        productSnapshot!['quantity']==0 ||productSnapshot!['quantity']<0 ||productSnapshot!['quantity']< quantity?
+                                        // productSnapshot!['quantity']==0?
+                                        Text('Out of Stock',
+                                          style: TextStyle(
+                                              fontSize: 12,fontWeight: FontWeight.bold,color: Colors.red),
+                                        ):
+                                        Text(AppLocalizations.of(context).trans("Availability"),
+                                          style: TextStyle(
+                                              fontSize: 15,fontWeight: FontWeight.bold,color: Colors.green),
+                                        ),
+                                      ),
                                     ],
-
-
-
                                   ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(bottom: 15,),
+                                    child: Container(
+                                        height: 40,
+                                        width: 140,
+                                        //color: Colors.red,
+                                        child:  Row(
+                                          children: [
 
-
-                                  SizedBox(
-                                    height: 190,
+                                            Text(  '${ formatter.format(productSnapshot!['price']).toString()}',
+                                              style:
+                                              TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
+                                            Text(' IQD',style:
+                                            TextStyle(fontSize: 14),),
+                                          ],
+                                        )
+                                    ),
                                   ),
+                                  Text(
+                                    AppLocalizations.of(context).locale.languageCode.toString()=='ku'?
+                                    productSnapshot!['descK'] ?? '':
+                                    AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
+                                    productSnapshot!['descA'] ?? '':
+                                    productSnapshot!['desc'] ?? '',
+
+
+                                    style: TextStyle(fontSize: 16,height: 1.3),),
+
+
+                                  // Column(
+                                  //     crossAxisAlignment: CrossAxisAlignment.stretch,
+                                  //     children: <Widget>[
+                                  //       DefaultTabController(
+                                  //         length: 2, // length of tabs
+                                  //         initialIndex: 0,
+                                  //         child: Container(
+                                  //           // color: Colors.red,
+                                  //           child: TabBar(
+                                  //             indicatorColor: Theme.of(context).accentColor,
+                                  //             indicatorPadding: EdgeInsets.all(0),
+                                  //             labelPadding: EdgeInsets.symmetric(horizontal: 50),
+                                  //             // indicator: UnderlineTabIndicator(
+                                  //             //     borderSide: BorderSide(width: 1.0),
+                                  //             //     insets: EdgeInsets.symmetric(horizontal:10.0)
+                                  //             // ),
+                                  //             //indicatorSize: TabBarIndicatorSize.,//TabBarIndicatorSize(3),
+                                  //             onTap: (index){
+                                  //               setState(() {
+                                  //                 selectedIndex = index;
+                                  //               });
+                                  //             },
+                                  //             isScrollable: true,
+                                  //             tabs: [
+                                  //               Tab(text:  "Specification"),
+                                  //               Tab(text:  "Description"),
+                                  //             ],
+                                  //           ),
+                                  //         ),
+                                  //       ),
+                                  //       Container(
+                                  //           decoration: BoxDecoration(
+                                  //               border: Border(
+                                  //                   top: BorderSide(
+                                  //                       color: Colors.grey,
+                                  //                       width: 0.5))),
+                                  //           child: Padding(
+                                  //               padding:
+                                  //               const EdgeInsets.all(15.0),
+                                  //               child: getCurrentPage()
+                                  //           ))
+                                  //     ])
+
+
 
                                 ],
+
+
+
                               ),
                             ),
                           ),
@@ -451,12 +445,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                       ],
                     ),
                   ),
+                  // Container(
+                  //
+                  //   color: Colors.red,
+                  //   child: Text('ss'),
+                  // ),
 
                   Positioned(
                     bottom: 0,
                     child: Container(
                       height: 100,
-                      // width: double.infinity,
+                      width: MediaQuery.of(context).size.width * 1.01,
 
                       decoration: BoxDecoration(
                           color: Colors.white,
@@ -466,217 +465,159 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 spreadRadius: 1,
                                 blurRadius: 10)
                           ]),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal:20),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            //countnumber
-                            Container(
-                             // width:180,
-                              decoration: BoxDecoration(
-                                  color: Colors.grey.withOpacity(0.3),
-                                  borderRadius:
-                                  BorderRadius.circular(12)),
-                              padding: EdgeInsets.symmetric(horizontal: 25,vertical: 5),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  InkWell(
-                                    onTap: (){
-                                      setState(() {
-                                        if(quantity>1){
-                                          quantity= quantity-1;
-                                        }
-                                      });
-                                    },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          //countnumber
+                          Container(
+                           // width:180,
+                            decoration: BoxDecoration(
+                                color: Colors.grey.withOpacity(0.3),
+                                borderRadius:
+                                BorderRadius.circular(12)),
+                            padding: EdgeInsets.symmetric(horizontal: 25,vertical: 5),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                InkWell(
+                                  onTap: (){
+                                    setState(() {
+                                      if(quantity>1){
+                                        quantity= quantity-1;
+                                      }
+                                    });
+                                  },
 
-                                    child: Icon(
-                                      Icons.remove,
-                                      size: 25,
-                                      color: Colors.blueGrey,
-                                    ),
+                                  child: Icon(
+                                    Icons.remove,
+                                    size: 25,
+                                    color: Colors.blueGrey,
                                   ),
-                                  Container(
-
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 10),
-                                      height: 40,
-                                      width: 40,
-                                      // color: Colors.red,
-                                      child:  Center(child:
-                                      Text(quantity.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),)
-                                      )
-                                  ),
-                                  InkWell(
-                                    onTap: (){
-                                      setState(() {
-                                        quantity= quantity+1;
-
-                                      });
-                                    },
-                                    child: Icon(
-                                      Icons.add,
-                                      size: 25,
-                                      color: Colors.green[900],
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-
-                            SizedBox(width:65,),
-                            // addtocart
-                            productSnapshot!['quantity']==0?
-                            Center(
-                              child: Stack(
-                                fit: StackFit.loose,
-                                alignment: AlignmentDirectional.centerEnd,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width:
-                                    MediaQuery.of(context).size.width -
-                                        110,
-                                    child: Container(
-                                      padding: EdgeInsets.symmetric(
-                                          vertical: 12),
-                                      decoration: BoxDecoration(
-                                          color: Colors.grey[400],
-                                          borderRadius:
-                                          BorderRadius.circular(10)),
-                                      child: InkWell(
-                                        onTap: () {
-                                          //print('out of stock');
-                                          // showErrorToast(context,
-                                          //     S.of(context).out_of_stock);
-                                        },
-                                        child: Container(
-                                          width: double.infinity,
-                                          padding:
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 20),
-                                          child: Padding(
-                                            padding:
-                                            const EdgeInsets.symmetric(
-                                                horizontal: 25),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                              MainAxisAlignment
-                                                  .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  AppLocalizations.of(context).trans("Addtocart"),
-                                                  textAlign:
-                                                  TextAlign.center,
-                                                  style: TextStyle(
-                                                      color:
-                                                      Theme.of(context)
-                                                          .primaryColor,
-                                                      fontSize: 18,
-                                                      fontWeight:
-                                                      FontWeight.bold),
-                                                ),
-                                                SizedBox(
-                                                  width: 3,
-                                                ),
-                                                Icon(
-                                                  Icons
-                                                      .shopping_cart_outlined,
-                                                  color: Theme.of(context)
-                                                      .primaryColor,
-                                                )
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 20),
-                                    // child: Helper.getPrice(
-                                    //   _con.total,
-                                    //   context,
-                                    //   style: Theme.of(context)
-                                    //       .textTheme
-                                    //       .headline4
-                                    //       .merge(TextStyle(
-                                    //           color: Theme.of(context)
-                                    //               .primaryColor)),
-                                    // ),
-                                  ),
-                                ],
-                              ),
-                            )
-                                :
-                            //Addtocart
-                            Container(
-                              width: 170,
-                              padding: EdgeInsets.symmetric(vertical: 13),
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).colorScheme.secondary,
-                                  borderRadius:
-                                  BorderRadius.circular(12)),
-                              child: InkWell(
-                                onTap: () {
-
-
-                                  setState(() {
-                                    if(   FirebaseAuth.instance.currentUser != null){
-                                      User user = _auth.currentUser!;
-                                      userCollection
-                                          .doc(user.uid)
-                                          .collection('cart')
-                                          .doc(widget.productID)
-                                          .set({
-                                        "productID": widget.productID,
-                                        "quantity": quantity,
-                                        "price": productSnapshot!['price'],
-                                        "name": productSnapshot!['name'],
-                                        "nameA": productSnapshot!['nameA'],
-                                        "nameK": productSnapshot!['nameK'],
-                                        "supPrice":
-                                        (productSnapshot!['price']) * quantity,
-
-                                        "img": productSnapshot!['images'][0],
-                                      });
-                                      //print('added');
-                                      ScaffoldMessenger.of(context).showSnackBar(_snackBar);
-
-                                    }else{
-                                      Navigator.of(context).push(MaterialPageRoute(
-                                        builder: (context) => MainLoginPage(),
-                                      ));
-                                    }
-
-                                  });
-
-
-
-
-
-
-
-                                },
-                                child: Text(
-                                  AppLocalizations.of(context).trans("Addtocart"),
-                                  textAlign:
-                                  TextAlign.center,
-                                  style: TextStyle(
-                                      color:
-                                      Theme.of(context)
-                                          .primaryColor,
-                                      fontSize: 17,
-                                      fontWeight:
-                                      FontWeight.w600),
                                 ),
+                                Container(
+
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 10),
+                                    height: 40,
+                                    width: 40,
+                                    // color: Colors.red,
+                                    child:  Center(child:
+                                    Text(quantity.toString(),style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15),)
+                                    )
+                                ),
+                                InkWell(
+                                  onTap: (){
+                                    setState(() {
+                                      quantity= quantity+1;
+
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.add,
+                                    size: 25,
+                                    color: Colors.green[900],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                          SizedBox(width:65,),
+                          // addtocart
+                          productSnapshot!['quantity']==0 ||productSnapshot!['quantity']<0  ||productSnapshot!['quantity']< quantity?
+              Container(
+              width: 170,
+              padding: EdgeInsets.symmetric(vertical: 13),
+              decoration: BoxDecoration(
+              color:Colors.grey,
+              borderRadius:
+              BorderRadius.circular(12)),
+              child: InkWell(
+              onTap: () {
+print('out of stock');
+              },
+              child: Text(
+              AppLocalizations.of(context).trans("Addtocart"),
+              textAlign:
+              TextAlign.center,
+              style: TextStyle(
+              color:
+              Theme.of(context)
+                  .primaryColor,
+              fontSize: 17,
+              fontWeight:
+              FontWeight.w600),
+              ),
+              ),
+              )
+                              :
+                          //Addtocart
+                          Container(
+                            width: 170,
+                            padding: EdgeInsets.symmetric(vertical: 13),
+                            decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.secondary,
+                                borderRadius:
+                                BorderRadius.circular(12)),
+                            child: InkWell(
+                              onTap: () {
+
+
+                                setState(() {
+                                  if(   FirebaseAuth.instance.currentUser != null){
+                                    User user = _auth.currentUser!;
+                                    userCollection
+                                        .doc(user.uid)
+                                        .collection('cart')
+                                        .doc(widget.productID)
+                                        .set({
+                                      "availableQuantity": productSnapshot!['quantity'],
+                                      "productID": widget.productID,
+                                      "quantity": quantity,
+                                      "price": productSnapshot!['price'],
+                                      "name": productSnapshot!['name'],
+                                      "nameA": productSnapshot!['nameA'],
+                                      "nameK": productSnapshot!['nameK'],
+                                      "supPrice":
+                                      (productSnapshot!['price']) * quantity,
+
+                                      "img": productSnapshot!['images'][0],
+                                    });
+                                    //print('added');
+                                    ScaffoldMessenger.of(context).showSnackBar(_snackBar);
+
+                                  }else{
+                                    Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => MainLoginPage(),
+                                    ));
+                                  }
+
+                                });
+
+
+
+
+
+
+
+                              },
+                              child: Text(
+                                AppLocalizations.of(context).trans("Addtocart"),
+                                textAlign:
+                                TextAlign.center,
+                                style: TextStyle(
+                                    color:
+                                    Theme.of(context)
+                                        .primaryColor,
+                                    fontSize: 17,
+                                    fontWeight:
+                                    FontWeight.w600),
                               ),
                             ),
+                          ),
 
 
-                          ],
-                        ),
+                        ],
                       ),
                     ),
                   ),
@@ -689,47 +630,7 @@ class _ProductDetailsState extends State<ProductDetails> {
 
     );
   }
-  // int selectedIndex = 0;
-  // getCurrentPage(){
-  //   if(selectedIndex == 1){
-  //     return Text(productSnapshot.data()['desc'],style: TextStyle(fontSize: 16,height: 1.3),);
-  //
-  //   }else if (selectedIndex == 0){
-  //     return
-  //       Column(
-  //         crossAxisAlignment: CrossAxisAlignment.start,
-  //         children: [
-  //           SizedBox(height: 15,),
-  //
-  //
-  //           SizedBox(height: 15,),
-  //           Row(
-  //             //mainAxisAlignment: MainAxisAlignment.spaceAround,
-  //             children: [
-  //               Expanded(
-  //                 child: Text('oemCode',
-  //                   maxLines: 3,
-  //                   style: TextStyle(fontSize: 18,fontWeight: FontWeight.bold),
-  //                 ),
-  //               ),
-  //               Expanded(
-  //                 child: Text(productSnapshot.data()['oemCode'].toString(),
-  //                   maxLines: 5,
-  //                   style: TextStyle(fontSize: 15),
-  //                 ),
-  //               )
-  //             ],),
-  //           SizedBox(height: 15,),
-  //
-  //
-  //
-  //
-  //
-  //         ],);
-  //
-  //   }
-  //
-  // }
+
 
 
 
@@ -785,7 +686,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   getFavList() {
 
     int i = 0;
-    FirebaseFirestore.instance.collection('users').doc(user.uid)
+    FirebaseFirestore.instance.collection('users').doc(user!.uid)
         .collection('favorite').get().then((value) {
       getFav = [];
       getFav!.addAll(value.docs);

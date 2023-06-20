@@ -71,7 +71,7 @@ class CustomAppButtonPrimary extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CustomAppButton(
-      color: Theme.of(context).accentColor,
+      color: Color(0xff00bebb),
       onTap: onTap,
       child: Center(
         child: Text(text,

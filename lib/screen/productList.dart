@@ -53,7 +53,9 @@ class _ProductsListState extends State<ProductsList> {
 
       appBar:
       AppBar(
-          title: Text(widget.categoryName),
+        backgroundColor: Colors.white,
+
+        title: Text(widget.categoryName,style: TextStyle(color: Colors.black87),),
           elevation: 0,
           leading: BackArrowWidget(),
       ),
@@ -114,7 +116,8 @@ class _ProductsListState extends State<ProductsList> {
                           AppLocalizations.of(context).locale.languageCode.toString()=='ar'?
                           data['nameA'].toString():
                           data['name'].toString(),
-                          style: TextStyle(fontWeight: FontWeight.w600,),
+                              textAlign: TextAlign.center,
+
 
 
                         )

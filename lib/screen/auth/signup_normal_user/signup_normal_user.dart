@@ -27,6 +27,8 @@ class _SignUpPageState extends State<SignUpPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+
         title: Text(AppLocalizations.of(context).trans("signup")),
         leading: BackArrowWidget(),
         elevation: 0,

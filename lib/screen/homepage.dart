@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int currentTabIndex = 0;
   FirebaseAuth _auth = FirebaseAuth.instance;
-  User user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
 
   onTapped(int index) {
     setState(() {
@@ -76,7 +76,7 @@ class _HomePageState extends State<HomePage> {
               StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('users')
-                      .doc(user.uid)
+                      .doc(user?.uid)
                       .collection('cart')
                       .snapshots(),
                   builder: (context, snapshot) {
@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
               activeIcon: FirebaseAuth.instance.currentUser != null ? StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('users')
-                      .doc(user.uid)
+                      .doc(user?.uid)
                       .collection('cart')
                       .snapshots(),
                   builder: (context, snapshot) {

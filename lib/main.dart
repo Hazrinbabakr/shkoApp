@@ -39,13 +39,15 @@ class MyApp extends StatelessWidget {
         child: Consumer<SettingsServiceProvider>(
           builder: (context,settings,child){
             return MaterialApp(
+
               debugShowCheckedModeBanner: false,
+              //color: Colors.white,
               theme: ThemeData(
                   primaryColor: Colors.white,
                   colorScheme: ColorScheme.light(
                     secondary: Color(0xff00bebb),
                   ),
-                  accentColor: Color(0xff00bebb),
+
                   fontFamily: 'NRT',
               ),
               home: SplashScreen(),//SignUpMainPage(),

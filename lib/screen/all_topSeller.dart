@@ -1,5 +1,6 @@
 // ignore_for_file: file_names, prefer_const_constructors
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shko/Widgets/BackArrowWidget.dart';
@@ -18,16 +19,19 @@ class AllTopSeller extends StatefulWidget {
 }
 
 class _AllTopSellerState extends State<AllTopSeller> {
- 
-  
+  var formatter = NumberFormat('#,###,000');
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.white,
+
           leading: BackArrowWidget(),
            automaticallyImplyLeading: false,
-          title: Text(  AppLocalizations.of(context).trans("topSeller"),style: TextStyle(color: Theme.of(context).colorScheme.secondary,fontWeight: FontWeight.bold),),
+          title: Text(  AppLocalizations.of(context).trans("topSeller"),style: TextStyle(color:Theme.of(context).colorScheme.secondary,fontWeight: FontWeight.bold),),
           elevation: 0,
         ),
 
@@ -93,7 +97,7 @@ class _AllTopSellerState extends State<AllTopSeller> {
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Row(
                               children: [
-                                Text('${ widget.topSellerSnapshot[i]['price'].toString()}',
+                                Text('${ formatter.format(widget.topSellerSnapshot[i]['price']).toString()}',
                                   style: TextStyle(fontSize: 19,color: Colors.red[700],fontWeight: FontWeight.w500),),
                                 Text('IQD',
                                   style: TextStyle(fontSize: 13,color: Colors.red[700],fontWeight: FontWeight.w500),),

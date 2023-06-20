@@ -193,7 +193,8 @@ height: 60,
                               ),
                             );
                           })
-                          : Padding(
+                          :
+                      Padding(
                         padding: const EdgeInsets.only(top: 20),
                         child: Column(
                           children: [

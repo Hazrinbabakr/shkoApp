@@ -32,7 +32,11 @@ class _LoginPageState extends State<LoginPage> {
     const spacing = 20.0;
 
     return Scaffold(
+      backgroundColor: Colors.white,
+
       appBar: AppBar(
+        backgroundColor: Colors.white,
+
         automaticallyImplyLeading: false,
         title: Text(AppLocalizations.of(context).trans("login")),
         centerTitle: true,

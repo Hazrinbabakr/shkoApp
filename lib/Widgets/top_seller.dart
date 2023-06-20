@@ -2,6 +2,7 @@
 // ignore_for_file: file_names, prefer_const_constructors, avoid_print
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:shko/localization/AppLocal.dart';
 import 'package:shko/screen/all_topSeller.dart';
@@ -18,6 +19,7 @@ class TopSeller extends StatefulWidget {
 }
 
 class _TopSellerState extends State<TopSeller> {
+  var formatter = NumberFormat('#,###,000');
   List<DocumentSnapshot>? topSellerSnapshot;
   getTopSeller() {
     FirebaseFirestore.instance
@@ -57,7 +59,7 @@ class _TopSellerState extends State<TopSeller> {
                         builder: (context) => AllTopSeller(topSellerSnapshot!)),
                     );
                   },
-                  child: Text( AppLocalizations.of(context).trans("ShowAll"),style: TextStyle(fontSize: 13,color: Theme.of(context).accentColor),)),
+                  child: Text( AppLocalizations.of(context).trans("ShowAll"),style: TextStyle(fontSize: 13,color:Color(0xff00bebb)  )),)
 
             ],
           ),
@@ -111,14 +113,16 @@ class _TopSellerState extends State<TopSeller> {
                                   padding: const EdgeInsets.symmetric(horizontal: 8),
                                   child: Row(
                                     children: [
-                                      Text('${ topSellerSnapshot![i]['price'].toString()}',
+                                     // formatter.format(number)
+                                     // '${formatter.format(((subTotal+deliveryFee)*dinnar)).toString()} IQD'
+                                      Text('${ formatter.format(topSellerSnapshot![i]['price']).toString()}',
                                         style: TextStyle(fontSize: 19,color: Colors.red[700],fontWeight: FontWeight.w500),),
                                       Text('IQD',
                                         style: TextStyle(fontSize: 13,color: Colors.red[700],fontWeight: FontWeight.w500),),
 
 SizedBox(width: 5,),
 
-                                      Text('${ topSellerSnapshot![i]['oldPrice'].toString()}',
+                                      Text('${ formatter.format(topSellerSnapshot![i]['oldPrice']).toString()}',
                                         style: TextStyle(fontSize: 10,color: Colors.grey,decoration: TextDecoration.lineThrough),),
                                       Text('IQD',
                                         style: TextStyle(fontSize: 7,color: Colors.grey,decoration: TextDecoration.lineThrough),),

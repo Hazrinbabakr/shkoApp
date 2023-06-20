@@ -20,12 +20,12 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   List<DocumentSnapshot>? orderHistoryList;
   List<DocumentSnapshot>? currentOrderList;
   FirebaseAuth _auth = FirebaseAuth.instance;
-  User user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
   final userCollection = FirebaseFirestore.instance.collection('users');
   final adminCollection = FirebaseFirestore.instance.collection('Admin');
   getProducts() {
     int i = 0;
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('orders').
+    FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('orders').
     where("OrderStatus",isNotEqualTo: "Pending")
         .get()
         .then((value) {
@@ -38,7 +38,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   }
 
   getCurrentProducts() {
-    FirebaseFirestore.instance.collection('users').doc(user.uid).collection('orders').
+    FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('orders').
         orderBy('date', descending: true)
    // where("OrderStatus",isEqualTo: "Pending")
         .get()
@@ -53,6 +53,7 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
     });
   }
 
+  var formatter = NumberFormat('#,###,000');
 
 int length=0;
 
@@ -73,10 +74,15 @@ int length=0;
       child: Scaffold(
           backgroundColor: Colors.white,
           appBar: AppBar(
-            centerTitle: true,
+                     backgroundColor: Colors.white,
+            iconTheme: IconThemeData(
+              color: Colors.black87, //modify arrow color from here..
+            ),
+          centerTitle: true,
             bottom:  PreferredSize(
               preferredSize: Size.fromHeight(40),
               child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 15),
                // color: Colors.red,
                 height: 40,
                 width: double.infinity,
@@ -118,7 +124,7 @@ int length=0;
               ),
             ),
            // automaticallyImplyLeading: false,
-              title: Text(AppLocalizations.of(context).trans("orders"),),
+              title: Text(AppLocalizations.of(context).trans("orders"),style: TextStyle(color: Colors.black87),),
               elevation: 0,
           ),
           body:
@@ -216,9 +222,9 @@ int length=0;
                                                       onTap: (){
                                                         setState(() {
 
-                                                          User user = _auth.currentUser!;
+                                                          User? user = _auth.currentUser;
                                                           userCollection
-                                                              .doc(user.uid)
+                                                              .doc(user?.uid)
                                                               .collection('orders')
                                                               .doc(currentOrderList![i].id).delete();
                                                           adminCollection
@@ -309,13 +315,22 @@ int length=0;
                               Row(
                                 children: [
                                   Text( AppLocalizations.of(context).trans("DeliveryFee"),style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList![i]['deliveryFee'].toString()}IQD')),
+                                  Expanded(child: Text(
+
+                                          '${formatter.format(currentOrderList![i]['deliveryFee'])
+                                          .toString()} IQD',
+
+                                  )),
                                 ],
                               ),
                               Row(
                                 children: [
                                   Text( AppLocalizations.of(context).trans("TotalPrice"),style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList![i]['totalPrice'].toString()}IQD')),
+                                  Expanded(child: Text(
+
+                                          '${formatter.format(currentOrderList![i]['totalPrice'])
+                                          .toString()} IQD',
+                                  )),
                                 ],
                               ),
 
@@ -387,12 +402,12 @@ int length=0;
                                         ,style: TextStyle(color: Colors.green[600],fontSize: 18),),
                                       Padding(
                                         padding: const EdgeInsets.symmetric(vertical:7 ),
-                                        child: Text(currentOrderList![i]['date'],style: TextStyle(fontSize: 12),),
+                                        child: Text(currentOrderList![i]['date'],style: TextStyle(fontSize: 12,color: Colors.black87),),
                                       ),
                                       Row(
                                         children: [
-                                          Text('Deliver to: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                          Expanded(child: Text(currentOrderList![i]['userAddress'].toString())),
+                                          Text('Deliver to: ',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black87),),
+                                          Expanded(child: Text(currentOrderList![i]['userAddress'].toString(),style: TextStyle(color: Colors.black87),)),
                                         ],
                                       ),
 
@@ -448,13 +463,20 @@ int length=0;
                               Row(
                                 children: [
                                   Text('Delivery Fee: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList![i]['deliveryFee'].toString()}\$')),
+                                  Expanded(child: Text(
+
+                                    '${formatter.format( currentOrderList![i]['deliveryFee'])
+                                        .toString()} IQD',
+                                  )),
                                 ],
                               ),
                               Row(
                                 children: [
                                   Text('Total Price: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                  Expanded(child: Text('${currentOrderList![i]['totalPrice'].toString()}\S')),
+                                  Expanded(child: Text(
+                                          '${formatter.format(currentOrderList![i]['totalPrice'])
+                                          .toString()} IQD',
+                                  )),
                                 ],
                               ),
 
@@ -521,12 +543,12 @@ int length=0;
                                       ,style: TextStyle(color: Colors.red[500],fontSize: 18),),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical:7 ),
-                                      child: Text(currentOrderList![i]['date'],style: TextStyle(fontSize: 12),),
+                                      child: Text(currentOrderList![i]['date'],style: TextStyle(fontSize: 12,color: Colors.black87),),
                                     ),
                                     Row(
                                       children: [
-                                        Text('Deliver to: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                        Expanded(child: Text(currentOrderList![i]['userAddress'].toString())),
+                                        Text('Deliver to: ',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.black87),),
+                                        Expanded(child: Text(currentOrderList![i]['userAddress'].toString(),style: TextStyle(color: Colors.black87),)),
                                       ],
                                     ),
 
@@ -582,13 +604,21 @@ int length=0;
                                 Row(
                                   children: [
                                     Text('Delivery Fee: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                    Expanded(child: Text('${currentOrderList![i]['deliveryFee'].toString()}\$')),
+                                    Expanded(child: Text(
+                                       // '${currentOrderList![i]['deliveryFee'].toString()}\$'
+                                            '${formatter.format( currentOrderList![i]['deliveryFee'])
+                                            .toString()} IQD',
+                                    )),
                                   ],
                                 ),
                                 Row(
                                   children: [
                                     Text('Total Price: ',style: TextStyle(fontWeight: FontWeight.bold),),
-                                    Expanded(child: Text('${currentOrderList![i]['totalPrice'].toString()}\S')),
+                                    Expanded(child: Text(
+                                            '${formatter.format(currentOrderList![i]['totalPrice'])
+                                            .toString()} IQD',
+
+                                    )),
                                   ],
                                 ),
 

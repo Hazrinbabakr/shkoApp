@@ -131,7 +131,10 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Select Location"),
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.black87),
+
+        title: const Text("Select Location",style: TextStyle(color: Colors.black87),),
         titleSpacing: 0,
         actions: [
           Visibility(
@@ -139,7 +142,7 @@ class _LocationPickerPageState extends State<LocationPickerPage> {
             child: Padding(
               padding: const EdgeInsets.only(right: 8.0, left: 8.0),
               child: IconButton(
-                icon: const Icon(Icons.check),
+                icon: const Icon(Icons.check,color: Colors.black87,),
                 onPressed: () async {
                   if (Navigator.canPop(context)) {
                     var latLngResult = LocationData.fromMap({

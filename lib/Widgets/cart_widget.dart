@@ -12,7 +12,7 @@ class CartWidget extends StatefulWidget {
 
 class _CartWidgetState extends State<CartWidget> {
   FirebaseAuth _auth = FirebaseAuth.instance;
-  User user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
 
 
   @override
@@ -25,7 +25,7 @@ class _CartWidgetState extends State<CartWidget> {
           ));
         },
         child: StreamBuilder(
-            stream: FirebaseFirestore.instance.collection('users').doc(user.uid).collection('cart').snapshots(),
+            stream: FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('cart').snapshots(),
             builder: (context, snapshot) {
               return Stack(
                 children: [

@@ -19,14 +19,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
   final userCollection = FirebaseFirestore.instance.collection('users');
   List<DocumentSnapshot>? allProductListSnapShot;
   List<DocumentSnapshot>? favListSnapShot;
-  User user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
   FirebaseAuth _auth = FirebaseAuth.instance;
   int? favLength;
   List<String> favList=[];
   getFavProduct() {
     favListSnapShot = [];
     FirebaseFirestore.instance
-        .collection('users').doc(user.uid).collection('favorite')
+        .collection('users').doc(user!.uid).collection('favorite')
         .get()
         .then((value) {
       favListSnapShot!.addAll(value.docs);
@@ -72,9 +72,14 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
+          backgroundColor: Colors.white,
+
+          iconTheme: IconThemeData(
+            color: Colors.black87, //modify arrow color from here..
+          ),
           // leading: BackArrowWidget(),
          // automaticallyImplyLeading: false,
-            title: Text(AppLocalizations.of(context).trans("Favorite"),),
+            title: Text(AppLocalizations.of(context).trans("Favorite"),style: TextStyle(color: Colors.black87),),
             elevation: 0,
         ),
 
@@ -88,7 +93,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
 
           crossAxisSpacing: 12,
           //mainAxisSpacing: 15,
-              //childAspectRatio: 0.60, // (itemWidth/itemHeight),
+              childAspectRatio: 0.85, // (itemWidth/itemHeight),
               padding: EdgeInsets.symmetric(
                   horizontal: 10, vertical: 10),
               // Create a grid with 2 columns. If you change the scrollDirection to
@@ -121,8 +126,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                 border: Border.all(color: Colors.black12,width: 0.6),
                             ),
                             child: Column(
-                            //  crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
+mainAxisAlignment: MainAxisAlignment.spaceAround,                              children: [
                                 Container(
                                   height: 90,
                                   width: 130,
@@ -148,12 +152,13 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                                       allProductListSnapShot![i]['nameA'].toString().toUpperCase():
                                       allProductListSnapShot![i]['name'].toString().toUpperCase(),
 textAlign: TextAlign.center,
-                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,), overflow: TextOverflow.visible,maxLines: 3,)),
+                                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 15,),
+                                      overflow: TextOverflow.ellipsis,maxLines: 2,)),
                                // SizedBox(height: 5,),
                                 //LocalStorageService.instance.user.role == 1?
                                 Center(
                                   child: Text('${allProductListSnapShot![i]['price'].toString()}\$',
-                                    style: TextStyle(fontSize: 15,color: Colors.black,fontWeight: FontWeight.w500),),
+                                    style: TextStyle(fontSize: 17,color: Colors.black,fontWeight: FontWeight.w500),),
                                 ),
 
                                 //SizedBox(width: 30,),

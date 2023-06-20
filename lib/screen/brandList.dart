@@ -54,7 +54,9 @@ class _BrandListState extends State<BrandList> {
 
       appBar:
       AppBar(
-        title: Text(widget.brandName),
+        backgroundColor: Colors.white,
+iconTheme: IconThemeData(color: Colors.black87),
+        title: Text(widget.brandName,style: TextStyle(color: Colors.black87),),
         elevation: 0,
         leading: BackArrowWidget(),
       ),

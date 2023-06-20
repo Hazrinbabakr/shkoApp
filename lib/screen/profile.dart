@@ -24,14 +24,14 @@ class ProfileScreen extends StatefulWidget {
 
 class _ProfileScreenState extends State<ProfileScreen> {
   bool guest =true;
-  User user = FirebaseAuth.instance.currentUser!;
+  User? user = FirebaseAuth.instance.currentUser;
   FirebaseAuth _auth= FirebaseAuth.instance;
   String name='';
   String phone='';
   String address='';
   Map<String,dynamic>? userInfo;
   Future getUserInfo()async{
-    userInfo= (await FirebaseFirestore.instance.collection("users").doc(user.uid).get()).data();
+    userInfo= (await FirebaseFirestore.instance.collection("users").doc(user!.uid).get()).data();
     setState(() {
      name= userInfo!['username'];
      phone= userInfo!['phone'];
@@ -60,8 +60,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).trans("profile"),),
-        elevation: 0.6,
+        backgroundColor: Colors.white,
+        title: Text(AppLocalizations.of(context).trans("profile"),style: TextStyle(color: Colors.black87),),
+        elevation: 0.0,
         automaticallyImplyLeading: false,),
       // drawer: DrawerWidget(),
       body:
@@ -82,7 +83,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
               ),
               child: StreamBuilder(
-                  stream: FirebaseFirestore.instance.collection("users").doc(user.uid).snapshots(),
+                  stream: FirebaseFirestore.instance.collection("users").doc(user!.uid).snapshots(),
                   builder: (context, snapshot) {
                     return
                       snapshot.data==null?
@@ -151,7 +152,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               onPressed: () {
                                                 // widget.address=_textFieldController.text;
                                                 FirebaseFirestore.instance
-                                                    .collection("users").doc(user.uid).update({
+                                                    .collection("users").doc(user!.uid).update({
                                                   "username":  _textFieldController.text,
                                                   // "subPrice": (cartInfo.data()['quantity'] +1) * cartInfo.data()['price']
                                                 });
@@ -479,8 +480,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 onTap: ()async{
 
                                   try {
-                                    User user2 = FirebaseAuth.instance.currentUser!;
-                                    await user2.delete();
+                                    User? user2 = FirebaseAuth.instance.currentUser;
+                                    await user2!.delete();
                                   } on FirebaseAuthException catch (e) {
                                     print(e.message.toString());
                                     if (e.code == 'requires-recent-login') {
@@ -488,7 +489,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     }
                                   }
                                   // user.delete();
-                                  FirebaseFirestore.instance.collection("users").doc(user.uid).delete();
+                                  FirebaseFirestore.instance.collection("users").doc(user!.uid).delete();
                                   Application.restartApp(context);
 
                                 },

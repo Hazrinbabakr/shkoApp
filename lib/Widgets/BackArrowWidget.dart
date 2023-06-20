@@ -34,7 +34,7 @@ class BackArrowWidget extends StatelessWidget {
     Icons.arrow_back_ios_outlined:
       Icons.arrow_forward_ios_outlined,
     size: 24.0,
-      color: Theme.of(context).accentColor,
+      color:  Color(0xff00bebb),
     ),
     ),
     // padding: EdgeInsets.all(15.0),

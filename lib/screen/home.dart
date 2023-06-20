@@ -64,6 +64,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 SizedBox(height: 10,),
                 Offers(),
+                //Text('tess'),
                  CategoriesWidget(),
                 // SizedBox(height: 10,),
                 // SocialMediaWidget()

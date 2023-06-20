@@ -53,11 +53,16 @@ class _AddressesListState extends State<AddressesList> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        iconTheme: IconThemeData(
+          color: Colors.black87, //modify arrow color from here..
+        ),
         // leading:  BackArrowWidget(),
         title: Text(
           AppLocalizations.of(context).trans("myAddress"),
           style: TextStyle(
             fontSize: 19,
+            color: Colors.black87
           ),
         ),
         centerTitle: true,

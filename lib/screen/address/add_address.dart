@@ -41,8 +41,10 @@ class _AddAddressState extends State<AddAddress> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black87),
+backgroundColor: Colors.white,
         elevation: 0,
-        title: Text(AppLocalizations.of(context).trans("add_address")),
+        title: Text(AppLocalizations.of(context).trans("add_address"),style: TextStyle(color: Colors.black87),),
       ),
       body: ModalProgressHUD(
         inAsyncCall: _loading,
