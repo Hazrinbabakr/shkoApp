@@ -25,8 +25,10 @@ class _OrderHistoryScreenState extends State<OrderHistoryScreen> {
   final adminCollection = FirebaseFirestore.instance.collection('Admin');
   getProducts() {
     int i = 0;
-    FirebaseFirestore.instance.collection('users').doc(user!.uid).collection('orders').
-    where("OrderStatus",isNotEqualTo: "Pending")
+    FirebaseFirestore.instance.collection('users')
+        .doc(user!.uid)
+        .collection('orders')
+        .where("OrderStatus",isNotEqualTo: "Pending")
         .get()
         .then((value) {
       orderHistoryList = [];
@@ -172,6 +174,7 @@ int length=0;
                       itemBuilder: (context, i) {
                         return (currentOrderList![i] != null) && currentOrderList![i]['OrderStatus'] == "Pending"?
 
+
                         ExpansionTile(
                           title: Padding(
                             padding: const EdgeInsets.only(bottom: 20),
@@ -296,10 +299,12 @@ int length=0;
                                                 children: [
                                                   Text('${currentOrderList![i]["productList"][index]['quantity'].toString()}x'),
                                                   SizedBox(width: 10,),
-                                                  Text(
-                                                    currentOrderList![i]["productList"][index]['name'],
-                                                    style:
-                                                    TextStyle(fontSize: 14
+                                                  Expanded(
+                                                    child: Text(
+                                                      currentOrderList![i]["productList"][index]['name'],
+                                                      style:
+                                                      TextStyle(fontSize: 14
+                                                      ),
                                                     ),
                                                   ),
                                                 ],

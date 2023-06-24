@@ -36,7 +36,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
      name= userInfo!['username'];
      phone= userInfo!['phone'];
      address = userInfo!['address'];
-     print(name);
     });
   }
   TextEditingController _textFieldController = TextEditingController();

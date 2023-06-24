@@ -114,7 +114,7 @@ class TextFieldWidget extends StatelessWidget {
       onFieldSubmitted: onSubmitted,
       onSaved: onSave,
       cursorHeight: 20,
-      cursorColor: Theme.of(context).primaryColor,
+      cursorColor: Theme.of(context).colorScheme.secondary,
       //cursorColor: AppColors.accentColor,
       maxLines: maxLines,
       onTap: onTap,
