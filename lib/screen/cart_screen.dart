@@ -102,13 +102,11 @@ class _CartScreenState extends State<CartScreen> {
         var usedOrders = await FirebaseFirestore.instance
             .collection("Admin/admindoc/orders")
             .where("voucherId",isEqualTo: res.docs.first.id)
+            .where("userID",isEqualTo: user!.uid)
             .get();
         usedOrders.size;
-        print("res.size");
-        print(usedOrders.size);
 
         voucher = Voucher.fromJson(res.docs.first);
-        print(voucher!.limit);
         if( usedOrders.size >= voucher!.limit
             || voucher!.expiryDate.difference(DateTime.now()).inSeconds < 0 ){
           voucher = null;
