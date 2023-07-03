@@ -110,14 +110,14 @@ class _CartScreenState extends State<CartScreen> {
         if( usedOrders.size >= voucher!.limit
             || voucher!.expiryDate.difference(DateTime.now()).inSeconds < 0 ){
           voucher = null;
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Voucher expired!")));
+          ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context).trans("couponExpired"),style: TextStyle(fontSize: 18),)));
         }
         loading = false;
         setState(() {
 
         });
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Voucher invalid!")));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(AppLocalizations.of(context).trans("couponInvaild"),style: TextStyle(fontSize: 18),)));
         loading = false;
         setState(() {
 
@@ -801,7 +801,7 @@ class _CartScreenState extends State<CartScreen> {
                                   Expanded(
                                     child: TextFieldWidget(
                                       controller: voucherController,
-                                      hint: AppLocalizations.of(context).trans("apply_voucher"),
+                                      hint: AppLocalizations.of(context).trans("enterCoupon"),
                                     ),
                                   ),
                                   SizedBox(width: 12,),
@@ -814,8 +814,8 @@ class _CartScreenState extends State<CartScreen> {
                                       borderRadius: 8,
                                       child: Center(
                                         child: Text(
-                                          AppLocalizations.of(context).trans(voucher == null?"apply":"remove"),style: TextStyle(
-                                          fontSize: 18,
+                                          AppLocalizations.of(context).trans(voucher == null?AppLocalizations.of(context).trans("apply"):AppLocalizations.of(context).trans("remove")),style: TextStyle(
+                                          fontSize: 16,
                                           color: Colors.white,
                                           fontWeight: FontWeight.bold
                                         ),),

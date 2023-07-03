@@ -116,5 +116,13 @@
   "AddedSuccessfully'": "اضيف بنجاح",
   "deliveryTo": "تسليم الى: ",
   "cancelMyOrder": "إلغاء طلبي",
-  "delete": "حذف"
+  "delete": "حذف",
+
+  "remove": "يزيل",
+  "apply": "يتقدم",
+  "enterCoupon": "أدخل رمز القسيمة",
+  "couponExpired": "القسيمة منتهية الصلاحية!",
+  "couponInvaild": "القسيمة غير صالحة!",
+  "discount": "تخفيض",
+  "discounted_price": "سعر مخفض"
 }

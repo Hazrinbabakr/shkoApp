@@ -117,5 +117,13 @@
   "AddedSuccessfully'": "بە سەرکەوتوویی زیاد کرا",
   "deliveryTo": "گەیاندن بۆ: ",
   "cancelMyOrder": "داواکارییەکەم هەڵبوەشێنەرەوە",
-  "delete": "Delete"
+  "delete": "Delete",
+
+  "remove": "لابردن",
+  "apply": "جێبەجێکردن",
+  "enterCoupon": "کۆدی کۆبۆنەکە داخڵ بکە",
+  "couponExpired": "کۆبۆنەکە بەسەرچووە!",
+  "couponInvaild": "کۆبۆنەکە نادروستە!",
+  "discount": "داشکان",
+  "discounted_price": "داشکاندنی نرخ"
 }

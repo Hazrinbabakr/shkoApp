@@ -111,5 +111,15 @@
 
 
   "cancelMyOrder": "Cancel My Order",
-  "delete": "Delete"
+  "delete": "Delete",
+
+  "remove": "Remove",
+  "apply": "Apply",
+  "enterCoupon": "Enter coupon code",
+  "couponExpired": "Coupon expired!",
+  "couponInvaild": "Coupon invalid!",
+  "discount": "Discount",
+  "discounted_price": "Discounted Price"
+
+
 }
