@@ -15,8 +15,8 @@ class WideDotsSwiperPaginationBuilder extends SwiperPlugin {
             height: 8.0,
             width: isActive ? 32.0 : 8.0,
             decoration: BoxDecoration(
-              color: isActive ?  Color(0xff8dba39):
-              Color(0xff8dba39).withOpacity(0.4),
+              color: isActive ?  Color(0xff00bebb):
+              Color(0xff00bebb).withOpacity(0.4),
               borderRadius: BorderRadius.all(Radius.circular(12)),
             ),
           );

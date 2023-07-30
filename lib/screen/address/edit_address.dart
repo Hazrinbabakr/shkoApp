@@ -44,8 +44,10 @@ class _EditAddressState extends State<EditAddress> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black87),
+        backgroundColor: Colors.white,
         elevation: 0,
-        title: Text(AppLocalizations.of(context).trans("add_address")),
+        title: Text(AppLocalizations.of(context).trans("add_address"),style: TextStyle(color: Colors.black87),),
       ),
       body: ModalProgressHUD(
         inAsyncCall: _loading,
@@ -69,17 +71,18 @@ class _EditAddressState extends State<EditAddress> {
                         ),
                         child: Column(
                           children: [
-                            Container(
-                              height: 150,
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).dividerColor,
-                                  borderRadius: BorderRadius.circular(25)
+                            if(!_loading)
+                              Container(
+                                height: 150,
+                                decoration: BoxDecoration(
+                                    color: Theme.of(context).dividerColor,
+                                    borderRadius: BorderRadius.circular(25)
+                                ),
+                                child: MapWidget(
+                                  key: ValueKey<String>("$lat,$long"),
+                                  defaultPosition: LatLng(lat,long),
+                                ),
                               ),
-                              child: MapWidget(
-                                key: ValueKey<String>("$lat,$long"),
-                                defaultPosition: LatLng(lat,long),
-                              ),
-                            ),
                             SizedBox(
                               width: double.infinity,
                               child: CustomAppButton(
@@ -147,7 +150,7 @@ class _EditAddressState extends State<EditAddress> {
                         _loading = true;
                       });
                       var res  = await _addressProvider.editAddress(Address(
-                        uid: widget.address.uid,
+                          uid: widget.address.uid,
                           title: titleController.text,
                           description: descController.text,
                           latitude: lat,

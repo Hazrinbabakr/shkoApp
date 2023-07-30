@@ -489,6 +489,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   }
                                   // user.delete();
                                   FirebaseFirestore.instance.collection("users").doc(user!.uid).delete();
+                                  LocalStorageService.instance.user = null;
+                                  LocalStorageService.instance.selectedAddress = null;
+                                  await FirebaseAuth.instance.signOut();
                                   Application.restartApp(context);
 
                                 },

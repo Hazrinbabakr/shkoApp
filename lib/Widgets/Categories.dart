@@ -24,7 +24,10 @@ class _CategoriesWidgetState extends State<CategoriesWidget> {
         .then((value) {
       categorySnapshot = [];
       categorySnapshot!.addAll(value.docs);
-      setState(() {});
+
+      if (mounted) {
+        setState(() {});
+      }
 
     });
 

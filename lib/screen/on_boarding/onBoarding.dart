@@ -95,7 +95,7 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
                           Expanded(
                             flex: 2,
                             child: CustomAppButton(
-                              color: Color(0xff8dba39),
+                              color: Color(0xff00bebb),
                               elevation: 0,
                               borderRadius: 15,
                               child: Center(
@@ -133,8 +133,8 @@ class _OnBoardingPageState extends State<OnBoardingPage> {
   }
 
   List<String> images = [
-    "images/category/onboard3.png",
     "images/category/onboard1.png",
+    "images/category/onboard3.png",
     "images/category/onboard2.png",
   ];
 

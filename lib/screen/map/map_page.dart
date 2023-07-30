@@ -18,9 +18,11 @@ class MapWidgetState extends State<MapWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(25),
-      child: GoogleMap(
+    return
+      // ClipRRect(
+      // borderRadius: BorderRadius.circular(25),
+      // child:
+    GoogleMap(
         mapType: MapType.normal,
         initialCameraPosition: CameraPosition(target: widget.defaultPosition, zoom: 14),
         markers: widget.markers?.toSet()??{
@@ -34,7 +36,7 @@ class MapWidgetState extends State<MapWidget> {
         rotateGesturesEnabled: false,
         myLocationButtonEnabled: false,
         myLocationEnabled: false,
-      ),
-    );
+      );
+    // );
   }
 }

@@ -68,6 +68,7 @@ backgroundColor: Colors.white,
                         ),
                         child: Column(
                           children: [
+                            if(!_loading)
                             Container(
                               height: 150,
                               decoration: BoxDecoration(
