@@ -369,7 +369,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                         child:  Row(
                                           children: [
 
-                                            Text(  '${ formatter.format(productSnapshot!['price']).toString()}',
+                                            Text(  '${ formatter.format(productSnapshot!['sellPrice']).toString()}',
                                               style:
                                               TextStyle(fontWeight: FontWeight.bold,fontSize: 18),),
                                             Text(' IQD',style:
@@ -574,12 +574,12 @@ print('out of stock');
                                       "availableQuantity": productSnapshot!['quantity'],
                                       "productID": widget.productID,
                                       "quantity": quantity,
-                                      "price": productSnapshot!['price'],
+                                      "price": productSnapshot!['sellPrice'],
                                       "name": productSnapshot!['name'],
                                       "nameA": productSnapshot!['nameA'],
                                       "nameK": productSnapshot!['nameK'],
                                       "supPrice":
-                                      (productSnapshot!['price']) * quantity,
+                                      (productSnapshot!['sellPrice']) * quantity,
 
                                       "img": productSnapshot!['images'][0],
                                     });

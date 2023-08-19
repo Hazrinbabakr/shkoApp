@@ -157,7 +157,7 @@ textAlign: TextAlign.center,
                                // SizedBox(height: 5,),
                                 //LocalStorageService.instance.user.role == 1?
                                 Center(
-                                  child: Text('${allProductListSnapShot![i]['price'].toString()}\$',
+                                  child: Text('${allProductListSnapShot![i]['sellPrice'].toString()}\$',
                                     style: TextStyle(fontSize: 17,color: Colors.black,fontWeight: FontWeight.w500),),
                                 ),
 

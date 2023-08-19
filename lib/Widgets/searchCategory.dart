@@ -106,7 +106,7 @@ class _BrandsState extends State<SearchCategory> {
                           categorySnapshot![i]['img'].toString()??""
                       ),
                     ),
-                    SizedBox(height: 25,),
+                    SizedBox(height: 15,),
                     Text(
                       AppLocalizations.of(context).locale.languageCode.toString()=='ku'? categorySnapshot![i]['nameK']:
                       AppLocalizations.of(context).locale.languageCode.toString()=='ar'?

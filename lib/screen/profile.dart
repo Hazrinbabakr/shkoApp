@@ -55,7 +55,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return   FirebaseAuth.instance.currentUser != null ?
+    return
+      FirebaseAuth.instance.currentUser != null ?
     Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(

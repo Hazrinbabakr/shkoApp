@@ -115,7 +115,7 @@ class _TopSellerState extends State<TopSeller> {
                                     children: [
                                      // formatter.format(number)
                                      // '${formatter.format(((subTotal+deliveryFee)*dinnar)).toString()} IQD'
-                                      Text('${ formatter.format(topSellerSnapshot![i]['price']).toString()}',
+                                      Text('${ formatter.format(topSellerSnapshot![i]['sellPrice']).toString()}',
                                         style: TextStyle(fontSize: 19,color: Colors.red[700],fontWeight: FontWeight.w500),),
                                       Text('IQD',
                                         style: TextStyle(fontSize: 13,color: Colors.red[700],fontWeight: FontWeight.w500),),

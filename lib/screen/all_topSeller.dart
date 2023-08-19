@@ -43,7 +43,7 @@ class _AllTopSellerState extends State<AllTopSeller> {
           shrinkWrap: true,
           primary: false,
 
-          crossAxisSpacing: 12,
+          crossAxisSpacing: 8,
           //mainAxisSpacing: 15,
           childAspectRatio: 0.85, // (itemWidth/itemHeight),
           padding: EdgeInsets.symmetric(
@@ -78,7 +78,7 @@ class _AllTopSellerState extends State<AllTopSeller> {
                   child: Column(
                     //crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      SizedBox(height: 20,),
+                      SizedBox(height: 10,),
                       Container(
                         //  color: Colors.red,
                         height:115,
@@ -97,7 +97,7 @@ class _AllTopSellerState extends State<AllTopSeller> {
                             padding: const EdgeInsets.symmetric(horizontal: 8),
                             child: Row(
                               children: [
-                                Text('${ formatter.format(widget.topSellerSnapshot[i]['price']).toString()}',
+                                Text('${ formatter.format(widget.topSellerSnapshot[i]['sellPrice']).toString()}',
                                   style: TextStyle(fontSize: 19,color: Colors.red[700],fontWeight: FontWeight.w500),),
                                 Text('IQD',
                                   style: TextStyle(fontSize: 13,color: Colors.red[700],fontWeight: FontWeight.w500),),

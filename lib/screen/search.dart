@@ -176,7 +176,7 @@ height: 60,
                                             SizedBox(width: 20,),
                                             Text(
 
-                                             '${ shops['price'].toString()} IQD',
+                                             '${ shops['sellPrice'].toString()} IQD',
                                               style: TextStyle(
                                                   fontSize: 20,
                                                   ),

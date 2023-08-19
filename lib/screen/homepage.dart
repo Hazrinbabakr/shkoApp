@@ -116,7 +116,8 @@ class _HomePageState extends State<HomePage> {
               Image.asset('images/category/cart.png',color: Colors.black38,),
 
 
-              activeIcon: FirebaseAuth.instance.currentUser != null ? StreamBuilder(
+              activeIcon: FirebaseAuth.instance.currentUser != null ?
+              StreamBuilder(
                   stream: FirebaseFirestore.instance
                       .collection('users')
                       .doc(user?.uid)
@@ -155,7 +156,8 @@ class _HomePageState extends State<HomePage> {
                                 )))
                       ],
                     );
-                  }): Image.asset('images/category/cart.png'),
+                  }):
+              Image.asset('images/category/cart.png'),
               // title: Text(
               //   AppLocalizations.of(context).trans("Cart"),
               //
