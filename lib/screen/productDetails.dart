@@ -205,7 +205,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                               CarouselSlider(
                                                 options: CarouselOptions(
                                                     //height: 300,
-                                                    viewportFraction: 1,
+                                                    viewportFraction: 0.74,
                                                     autoPlay: false,
                                                     onPageChanged: (index, reason) {
                                                       setState(() {
@@ -242,8 +242,8 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                             );
                                                           },
                                                           child: Container(
-                                                            // height: heightt-450,
-                                                            //width: 700,
+                                                            //  height:450,
+                                                            // width: 700,
                                                             decoration: BoxDecoration(
                                                               image: DecorationImage(
                                                                   fit: BoxFit.cover,

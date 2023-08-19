@@ -32,7 +32,7 @@ class Offers extends StatelessWidget {
                   borderRadius: BorderRadius.circular(15),
                   child:CarouselSlider(
                     options: CarouselOptions(
-                      viewportFraction: 1,
+                      viewportFraction: 0.7,
                       height:       160.0,
                       autoPlay:     true,
                     ),
